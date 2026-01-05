@@ -125,7 +125,23 @@ const dadosIniciais = {
             "Confit de alho e tomates cereja (100g)",
             "Pote de vidro"
           ], 
-          "Pão clássico de casca grossa e miolo aerado, fermentado por 48h."
+          "Pão clássico de casca grossa e miolo aerado, fermentado por pelo menos 24 horas."
+        ],
+        [
+          "Pão de Campanha", 
+          "35.00", 
+          "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg", 
+          [
+            "Sardella (100g)", 
+            "Alichella (100g)", 
+            "Melanzane Sott'olio (100g)", 
+            "Manteiga temperada (100g)", 
+            "Picles de cebola (100g)",
+            "Confit de alho (100g)",
+            "Confit de alho e tomates cereja (100g)",
+            "Pote de vidro"
+          ], 
+          "Pão rústico de fermentação natural, tradicionalmente elaborado com farinha de trigo refinada com um toque de centeio ou integral, seu sabor e aroma são mais ricos do que de um pão italiano."
         ]
       ]
     },
