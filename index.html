@@ -11,11 +11,26 @@
         
         html, body { height: 100%; margin: 0; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); font-family: 'Calibri', sans-serif; }
         
-        header { background: var(--p-green); color: #fdf5e6; padding: 15px; text-align: center; border-bottom: 4px solid var(--a-brown); flex-shrink: 0; }
-        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--a-brown); margin-bottom: 8px; object-fit: cover; background: white; }
-        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; text-transform: uppercase; }
-        header p { margin: 2px 0 8px; font-size: 0.95rem; opacity: 0.9; font-style: italic; }
-        .insta-link { color: #fdf5e6; text-decoration: none; font-size: 1.2rem; }
+        header { 
+            background: var(--p-green); 
+            color: #fdf5e6; 
+            padding: 15px; 
+            border-bottom: 4px solid var(--a-brown); 
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .header-info { text-align: left; }
+        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--a-brown); object-fit: cover; background: white; }
+        header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase; line-height: 1.1; }
+        
+        /* Subtítulo com fonte aumentada */
+        header p { margin: 4px 0; font-size: 1.1rem; opacity: 1; font-style: italic; font-weight: 500; }
+        
+        .contact-links { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+        .contact-link { color: #fdf5e6; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
 
         .main-scroll { flex-grow: 1; overflow-y: auto; padding: 15px; -webkit-overflow-scrolling: touch; }
         .container { max-width: 600px; margin: auto; }
@@ -31,7 +46,6 @@
         .prod-info .desc { font-size: 0.85rem; color: #666; display: block; margin: 4px 0; line-height: 1.3; }
         .prod-info small { font-weight: bold; color: var(--a-brown); font-size: 1.05rem; }
 
-        /* Estilo dos contadores */
         .qty-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
         .qty-box { display: flex; align-items: center; border: 2px solid var(--p-green); border-radius: 8px; height: 32px; background: white; overflow: hidden; }
         .btn-q { background: var(--p-green); border: none; width: 32px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
@@ -55,10 +69,21 @@
 <body>
 
 <header>
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg" class="logo-img">
-    <h1>Pão do Ciso</h1>
-    <p>Nanopadaria artesanal</p>
-    <a href="https://www.instagram.com/paodociso" target="_blank" class="insta-link"><i class="fab fa-instagram"></i> @paodociso</a>
+    <a href="https://www.instagram.com/paodociso" target="_blank">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg" class="logo-img" alt="Pão do Ciso">
+    </a>
+    <div class="header-info">
+        <h1>Pão do Ciso</h1>
+        <p>Nanopadaria artesanal</p>
+        <div class="contact-links">
+            <a href="https://www.instagram.com/paodociso" target="_blank" class="contact-link">
+                <i class="fab fa-instagram"></i> @paodociso
+            </a>
+            <a href="https://wa.me/5511982391781" target="_blank" class="contact-link">
+                <i class="fab fa-whatsapp"></i> +55 11 98239-1781
+            </a>
+        </div>
+    </div>
 </header>
 
 <div class="main-scroll">
@@ -100,7 +125,8 @@
 <script src="cardapio.js"></script>
 <script>
     let carrinho = [];
-    const SCRIPT_URL = "SUA_URL_DO_APPS_SCRIPT"; 
+    // ATENÇÃO: Mantenha sua URL do script abaixo para a planilha funcionar
+    const SCRIPT_URL = "SUA_URL_DA_SPREADSHEET_AQUI"; 
 
     const rd = (db) => {
         const opsFull = db.opcionais.map(o => ({ n: o[0].trim(), p: parseFloat(o[1]) }));
@@ -127,7 +153,6 @@
                                 <small>R$ ${parseFloat(i[1]).toFixed(2)}</small>
                             </div>
                         </div>
-                        
                         ${itemOps.map(o => `
                             <div class="qty-row">
                                 <span style="font-size:0.85rem">${o.n} (+${o.p.toFixed(2)})</span>
@@ -137,7 +162,6 @@
                                     <button class="btn-q" onclick="mudar('${id}',${i[1]},1,false,this)">+</button>
                                 </div>
                             </div>`).join('')}
-                        
                         <button class="btn-add" onclick="add('${id}','${i[0]}')">
                             Adicionar R$ <span class="local-total">${parseFloat(i[1]).toFixed(2)}</span>
                         </button>
@@ -226,7 +250,7 @@
 
         const pedidoData = { nome, fone, tipo: tipo.toUpperCase(), endereco: tipo === 'entrega' ? endereco : 'RETIRADA NA LOJA', total: totalFinal, itens: resumoItensPlanilha };
 
-        if(SCRIPT_URL !== "SUA_URL_DO_APPS_SCRIPT") {
+        if(SCRIPT_URL !== "SUA_URL_DA_SPREADSHEET_AQUI") {
             try { fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(pedidoData) }); } catch(e) {}
         }
 
