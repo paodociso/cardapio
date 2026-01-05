@@ -11,26 +11,11 @@
         
         html, body { height: 100%; margin: 0; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); font-family: 'Calibri', sans-serif; }
         
-        header { 
-            background: var(--p-green); 
-            color: #fdf5e6; 
-            padding: 15px; 
-            border-bottom: 4px solid var(--a-brown); 
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .header-info { text-align: left; }
-        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--a-brown); object-fit: cover; background: white; }
-        header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase; line-height: 1.1; }
-        
-        /* Subtítulo com fonte aumentada */
-        header p { margin: 4px 0; font-size: 1.1rem; opacity: 1; font-style: italic; font-weight: 500; }
-        
-        .contact-links { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
-        .contact-link { color: #fdf5e6; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
+        header { background: var(--p-green); color: #fdf5e6; padding: 15px; text-align: center; border-bottom: 4px solid var(--a-brown); flex-shrink: 0; }
+        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--a-brown); margin-bottom: 8px; object-fit: cover; background: white; }
+        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; text-transform: uppercase; }
+        header p { margin: 2px 0 8px; font-size: 0.95rem; opacity: 0.9; font-style: italic; }
+        .insta-link { color: #fdf5e6; text-decoration: none; font-size: 1.2rem; }
 
         .main-scroll { flex-grow: 1; overflow-y: auto; padding: 15px; -webkit-overflow-scrolling: touch; }
         .container { max-width: 600px; margin: auto; }
@@ -39,24 +24,22 @@
         .collapsible-content { display: none; }
 
         .card { background: var(--w); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #eaddca; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .prod-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 10px; }
+        .prod-header { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
         .img-thumb { width: 75px; height: 75px; object-fit: cover; border-radius: 10px; }
-        .prod-info { flex-grow: 1; }
         .prod-info b { font-size: 1.1rem; color: var(--p-green); display: block; }
         .prod-info .desc { font-size: 0.85rem; color: #666; display: block; margin: 4px 0; line-height: 1.3; }
         .prod-info small { font-weight: bold; color: var(--a-brown); font-size: 1.05rem; }
 
-        .qty-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
-        .qty-box { display: flex; align-items: center; border: 2px solid var(--p-green); border-radius: 8px; height: 32px; background: white; overflow: hidden; }
-        .btn-q { background: var(--p-green); border: none; width: 32px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
-        .qty-val { width: 32px; border: none; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        .qty-box { display: flex; align-items: center; border: 2px solid var(--p-green); border-radius: 8px; height: 35px; background: white; overflow: hidden; }
+        .btn-q { background: var(--p-green); border: none; width: 35px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
+        .qty-val { width: 35px; border: none; text-align: center; font-weight: bold; font-size: 1rem; }
 
         .footer-cart { background: white; border-top: 4px solid var(--p-green); padding: 15px; flex-shrink: 0; z-index: 1000; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); }
         #cesta-itens { max-height: 0; overflow-y: auto; transition: max-height 0.3s ease; }
         #cesta-itens.open { max-height: 35vh; padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 10px; }
         
         .item-cesta { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
-        .btn-add { background: var(--p-green); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .btn-add { background: var(--p-green); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--bg); padding: 25px; border-radius: 20px; width: 100%; max-width: 450px; text-align: center; max-height: 90vh; overflow-y: auto; }
@@ -69,21 +52,10 @@
 <body>
 
 <header>
-    <a href="https://www.instagram.com/paodociso" target="_blank">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg" class="logo-img" alt="Pão do Ciso">
-    </a>
-    <div class="header-info">
-        <h1>Pão do Ciso</h1>
-        <p>Nanopadaria artesanal</p>
-        <div class="contact-links">
-            <a href="https://www.instagram.com/paodociso" target="_blank" class="contact-link">
-                <i class="fab fa-instagram"></i> @paodociso
-            </a>
-            <a href="https://wa.me/5511982391781" target="_blank" class="contact-link">
-                <i class="fab fa-whatsapp"></i> +55 11 98239-1781
-            </a>
-        </div>
-    </div>
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg" class="logo-img">
+    <h1>Pão do Ciso</h1>
+    <p>Nanopadaria artesanal</p>
+    <a href="https://www.instagram.com/paodociso" target="_blank" class="insta-link"><i class="fab fa-instagram"></i> @paodociso</a>
 </header>
 
 <div class="main-scroll">
@@ -97,7 +69,7 @@
             <span style="font-size:0.9rem; font-weight:bold; color:var(--a-brown); text-decoration: underline;">🛒 Ver Cesta (<span id="cart-count">0</span>)</span><br>
             <b style="font-size:1.1rem">Total: R$ <span id="total-geral">0.00</span></b>
         </div>
-        <button class="btn-add" style="background:var(--a-brown); width:auto;" onclick="abrirModal()">Finalizar Pedido</button>
+        <button class="btn-add" style="background:var(--a-brown)" onclick="abrirModal()">Finalizar Pedido</button>
     </div>
 </div>
 
@@ -117,7 +89,7 @@
             <div class="form-group"><label>Endereço completo</label><input type="text" id="f-endereco" placeholder="Rua, nº, apto, bairro"></div>
             <p class="taxa-aviso" id="aviso-taxa">⚠️ Taxa de entrega a combinar via WhatsApp.</p>
         </div>
-        <button class="btn-add" onclick="processarPedido()">Enviar Pedido</button>
+        <button class="btn-add" style="width:100%; padding:14px;" onclick="processarPedido()">Enviar Pedido</button>
         <button onclick="fecharModal()" style="width:100%; margin-top:12px; background:none; border:none; color:#666; cursor:pointer;">Voltar</button>
     </div>
 </div>
@@ -125,7 +97,6 @@
 <script src="cardapio.js"></script>
 <script>
     let carrinho = [];
-    // ATENÇÃO: Mantenha sua URL do script abaixo para a planilha funcionar
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBf2XS6pV3ZcX2rO1tF41TcXmN8IL9N8ndoGsLjJHj2z_UsEjrfTAI9ww9SnfNOTSI/exec"; 
 
     const rd = (db) => {
@@ -141,20 +112,13 @@
                         <div class="prod-header">
                             <img src="${i[2]}" class="img-thumb">
                             <div class="prod-info">
-                                <div style="display:flex; justify-content:space-between; align-items:center;">
-                                    <b>${i[0]}</b>
-                                    <div class="qty-box">
-                                        <button class="btn-q" onclick="mudar('${id}',${i[1]},-1,true,this)">-</button>
-                                        <input type="text" value="1" readonly class="qty-val qty-pao">
-                                        <button class="btn-q" onclick="mudar('${id}',${i[1]},1,true,this)">+</button>
-                                    </div>
-                                </div>
+                                <b>${i[0]}</b>
                                 <span class="desc">${i[4] || ''}</span>
                                 <small>R$ ${parseFloat(i[1]).toFixed(2)}</small>
                             </div>
                         </div>
                         ${itemOps.map(o => `
-                            <div class="qty-row">
+                            <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-top:1px solid #f5f5f5;">
                                 <span style="font-size:0.85rem">${o.n} (+${o.p.toFixed(2)})</span>
                                 <div class="qty-box">
                                     <button class="btn-q" onclick="mudar('${id}',${i[1]},-1,false,this)">-</button>
@@ -162,9 +126,14 @@
                                     <button class="btn-q" onclick="mudar('${id}',${i[1]},1,false,this)">+</button>
                                 </div>
                             </div>`).join('')}
-                        <button class="btn-add" onclick="add('${id}','${i[0]}')">
-                            Adicionar R$ <span class="local-total">${parseFloat(i[1]).toFixed(2)}</span>
-                        </button>
+                        <div style="display:flex; justify-content:space-between; margin-top:12px; align-items:center;">
+                            <div class="qty-box">
+                                <button class="btn-q" onclick="mudar('${id}',${i[1]},-1,true,this)">-</button>
+                                <input type="text" value="1" readonly class="qty-val qty-pao">
+                                <button class="btn-q" onclick="mudar('${id}',${i[1]},1,true,this)">+</button>
+                            </div>
+                            <button class="btn-add" onclick="add('${id}','${i[0]}')">Adicionar R$ <span class="local-total">${parseFloat(i[1]).toFixed(2)}</span></button>
+                        </div>
                     </div>`;
                 }).join('')}
             </div>`).join('');
@@ -231,15 +200,21 @@
         if(fone.length < 10 || fone.length > 11) return alert("Telefone inválido! Use DDD + Número (10 ou 11 dígitos).");
         if(tipo === 'entrega' && !endereco) return alert("Por favor, informe o endereço de entrega.");
 
+        // FORMATAÇÃO LIMPA PARA WHATSAPP E PLANILHA
         let resumoItensPlanilha = "";
         let msgWhats = `*PEDIDO PÃO DO CISO*%0A*Cliente:* ${nome}%0A*WhatsApp:* ${fone}%0A*Opção:* ${tipo.toUpperCase()}%0A`;
+        
         if(tipo === 'entrega') msgWhats += `*Endereço:* ${endereco}%0A_Taxa a combinar_%0A`;
         msgWhats += `%0A*ITENS:*%0A`;
 
         carrinho.forEach((i, idx) => {
             let itemTexto = `${i.qtd}x ${i.nome}`;
             let detalhesOps = i.ops.length > 0 ? ` [${i.ops.join(' / ')}]` : "";
+            
+            // Para a planilha (uma linha por produto com seus opcionais entre colchetes)
             resumoItensPlanilha += itemTexto + detalhesOps + (idx < carrinho.length -1 ? " | " : "");
+
+            // Para o WhatsApp (bonito e legível)
             msgWhats += `*${idx + 1}. ${itemTexto}*%0A`;
             i.ops.forEach(op => msgWhats += `   └ _${op}_%0A`);
             msgWhats += `   Subtotal: R$ ${i.total.toFixed(2)}%0A%0A`;
@@ -248,10 +223,20 @@
         const totalFinal = document.getElementById('total-geral').innerText;
         msgWhats += `*TOTAL GERAL: R$ ${totalFinal}*`;
 
-        const pedidoData = { nome, fone, tipo: tipo.toUpperCase(), endereco: tipo === 'entrega' ? endereco : 'RETIRADA NA LOJA', total: totalFinal, itens: resumoItensPlanilha };
+        // Envio para Planilha
+        const pedidoData = { 
+            nome, 
+            fone, 
+            tipo: tipo.toUpperCase(), 
+            endereco: tipo === 'entrega' ? endereco : 'RETIRADA NA LOJA', 
+            total: totalFinal, 
+            itens: resumoItensPlanilha 
+        };
 
-        if(SCRIPT_URL !== "SUA_URL_DA_SPREADSHEET_AQUI") {
-            try { fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(pedidoData) }); } catch(e) {}
+        if(SCRIPT_URL !== "SUA_URL_DO_GOOGLE_SCRIPT_AQUI") {
+            try {
+                fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(pedidoData) });
+            } catch(e) { console.error("Erro planilha:", e); }
         }
 
         window.open(`https://wa.me/5511982391781?text=${msgWhats}`);
