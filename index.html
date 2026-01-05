@@ -1,4 +1,3 @@
-<!--Identificação Interna: cardapio.v2;1-->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,7 +6,7 @@
     <title>Pão do Ciso - Nanopadaria Artesanal</title>
     <style>
         :root { --p-green: #2d3a27; --a-brown: #7d4f39; --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; }
-        * { box-sizing: border-box; } 
+        * { box-sizing: border-box; scroll-behavior: smooth; } 
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; padding-bottom: 200px; overflow-x: hidden; }
         
         .container { max-width: 600px; margin: auto; padding: 15px; width: 100%; }
@@ -20,8 +19,12 @@
         header h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; }
         header small { display: block; font-size: 0.9rem; opacity: 0.9; margin-top: 5px; }
 
-        .social-link { text-align: center; margin: 15px 0; }
+        .social-link { text-align: center; margin: 15px 0 5px; }
         .social-link a { color: var(--a-brown); text-decoration: none; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 5px; }
+
+        .cat-menu { display: flex; gap: 10px; overflow-x: auto; padding: 10px 5px; margin: 10px 0 20px 0; scrollbar-width: none; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .cat-menu::-webkit-scrollbar { display: none; }
+        .cat-btn { background: var(--p-green); border: none; padding: 10px 18px; border-radius: 25px; white-space: nowrap; font-size: 0.85rem; font-weight: bold; color: #fff; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
         .card { background: var(--w); border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #eaddca; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .prod-header { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
@@ -44,7 +47,6 @@
         .btn-q { 
             background: #fff; color: var(--p-green); border: none; width: 40px; height: 100%;
             font-weight: bold; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            line-height: 1;
         }
         .btn-q:first-child { border-right: 1px solid var(--p-green); }
         .btn-q:last-child { border-left: 1px solid var(--p-green); }
@@ -55,11 +57,27 @@
             pointer-events: none; appearance: none; -moz-appearance: textfield; margin: 0; padding: 0;
         }
 
+        /* BOTÃO ADICIONAR COM MESMA ALTURA DO CONTADOR */
+        .btn-add { 
+            height: 40px; 
+            background: var(--p-green); 
+            color: var(--w); 
+            border: none; 
+            padding: 0 20px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
         .input-group { background: var(--w); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #d7ccc8; }
         input { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; }
         
         .footer-cart { position:fixed; bottom:0; width:100%; background:white; padding:15px; border-top: 4px solid var(--p-green); z-index: 100; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); }
-        .btn { background: var(--a-brown); color: var(--w); border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
+        .btn-final { background: var(--a-brown); color: var(--w); border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
         
         #cesta { background: #fffde7; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px dashed var(--a-brown); max-height: 120px; overflow-y: auto; display: none; font-size: 0.9rem; }
         .view { display: none; } .active { display: block; }
@@ -79,12 +97,7 @@
     </header>
     
     <div class="social-link">
-        <a href="https://www.instagram.com/paodociso" target="_blank">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96.0 1 0 0 1.92.96.96.0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
-            </svg>
-            @paodociso
-        </a>
+        <a href="https://www.instagram.com/paodociso" target="_blank">@paodociso</a>
     </div>
 
     <div class="container">
@@ -92,6 +105,7 @@
             <input type="text" id="cli-n" placeholder="Seu Nome">
             <input type="tel" id="cli-t" placeholder="WhatsApp (11 dígitos com DDD)" maxlength="11">
         </div>
+        <div id="cat-container" class="cat-menu"></div>
         <div id="render-cli"></div>
     </div>
     
@@ -102,7 +116,7 @@
                 <small onclick="tglCesta()" style="text-decoration:underline; cursor:pointer">Ver Cesta</small><br>
                 <b>Total: R$ <span id="total-carrinho" style="color:var(--p-green); font-size:1.2rem">0.00</span></b>
             </div>
-            <button class="btn" style="width:auto; padding-inline:20px;" onclick="enviarPedido()">Finalizar Pedido</button>
+            <button class="btn-final" style="width:auto; padding-inline:20px;" onclick="enviarPedido()">Finalizar Pedido</button>
         </div>
     </div>
 </div>
@@ -111,7 +125,6 @@
     <div class="container">
         <div class="input-group">
             <h4>🔐 Informações do Sistema</h4>
-            <p>Os dados estão sendo lidos de: <b>cardapio.js</b></p>
             <div id="status-adm">Verificando dados...</div>
             <hr>
             <small>Versão: cardapio.v2;0</small>
@@ -135,6 +148,7 @@
         try {
             const novosOpc = raw.opcionais.map((o, i) => ({ id: i+1, nome: o[0], preco: parseFloat(o[1]) }));
             const novasSec = raw.secoes.map((s, si) => ({
+                id: 'sec-' + si,
                 nome: s.nome,
                 itens: s.itens.map((it, ii) => ({
                     id: Date.now() + ii + si,
@@ -145,3 +159,85 @@
                         const f = novosOpc.find(x => x.nome === n);
                         return f ? f.id : null;
                     }).filter(x => x)
+                }))
+            }));
+            db.opcionais = novosOpc;
+            db.secoes = novasSec;
+            rd();
+            $('status-adm').innerHTML = "✅ Dados carregados com sucesso!";
+        } catch(e) { $('status-adm').innerHTML = "❌ Erro ao ler cardapio.js"; }
+    };
+
+    window.onload = () => { if(typeof dadosIniciais !== 'undefined') processarIniciais(dadosIniciais); };
+
+    const rd = () => {
+        $('cat-container').innerHTML = db.secoes.map(s => `
+            <button class="cat-btn" onclick="document.getElementById('${s.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">${s.nome}</button>
+        `).join('');
+
+        $('render-cli').innerHTML = db.secoes.map(s => `
+            <div id="${s.id}" style="margin:25px 0 10px; font-weight:bold; color:var(--a-brown); border-bottom: 2px solid var(--nav); padding-bottom: 5px; scroll-margin-top: 70px;">${s.nome.toUpperCase()}</div>
+            ${s.itens.map(i => {
+                const ops = i.opcionaisIds.map(oid => db.opcionais.find(x => x.id == oid)).filter(x=>x);
+                return `
+                <div class="card" id="card-${i.id}">
+                    <div class="prod-header">
+                        <img src="${i.img || 'https://via.placeholder.com/80'}" class="img-thumb">
+                        <div><b>${i.nome}</b><br>R$ ${i.preco.toFixed(2)}</div>
+                    </div>
+                    ${ops.map(o => `
+                        <div class="opc-row">
+                            <span>${o.nome} (+R$ ${o.preco.toFixed(2)})</span>
+                            <div class="qty-box">
+                                <button class="btn-q" onclick="const i=this.nextElementSibling; i.value=Math.max(0,parseInt(i.value)-1); upLocal(${i.id},${i.preco})">-</button>
+                                <input type="number" value="0" readonly class="qty-val qty-opc" data-p="${o.preco}" data-n="${o.nome}">
+                                <button class="btn-q" onclick="const i=this.previousElementSibling; i.value=parseInt(i.value)+1; upLocal(${i.id},${i.preco})">+</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1px solid #eee">
+                        <div class="qty-box">
+                            <button class="btn-q" onclick="const i=this.nextElementSibling; i.value=Math.max(1,parseInt(i.value)-1); upLocal(${i.id},${i.preco})">-</button>
+                            <input type="number" value="1" readonly class="qty-val qty-pao">
+                            <button class="btn-q" onclick="const i=this.previousElementSibling; i.value=parseInt(i.value)+1; upLocal(${i.id},${i.preco})">+</button>
+                        </div>
+                        <button class="btn-add" onclick="add(${i.id}, '${i.nome}')">ADICIONAR R$ <span class="local-total">${i.preco.toFixed(2)}</span></button>
+                    </div>
+                </div>`;
+            }).join('')}
+        `).join('');
+    };
+
+    const upLocal = (id, base) => {
+        const c = $(`card-${id}`);
+        const q = parseInt(c.querySelector('.qty-pao').value);
+        let ex = 0; c.querySelectorAll('.qty-opc').forEach(o => ex += (parseInt(o.value) * parseFloat(o.dataset.p)));
+        c.querySelector('.local-total').innerText = ((base + ex) * q).toFixed(2);
+    };
+
+    const add = (id, nome) => {
+        const c = $(`card-${id}`);
+        const q = parseInt(c.querySelector('.qty-pao').value);
+        const t = parseFloat(c.querySelector('.local-total').innerText);
+        let ex = []; c.querySelectorAll('.qty-opc').forEach(o => { if(parseInt(o.value)>0) ex.push(`${o.value}x ${o.dataset.n}`); });
+        car.push({ n: nome, q, t, ex });
+        const total = car.reduce((a,b)=>a+b.t, 0).toFixed(2);
+        $('total-carrinho').innerText = total;
+        $('cesta').innerHTML = car.map(x => `<div>🛒 ${x.q}x ${x.n} <span style="float:right">R$ ${x.t.toFixed(2)}</span></div>`).join('');
+        $('cesta').style.display = 'block';
+    };
+
+    const enviarPedido = async () => {
+        const n = $('cli-n').value, t = $('cli-t').value;
+        if(!n || t.length < 11 || !car.length) return alert("Preencha Nome, WhatsApp e adicione itens!");
+        const txtProd = car.map(c => `${c.q}x ${c.n} ${c.ex.length ? '('+c.ex.join(', ')+')' : ''}`).join(' | ');
+        const total = $('total-carrinho').innerText;
+        const p = { cliente: n, tel: t, data: new Date().toLocaleString('pt-BR'), itens_texto: txtProd, total: total };
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p) });
+        let wpp = `*NOVO PEDIDO - PÃO DO CISO*%0A*Cliente:* ${n}%0A%0A${car.map(c => `*${c.q}x ${c.n}*%0A${c.ex.join(', ')}%0AValor: R$ ${c.t.toFixed(2)}`).join('%0A%0A')}%0A%0A*TOTAL: R$ ${total}*`;
+        window.open(`https://wa.me/5511982391781?text=${wpp}`);
+        car = []; rd(); $('total-carrinho').innerText = "0.00"; $('cesta').style.display='none';
+    };
+</script>
+</body>
+</html>
