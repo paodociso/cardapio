@@ -32,54 +32,30 @@
         
         .opc-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid #f0f0f0; }
         
-        /* CONTADORES CENTRALIZADOS */
-        .qty-box { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #fff; 
-            border-radius: 8px; 
-            border: 2px solid var(--p-green); 
-            height: 40px; 
-            width: 120px; 
-            overflow: hidden; 
-        }
-        .btn-q { 
-            background: #fff; color: var(--p-green); border: none; width: 40px; height: 100%;
-            font-weight: bold; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
-        }
+        .qty-box { display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 8px; border: 2px solid var(--p-green); height: 40px; width: 120px; overflow: hidden; }
+        .btn-q { background: #fff; color: var(--p-green); border: none; width: 40px; height: 100%; font-weight: bold; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none; }
         .btn-q:first-child { border-right: 1px solid var(--p-green); }
         .btn-q:last-child { border-left: 1px solid var(--p-green); }
 
         .qty-val { 
-            width: 40px; height: 100%; text-align: center; font-weight: 900; border: none; 
-            font-size: 1.1rem; color: #000; background: #fff; display: flex; align-items: center; justify-content: center;
-            pointer-events: none; appearance: none; -moz-appearance: textfield; margin: 0; padding: 0;
+            width: 40px; height: 100%; text-align: center; font-weight: 900; border: none; font-size: 1.1rem; color: #000; background: #fff; 
+            display: flex; align-items: center; justify-content: center; pointer-events: none; margin:0; padding:0;
+            appearance: textfield; -moz-appearance: textfield;
         }
+        .qty-val::-webkit-outer-spin-button, .qty-val::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-        /* BOTÃO ADICIONAR COM MESMA ALTURA DO CONTADOR */
-        .btn-add { 
-            height: 40px; 
-            background: var(--p-green); 
-            color: var(--w); 
-            border: none; 
-            padding: 0 20px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 0.9rem;
-        }
+        .btn-add { height: 40px; background: var(--p-green); color: var(--w); border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
 
         .input-group { background: var(--w); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #d7ccc8; }
-        input { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; }
+        input[type="text"], input[type="tel"] { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; }
         
         .footer-cart { position:fixed; bottom:0; width:100%; background:white; padding:15px; border-top: 4px solid var(--p-green); z-index: 100; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); }
         .btn-final { background: var(--a-brown); color: var(--w); border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
         
-        #cesta { background: #fffde7; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px dashed var(--a-brown); max-height: 120px; overflow-y: auto; display: none; font-size: 0.9rem; }
+        #cesta { background: #fffde7; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px dashed var(--a-brown); max-height: 180px; overflow-y: auto; display: none; font-size: 0.9rem; }
+        .item-cesta { margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+        .opc-item-cesta { font-size: 0.8rem; color: #555; display: block; margin-left: 20px; font-style: italic; }
+
         .view { display: none; } .active { display: block; }
     </style>
 </head>
@@ -113,7 +89,7 @@
         <div id="cesta"></div>
         <div style="display:flex; justify-content:space-between; align-items:center; gap: 10px;">
             <div style="flex-grow: 1;">
-                <small onclick="tglCesta()" style="text-decoration:underline; cursor:pointer">Ver Cesta</small><br>
+                <small onclick="tglCesta()" style="text-decoration:underline; cursor:pointer">🛒 Ver Cesta</small><br>
                 <b>Total: R$ <span id="total-carrinho" style="color:var(--p-green); font-size:1.2rem">0.00</span></b>
             </div>
             <button class="btn-final" style="width:auto; padding-inline:20px;" onclick="enviarPedido()">Finalizar Pedido</button>
@@ -135,7 +111,6 @@
 <script src="cardapio.js"></script>
 
 <script>
-    /* Identificação Interna: cardapio.v2;0 */
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk9SYaDVnCxA-r4vncPNtDcYXHRKCccaHj-595XsLQjIkhtIz96XU8x4m_nQJfWRyG/exec"; 
     let db = { secoes: [], opcionais: [] };
     let car = [];
@@ -164,7 +139,7 @@
             db.opcionais = novosOpc;
             db.secoes = novasSec;
             rd();
-            $('status-adm').innerHTML = "✅ Dados carregados com sucesso!";
+            $('status-adm').innerHTML = "✅ Dados carregados!";
         } catch(e) { $('status-adm').innerHTML = "❌ Erro ao ler cardapio.js"; }
     };
 
@@ -189,17 +164,17 @@
                         <div class="opc-row">
                             <span>${o.nome} (+R$ ${o.preco.toFixed(2)})</span>
                             <div class="qty-box">
-                                <button class="btn-q" onclick="const i=this.nextElementSibling; i.value=Math.max(0,parseInt(i.value)-1); upLocal(${i.id},${i.preco})">-</button>
+                                <button class="btn-q" onclick="mudarQtd(this, -1, ${i.id}, ${i.preco})">-</button>
                                 <input type="number" value="0" readonly class="qty-val qty-opc" data-p="${o.preco}" data-n="${o.nome}">
-                                <button class="btn-q" onclick="const i=this.previousElementSibling; i.value=parseInt(i.value)+1; upLocal(${i.id},${i.preco})">+</button>
+                                <button class="btn-q" onclick="mudarQtd(this, 1, ${i.id}, ${i.preco})">+</button>
                             </div>
                         </div>
                     `).join('')}
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1px solid #eee">
                         <div class="qty-box">
-                            <button class="btn-q" onclick="const i=this.nextElementSibling; i.value=Math.max(1,parseInt(i.value)-1); upLocal(${i.id},${i.preco})">-</button>
+                            <button class="btn-q" onclick="mudarQtd(this, -1, ${i.id}, ${i.preco}, true)">-</button>
                             <input type="number" value="1" readonly class="qty-val qty-pao">
-                            <button class="btn-q" onclick="const i=this.previousElementSibling; i.value=parseInt(i.value)+1; upLocal(${i.id},${i.preco})">+</button>
+                            <button class="btn-q" onclick="mudarQtd(this, 1, ${i.id}, ${i.preco}, true)">+</button>
                         </div>
                         <button class="btn-add" onclick="add(${i.id}, '${i.nome}')">ADICIONAR R$ <span class="local-total">${i.preco.toFixed(2)}</span></button>
                     </div>
@@ -208,10 +183,20 @@
         `).join('');
     };
 
+    const mudarQtd = (btn, delta, itemId, precoBase, isPao = false) => {
+        const box = btn.parentNode;
+        const input = box.querySelector('input');
+        let val = parseInt(input.value) + delta;
+        if(isPao) { if(val < 1) val = 1; } else { if(val < 0) val = 0; }
+        input.value = val;
+        upLocal(itemId, precoBase);
+    };
+
     const upLocal = (id, base) => {
         const c = $(`card-${id}`);
         const q = parseInt(c.querySelector('.qty-pao').value);
-        let ex = 0; c.querySelectorAll('.qty-opc').forEach(o => ex += (parseInt(o.value) * parseFloat(o.dataset.p)));
+        let ex = 0; 
+        c.querySelectorAll('.qty-opc').forEach(o => { ex += (parseInt(o.value) * parseFloat(o.dataset.p)); });
         c.querySelector('.local-total').innerText = ((base + ex) * q).toFixed(2);
     };
 
@@ -219,23 +204,40 @@
         const c = $(`card-${id}`);
         const q = parseInt(c.querySelector('.qty-pao').value);
         const t = parseFloat(c.querySelector('.local-total').innerText);
-        let ex = []; c.querySelectorAll('.qty-opc').forEach(o => { if(parseInt(o.value)>0) ex.push(`${o.value}x ${o.dataset.n}`); });
+        let ex = []; 
+        c.querySelectorAll('.qty-opc').forEach(o => { if(parseInt(o.value) > 0) ex.push(`${o.value}x ${o.dataset.n}`); });
         car.push({ n: nome, q, t, ex });
-        const total = car.reduce((a,b)=>a+b.t, 0).toFixed(2);
-        $('total-carrinho').innerText = total;
-        $('cesta').innerHTML = car.map(x => `<div>🛒 ${x.q}x ${x.n} <span style="float:right">R$ ${x.t.toFixed(2)}</span></div>`).join('');
+        
+        $('total-carrinho').innerText = car.reduce((a,b)=>a+b.t, 0).toFixed(2);
+        
+        // EXIBIÇÃO EM LINHAS SEPARADAS NA CESTA
+        $('cesta').innerHTML = car.map(x => `
+            <div class="item-cesta">
+                <b>${x.q}x ${x.n}</b> <span style="float:right">R$ ${x.t.toFixed(2)}</span>
+                ${x.ex.map(op => `<span class="opc-item-cesta">+ ${op}</span>`).join('')}
+            </div>
+        `).join('');
+        
         $('cesta').style.display = 'block';
     };
 
     const enviarPedido = async () => {
         const n = $('cli-n').value, t = $('cli-t').value;
         if(!n || t.length < 11 || !car.length) return alert("Preencha Nome, WhatsApp e adicione itens!");
-        const txtProd = car.map(c => `${c.q}x ${c.n} ${c.ex.length ? '('+c.ex.join(', ')+')' : ''}`).join(' | ');
+        const txtProd = car.map(c => `${c.q}x ${c.n} ${c.ex.length ? '[Obs: ' + c.ex.join(', ') + ']' : ''}`).join(' | ');
         const total = $('total-carrinho').innerText;
         const p = { cliente: n, tel: t, data: new Date().toLocaleString('pt-BR'), itens_texto: txtProd, total: total };
         fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p) });
-        let wpp = `*NOVO PEDIDO - PÃO DO CISO*%0A*Cliente:* ${n}%0A%0A${car.map(c => `*${c.q}x ${c.n}*%0A${c.ex.join(', ')}%0AValor: R$ ${c.t.toFixed(2)}`).join('%0A%0A')}%0A%0A*TOTAL: R$ ${total}*`;
+        
+        let wpp = `*NOVO PEDIDO - PÃO DO CISO*%0A*Cliente:* ${n}%0A----------------------------%0A`;
+        car.forEach(c => {
+            wpp += `*${c.q}x ${c.n}*%0A`;
+            c.ex.forEach(op => { wpp += `_  + ${op}_%0A`; });
+            wpp += `Subtotal: R$ ${c.t.toFixed(2)}%0A%0A`;
+        });
+        wpp += `----------------------------%0A*TOTAL: R$ ${total}*`;
         window.open(`https://wa.me/5511982391781?text=${wpp}`);
+        
         car = []; rd(); $('total-carrinho').innerText = "0.00"; $('cesta').style.display='none';
     };
 </script>
