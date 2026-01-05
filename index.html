@@ -4,118 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pão do Ciso</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --p-green: #2d3a27; --a-brown: #7d4f39; --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; }
         * { box-sizing: border-box; }
         
-        html, body { 
-            height: 100%; 
-            margin: 0; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column; 
-            background: var(--bg); 
-            font-family: 'Calibri', 'Segoe UI', 'Arial', sans-serif; 
-        }
+        html, body { height: 100%; margin: 0; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); font-family: 'Calibri', sans-serif; }
         
-        /* BANNER COM LOGO, TÍTULO E INSTA */
-        header { 
-            background: var(--p-green); 
-            color: #fdf5e6; 
-            padding: 20px 15px; 
-            text-align: center; 
-            border-bottom: 4px solid var(--a-brown); 
-            flex-shrink: 0; 
-        }
-        .logo-placeholder {
-            width: 80px;
-            height: 80px;
-            background: rgba(255,255,255,0.1);
-            border: 2px dashed rgba(255,255,255,0.3);
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .logo-placeholder img { width: 100%; height: 100%; object-fit: cover; }
-        
-        header h1 { margin: 0; font-size: 1.6rem; letter-spacing: 2px; text-transform: uppercase; }
-        header p { margin: 5px 0; font-style: italic; font-size: 0.95rem; opacity: 0.9; }
-        
-        .insta-link { 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 5px; 
-            color: #fdf5e6; 
-            text-decoration: none; 
-            margin-top: 8px; 
-            font-size: 0.85rem;
-            background: rgba(0,0,0,0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
+        header { background: var(--p-green); color: #fdf5e6; padding: 15px; text-align: center; border-bottom: 4px solid var(--a-brown); flex-shrink: 0; }
+        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--a-brown); margin-bottom: 8px; object-fit: cover; background: white; }
+        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; text-transform: uppercase; }
+        header p { margin: 2px 0 8px; font-size: 0.95rem; opacity: 0.9; font-style: italic; }
+        .insta-link { color: #fdf5e6; text-decoration: none; font-size: 1.2rem; }
 
-        /* ÁREA DO CARDÁPIO */
         .main-scroll { flex-grow: 1; overflow-y: auto; padding: 15px; -webkit-overflow-scrolling: touch; }
         .container { max-width: 600px; margin: auto; }
 
-        .collapsible { background: var(--nav); color: var(--text); cursor: pointer; padding: 12px; width: 100%; border: none; text-align: left; font-size: 1rem; font-weight: bold; border-radius: 8px; margin-top: 15px; display: flex; justify-content: space-between; font-family: inherit; }
+        .collapsible { background: var(--nav); color: var(--text); cursor: pointer; padding: 12px; width: 100%; border: none; text-align: left; font-size: 1rem; font-weight: bold; border-radius: 8px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
         .collapsible-content { display: none; }
 
         .card { background: var(--w); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #eaddca; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .prod-header { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-        .img-thumb { width: 65px; height: 65px; object-fit: cover; border-radius: 8px; }
-        
-        .prod-info b { font-size: 1.1rem; color: var(--p-green); }
-        .prod-info small { font-weight: bold; color: var(--a-brown); font-size: 1rem; }
+        .img-thumb { width: 75px; height: 75px; object-fit: cover; border-radius: 10px; }
+        .prod-info b { font-size: 1.1rem; color: var(--p-green); display: block; }
+        .prod-info .desc { font-size: 0.85rem; color: #666; display: block; margin: 4px 0; line-height: 1.3; }
+        .prod-info small { font-weight: bold; color: var(--a-brown); font-size: 1.05rem; }
 
         .qty-box { display: flex; align-items: center; border: 2px solid var(--p-green); border-radius: 8px; height: 35px; background: white; overflow: hidden; }
-        .btn-q { background: var(--p-green); border: none; width: 35px; height: 100%; color: white; font-weight: bold; cursor: pointer; font-size: 1.2rem; font-family: inherit; }
-        .qty-val { width: 40px; border: none; text-align: center; font-weight: bold; background: transparent; font-family: inherit; font-size: 1rem; }
+        .btn-q { background: var(--p-green); border: none; width: 35px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
+        .qty-val { width: 35px; border: none; text-align: center; font-weight: bold; font-size: 1rem; }
 
-        /* RODAPÉ DINÂMICO */
-        .footer-cart { background: white; border-top: 4px solid var(--p-green); padding: 15px; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); flex-shrink: 0; }
+        .footer-cart { background: white; border-top: 4px solid var(--p-green); padding: 15px; flex-shrink: 0; z-index: 1000; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); }
+        #cesta-itens { max-height: 0; overflow-y: auto; transition: max-height 0.3s ease; }
+        #cesta-itens.open { max-height: 35vh; padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 10px; }
         
-        #cesta-itens { max-height: 0; overflow-y: auto; transition: max-height 0.3s ease; background: #fffcf5; margin: 0; }
-        #cesta-itens.open { max-height: 40vh; padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 10px; }
-
-        .item-cesta { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .opcional-linha { display: block; font-size: 0.85rem; color: #555; padding-left: 10px; border-left: 2px solid var(--nav); margin-top: 3px; }
-        
-        .btn-add { background: var(--p-green); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: inherit; }
+        .item-cesta { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+        .btn-add { background: var(--p-green); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--bg); padding: 25px; border-radius: 20px; width: 100%; max-width: 400px; font-family: inherit; }
-        .modal-content input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ccc; font-family: inherit; }
+        .modal-content { background: var(--bg); padding: 25px; border-radius: 20px; width: 100%; max-width: 450px; text-align: center; max-height: 90vh; overflow-y: auto; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: var(--text); font-size: 0.9rem; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
+        .taxa-aviso { font-size: 0.8rem; color: #d32f2f; margin-top: 5px; font-weight: bold; display: none; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-placeholder">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkhyphenhyphenADG_zMDc0sgRUbpezC3xd2CoUxZqTv1N8NwqMqQXdkjtyMnZjTl5n7hgvIDy3vdM85eKjtmDZ9c2pZ4pAHIoKzLwIRCegDOdCFy3tL2Bv4fT2O58oG7JoSlAgaREkhmrizikrxpU3SpqsoyiTy00ZCqcuBpSANH8DKwYPuxOHHUSHciBlO64Yj2_lk/s320/logo2.png" alt="Logo Pão do Ciso">
-    </div>
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg" class="logo-img">
     <h1>Pão do Ciso</h1>
     <p>Nanopadaria artesanal</p>
-    <a href="https://www.instagram.com/paodociso" target="_blank" class="insta-link">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
-        </svg>
-        @paodociso
-    </a>
+    <a href="https://www.instagram.com/paodociso" target="_blank" class="insta-link"><i class="fab fa-instagram"></i> @paodociso</a>
 </header>
 
 <div class="main-scroll">
     <div class="container" id="render-cli"></div>
 </div>
 
-<div class="footer-cart" id="main-footer">
+<div class="footer-cart">
     <div id="cesta-itens"></div>
-    <div style="display:flex; justify-content:space-between; align-items:center; max-width:570px; margin:auto;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
         <div onclick="toggleCesta()" style="cursor:pointer">
-            <span style="text-decoration:underline; font-size:0.9rem; font-weight:bold; color:var(--a-brown)">🛒 Ver Cesta (<span id="cart-count">0</span>)</span><br>
+            <span style="font-size:0.9rem; font-weight:bold; color:var(--a-brown); text-decoration: underline;">🛒 Ver Cesta (<span id="cart-count">0</span>)</span><br>
             <b style="font-size:1.1rem">Total: R$ <span id="total-geral">0.00</span></b>
         </div>
         <button class="btn-add" style="background:var(--a-brown)" onclick="abrirModal()">Finalizar Pedido</button>
@@ -124,39 +75,50 @@
 
 <div id="modal-dados" class="modal">
     <div class="modal-content">
-        <h3 style="margin-top:0; color:var(--p-green)">Finalizar Pedido</h3>
-        <input type="text" id="f-nome" placeholder="Escreva seu Nome">
-        <div style="display:flex; gap:10px;">
-            <button onclick="fecharModal()" style="flex:1; padding:12px; border-radius:8px; border:1px solid #ccc; background:#fff; cursor:pointer;">Voltar</button>
-            <button onclick="enviarWhats()" style="flex:2; padding:12px; background:var(--p-green); color:white; border:none; font-weight:bold; border-radius:8px; cursor:pointer;">Enviar no WhatsApp</button>
+        <h3 style="margin-top:0; color:var(--p-green)">Dados do Pedido</h3>
+        <div class="form-group"><label>Nome Completo</label><input type="text" id="f-nome" placeholder="Seu nome"></div>
+        <div class="form-group"><label>WhatsApp (DDD + Número)</label><input type="tel" id="f-fone" placeholder="Ex: 11988887777" maxlength="11"></div>
+        <div class="form-group">
+            <label>Como deseja receber?</label>
+            <select id="f-tipo" onchange="toggleEndereco()">
+                <option value="retirada">Retirar na Padaria</option>
+                <option value="entrega">Entrega em Domicílio</option>
+            </select>
         </div>
+        <div id="sessao-endereco" style="display:none">
+            <div class="form-group"><label>Endereço completo</label><input type="text" id="f-endereco" placeholder="Rua, nº, apto, bairro"></div>
+            <p class="taxa-aviso" id="aviso-taxa">⚠️ Taxa de entrega a combinar via WhatsApp.</p>
+        </div>
+        <button class="btn-add" style="width:100%; padding:14px;" onclick="processarPedido()">Enviar Pedido</button>
+        <button onclick="fecharModal()" style="width:100%; margin-top:12px; background:none; border:none; color:#666; cursor:pointer;">Voltar</button>
     </div>
 </div>
 
 <script src="cardapio.js"></script>
 <script>
     let carrinho = [];
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBf2XS6pV3ZcX2rO1tF41TcXmN8IL9N8ndoGsLjJHj2z_UsEjrfTAI9ww9SnfNOTSI/exec"; 
 
     const rd = (db) => {
-        const opsFull = db.opcionais.map(o => ({ n: o[0], p: parseFloat(o[1]) }));
-        const html = db.secoes.map((s, si) => `
-            <button class="collapsible" onclick="this.classList.toggle('active'); var c=this.nextElementSibling; c.style.display=(c.style.display==='block'?'none':'block')">${s.nome.toUpperCase()}</button>
+        const opsFull = db.opcionais.map(o => ({ n: o[0].trim(), p: parseFloat(o[1]) }));
+        document.getElementById('render-cli').innerHTML = db.secoes.map((s, si) => `
+            <button class="collapsible" onclick="toggleColl(this)">${s.nome.toUpperCase()} <span>+</span></button>
             <div class="collapsible-content">
                 ${s.itens.map((i, ii) => {
                     const id = `it-${si}-${ii}`;
-                    const itemOps = (i[3] || []).map(n => opsFull.find(x => x.n === n)).filter(x=>x);
+                    const itemOps = (i[3] || []).map(n => opsFull.find(x => x.n.toLowerCase().includes(n.trim().toLowerCase()))).filter(x => x);
                     return `
                     <div class="card" id="card-${id}">
                         <div class="prod-header">
                             <img src="${i[2]}" class="img-thumb">
                             <div class="prod-info">
-                                <b>${i[0]}</b><br>
-                                <span style="font-size:0.85rem; color:#666">${i[4] || ''}</span><br>
+                                <b>${i[0]}</b>
+                                <span class="desc">${i[4] || ''}</span>
                                 <small>R$ ${parseFloat(i[1]).toFixed(2)}</small>
                             </div>
                         </div>
                         ${itemOps.map(o => `
-                            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:1px solid #eee;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-top:1px solid #f5f5f5;">
                                 <span style="font-size:0.85rem">${o.n} (+${o.p.toFixed(2)})</span>
                                 <div class="qty-box">
                                     <button class="btn-q" onclick="mudar('${id}',${i[1]},-1,false,this)">-</button>
@@ -164,7 +126,7 @@
                                     <button class="btn-q" onclick="mudar('${id}',${i[1]},1,false,this)">+</button>
                                 </div>
                             </div>`).join('')}
-                        <div style="display:flex; justify-content:space-between; margin-top:10px; align-items:center;">
+                        <div style="display:flex; justify-content:space-between; margin-top:12px; align-items:center;">
                             <div class="qty-box">
                                 <button class="btn-q" onclick="mudar('${id}',${i[1]},-1,true,this)">-</button>
                                 <input type="text" value="1" readonly class="qty-val qty-pao">
@@ -175,81 +137,110 @@
                     </div>`;
                 }).join('')}
             </div>`).join('');
-        document.getElementById('render-cli').innerHTML = html;
     };
+
+    function toggleColl(btn) {
+        const content = btn.nextElementSibling;
+        const isOpen = content.style.display === 'block';
+        content.style.display = isOpen ? 'none' : 'block';
+        btn.querySelector('span').innerText = isOpen ? '+' : '-';
+    }
 
     function mudar(id, base, d, isP, btn) {
         let inp = btn.parentNode.querySelector('input');
         let v = parseInt(inp.value) + d;
-        if(isP) { if(v<1) v=1; } else { if(v<0) v=0; }
+        if(isP) v = v < 1 ? 1 : v; else v = v < 0 ? 0 : v;
         inp.value = v;
         const c = document.getElementById('card-'+id);
-        const qP = parseInt(c.querySelector('.qty-pao').value);
-        let sO = 0; c.querySelectorAll('.qty-opc').forEach(o => sO += (parseInt(o.value)*parseFloat(o.dataset.p)));
-        c.querySelector('.local-total').innerText = ((base + sO) * qP).toFixed(2);
+        const qPao = parseInt(c.querySelector('.qty-pao').value);
+        let somaOps = 0;
+        c.querySelectorAll('.qty-opc').forEach(o => somaOps += (parseInt(o.value) * parseFloat(o.dataset.p)));
+        c.querySelector('.local-total').innerText = ((base + somaOps) * qPao).toFixed(2);
     }
 
     function add(id, nome) {
         const c = document.getElementById('card-'+id);
-        const qtd = parseInt(c.querySelector('.qty-pao').value);
         const total = parseFloat(c.querySelector('.local-total').innerText);
-        let selecionados = [];
-        c.querySelectorAll('.qty-opc').forEach(o => {
-            if(parseInt(o.value) > 0) selecionados.push(`${o.value}x ${o.dataset.n}`);
-        });
-        carrinho.push({ id, nome, qtd, total, selecionados, cid: Date.now() });
-        document.getElementById('cesta-itens').classList.add('open');
+        const qtd = parseInt(c.querySelector('.qty-pao').value);
+        let ops = [];
+        c.querySelectorAll('.qty-opc').forEach(o => { if(parseInt(o.value) > 0) ops.push(`${o.value}x ${o.dataset.n}`); });
+        carrinho.push({ nome, total, qtd, ops, cid: Date.now() });
         updateCart();
+        document.getElementById('cesta-itens').classList.add('open');
     }
 
     function updateCart() {
-        document.getElementById('total-geral').innerText = carrinho.reduce((a,b) => a + b.total, 0).toFixed(2);
+        const total = carrinho.reduce((a,b) => a + b.total, 0);
+        document.getElementById('total-geral').innerText = total.toFixed(2);
         document.getElementById('cart-count').innerText = carrinho.length;
         document.getElementById('cesta-itens').innerHTML = carrinho.map(x => `
             <div class="item-cesta">
-                <b>${x.qtd}x ${x.nome}</b>
-                ${x.selecionados.map(s => `<span class="opcional-linha">+ ${s}</span>`).join('')}
-                <div style="display:flex; justify-content:space-between; margin-top:8px;">
-                    <span style="font-weight:bold">R$ ${x.total.toFixed(2)}</span>
-                    <div>
-                        <button onclick="editar('${x.cid}')" style="background:#f0ad4e; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.75rem; cursor:pointer;">Editar</button>
-                        <button onclick="remover('${x.cid}')" style="background:#d9534f; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.75rem; cursor:pointer;">Remover</button>
-                    </div>
-                </div>
+                <div><b>${x.qtd}x ${x.nome}</b><br><small>${x.ops.join(' | ')}</small></div>
+                <div style="text-align:right"><b>R$ ${x.total.toFixed(2)}</b><br><button onclick="remover(${x.cid})" style="color:red; background:none; border:none; cursor:pointer;">Remover</button></div>
             </div>`).join('');
-        const cesta = document.getElementById('cesta-itens');
-        cesta.scrollTop = cesta.scrollHeight;
     }
 
-    function remover(cid) { 
-        carrinho = carrinho.filter(x => x.cid !== cid); 
-        if(carrinho.length === 0) document.getElementById('cesta-itens').classList.remove('open');
-        updateCart(); 
-    }
-
-    function editar(cid) {
-        const item = carrinho.find(x => x.cid === cid);
-        remover(cid);
-        document.getElementById('card-'+item.id).scrollIntoView({behavior: "smooth", block: "center"});
-        document.getElementById('cesta-itens').classList.remove('open');
-    }
-
+    function remover(cid) { carrinho = carrinho.filter(x => x.cid !== cid); updateCart(); }
     function toggleCesta() { if(carrinho.length > 0) document.getElementById('cesta-itens').classList.toggle('open'); }
     function abrirModal() { if(carrinho.length === 0) return alert("Cesta vazia!"); document.getElementById('modal-dados').style.display = 'flex'; }
     function fecharModal() { document.getElementById('modal-dados').style.display = 'none'; }
+    function toggleEndereco() {
+        const tipo = document.getElementById('f-tipo').value;
+        document.getElementById('sessao-endereco').style.display = tipo === 'entrega' ? 'block' : 'none';
+        document.getElementById('aviso-taxa').style.display = tipo === 'entrega' ? 'block' : 'none';
+    }
 
-    function enviarWhats() {
-        const nomeCli = document.getElementById('f-nome').value;
-        if(!nomeCli) return alert("Informe seu nome.");
-        const agora = new Date();
-        let msg = `*PEDIDO PÃO DO CISO*%0A*Data:* ${agora.toLocaleDateString()} às ${agora.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}%0A*Cliente:* ${nomeCli}%0A%0A`;
-        carrinho.forEach(i => {
-            msg += `✅ *${i.qtd}x ${i.nome}*%0A`;
-            i.selecionados.forEach(s => msg += `  └ ${s}%0A`);
-            msg += `Subtotal: R$ ${i.total.toFixed(2)}%0A---%0A`;
+    async function processarPedido() {
+        const nome = document.getElementById('f-nome').value;
+        const fone = document.getElementById('f-fone').value.replace(/\D/g, '');
+        const tipo = document.getElementById('f-tipo').value;
+        const endereco = document.getElementById('f-endereco').value;
+
+        if(!nome || nome.length < 3) return alert("Informe seu nome completo.");
+        if(fone.length < 10 || fone.length > 11) return alert("Telefone inválido! Use DDD + Número (10 ou 11 dígitos).");
+        if(tipo === 'entrega' && !endereco) return alert("Por favor, informe o endereço de entrega.");
+
+        // FORMATAÇÃO LIMPA PARA WHATSAPP E PLANILHA
+        let resumoItensPlanilha = "";
+        let msgWhats = `*PEDIDO PÃO DO CISO*%0A*Cliente:* ${nome}%0A*WhatsApp:* ${fone}%0A*Opção:* ${tipo.toUpperCase()}%0A`;
+        
+        if(tipo === 'entrega') msgWhats += `*Endereço:* ${endereco}%0A_Taxa a combinar_%0A`;
+        msgWhats += `%0A*ITENS:*%0A`;
+
+        carrinho.forEach((i, idx) => {
+            let itemTexto = `${i.qtd}x ${i.nome}`;
+            let detalhesOps = i.ops.length > 0 ? ` [${i.ops.join(' / ')}]` : "";
+            
+            // Para a planilha (uma linha por produto com seus opcionais entre colchetes)
+            resumoItensPlanilha += itemTexto + detalhesOps + (idx < carrinho.length -1 ? " | " : "");
+
+            // Para o WhatsApp (bonito e legível)
+            msgWhats += `*${idx + 1}. ${itemTexto}*%0A`;
+            i.ops.forEach(op => msgWhats += `   └ _${op}_%0A`);
+            msgWhats += `   Subtotal: R$ ${i.total.toFixed(2)}%0A%0A`;
         });
-        msg += `%0A*TOTAL: R$ ${document.getElementById('total-geral').innerText}*`;
-        window.open(`https://wa.me/5511982391781?text=${msg}`);
+
+        const totalFinal = document.getElementById('total-geral').innerText;
+        msgWhats += `*TOTAL GERAL: R$ ${totalFinal}*`;
+
+        // Envio para Planilha
+        const pedidoData = { 
+            nome, 
+            fone, 
+            tipo: tipo.toUpperCase(), 
+            endereco: tipo === 'entrega' ? endereco : 'RETIRADA NA LOJA', 
+            total: totalFinal, 
+            itens: resumoItensPlanilha 
+        };
+
+        if(SCRIPT_URL !== "SUA_URL_DO_GOOGLE_SCRIPT_AQUI") {
+            try {
+                fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(pedidoData) });
+            } catch(e) { console.error("Erro planilha:", e); }
+        }
+
+        window.open(`https://wa.me/5511982391781?text=${msgWhats}`);
+        fecharModal();
     }
 
     window.onload = () => rd(dadosIniciais);
