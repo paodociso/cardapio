@@ -1,3 +1,4 @@
+<!--Identificação Interna: cardapio.v2;0-->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,267 +8,201 @@
     <style>
         :root { --p-green: #2d3a27; --a-brown: #7d4f39; --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; }
         * { box-sizing: border-box; } 
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; padding-bottom: 180px; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; padding-bottom: 200px; overflow-x: hidden; }
         
         .container { max-width: 600px; margin: auto; padding: 15px; width: 100%; }
 
         nav { background: var(--nav); display: flex; justify-content: center; gap: 8px; padding: 12px; position: sticky; top: 0; z-index: 100; width: 100%; }
-        nav button { background: rgba(255,255,255,0.4); border: 1px solid var(--a-brown); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85rem; white-space: nowrap; }
+        nav button { background: rgba(255,255,255,0.4); border: 1px solid var(--a-brown); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
         nav button.active { background: var(--a-brown); color: white; }
 
-        header { background: var(--p-green); color: #fdf5e6; padding: 20px; text-align: center; border-bottom: 4px solid var(--a-brown); width: 100%; }
+        header { background: var(--p-green); color: #fdf5e6; padding: 20px; text-align: center; border-bottom: 4px solid var(--a-brown); }
 
-        .card { background: var(--w); border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #eaddca; box-shadow: 0 2px 4px rgba(0,0,0,0.05); width: 100%; }
+        .card { background: var(--w); border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #eaddca; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .prod-header { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-        .img-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; flex-shrink: 0; }
+        .img-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
         
-        .opc-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-top: 1px solid #f0f0f0; gap: 10px; }
+        .opc-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid #f0f0f0; }
         
-        /* CONTADORES COM NÚMEROS CENTRALIZADOS */
+        /* CONTADORES CENTRALIZADOS */
         .qty-box { 
             display: flex; 
-            align-items: stretch; 
+            align-items: center; 
+            justify-content: center; /* Centraliza horizontalmente */
             background: #fff; 
             border-radius: 8px; 
             border: 2px solid var(--p-green); 
             height: 40px; 
             width: 120px; 
             overflow: hidden; 
-            flex-shrink: 0; 
         }
         .btn-q { 
-            background: #fff; 
-            color: var(--p-green); 
-            border: none; 
-            width: 40px; 
-            font-weight: bold; 
-            font-size: 1.4rem; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            line-height: 1;
-            -webkit-tap-highlight-color: transparent;
+            background: #fff; color: var(--p-green); border: none; width: 40px; height: 100%;
+            font-weight: bold; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
         .btn-q:first-child { border-right: 1px solid var(--p-green); }
         .btn-q:last-child { border-left: 1px solid var(--p-green); }
-        .btn-q:active { background: #f0f0f0; }
 
         .qty-val { 
-            width: 40px; 
-            text-align: center; 
-            font-weight: 900; 
-            border: none; 
-            font-size: 1.1rem; 
-            color: #000; 
-            background: #fff; 
-            margin: 0; 
-            padding: 0; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            /* Remove setas de numero no Chrome/Safari/Firefox */
-            appearance: textfield;
-            -moz-appearance: textfield;
-        }
-        .qty-val::-webkit-inner-spin-button, .qty-val::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
+            width: 40px; height: 100%; text-align: center; font-weight: 900; border: none; 
+            font-size: 1.1rem; color: #000; background: #fff; display: flex; align-items: center; justify-content: center;
+            pointer-events: none; appearance: none; -moz-appearance: textfield; margin: 0; padding: 0;
         }
 
-        .input-group { background: var(--w); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #d7ccc8; width: 100%; }
-        input, select { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+        .input-group { background: var(--w); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #d7ccc8; }
+        input { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; }
         
-        .opc-check-label { display: flex; align-items: center; gap: 10px; padding: 8px; cursor: pointer; border-bottom: 1px solid #f0f0f0; width: 100%; }
-        .opc-check-label input { width: 20px; height: 20px; margin: 0; flex-shrink: 0; }
-
-        .footer-cart { position:fixed; bottom:0; width:100%; background:white; padding:15px; border-top: 4px solid var(--p-green); z-index: 100; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
-        .btn { background: var(--a-brown); color: var(--w); border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; font-size: 1rem; }
+        .footer-cart { position:fixed; bottom:0; width:100%; background:white; padding:15px; border-top: 4px solid var(--p-green); z-index: 100; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); }
+        .btn { background: var(--a-brown); color: var(--w); border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
         
-        #resumo-cesta { background: #fffde7; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px dashed var(--a-brown); max-height: 150px; overflow-y: auto; font-size: 0.9rem; display: none; }
+        #cesta { background: #fffde7; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px dashed var(--a-brown); max-height: 120px; overflow-y: auto; display: none; font-size: 0.9rem; }
         .view { display: none; } .active { display: block; }
-        .adm-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #fafafa; border-bottom: 1px solid #eee; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
 <nav>
     <button id="nav-cli" class="active" onclick="vw('cli')">🍞 Cardápio</button>
-    <button id="nav-adm" onclick="vw('adm')">🔐 ADM</button>
-    <button id="nav-hist" onclick="vw('hist')">📜 Pedidos</button>
+    <button id="nav-adm" onclick="vw('adm')">🔐 Info</button>
 </nav>
 
 <div id="v-cli" class="view active">
     <header><h1>Pão do Ciso</h1></header>
     <div class="container">
         <div class="input-group">
-            <input type="text" id="cli-n" placeholder="Nome Completo">
+            <input type="text" id="cli-n" placeholder="Seu Nome">
             <input type="tel" id="cli-t" placeholder="WhatsApp (11 dígitos)" maxlength="11">
         </div>
         <div id="render-cli"></div>
     </div>
     
     <div class="footer-cart">
-        <div id="resumo-cesta"></div>
+        <div id="cesta"></div>
         <div style="display:flex; justify-content:space-between; align-items:center; gap: 10px;">
             <div style="flex-grow: 1;">
-                <small onclick="toggleCesta()" style="text-decoration:underline; cursor:pointer; color:var(--a-brown); font-weight:bold">Ver Cesta</small><br>
-                <b>Total: <span style="color:var(--p-green); font-size:1.2rem">R$ <span id="total-carrinho">0.00</span></span></b>
+                <small onclick="tglCesta()" style="text-decoration:underline; cursor:pointer">Ver Cesta</small><br>
+                <b>Total: R$ <span id="total-carrinho" style="color:var(--p-green); font-size:1.2rem">0.00</span></b>
             </div>
-            <button class="btn" style="width:auto; padding-inline:20px;" onclick="pedir()">Enviar Pedido</button>
+            <button class="btn" style="width:auto; padding-inline:20px;" onclick="enviarPedido()">Enviar Pedido</button>
         </div>
     </div>
 </div>
 
 <div id="v-adm" class="view">
     <div class="container">
-        <div id="login-adm" class="input-group">
-            <h3>Acesso Restrito</h3>
-            <input type="text" id="u-in" placeholder="Usuário">
-            <input type="password" id="p-in" placeholder="Senha">
-            <button class="btn" onclick="auth()">Entrar</button>
-        </div>
-        <div id="painel" style="display:none">
-            <button class="btn" style="background:#666; margin-bottom:20px;" onclick="logoff()">Sair</button>
-            <div class="input-group">
-                <h4>Seções</h4>
-                <input type="text" id="sec-n" placeholder="Ex: Pães Artesanais">
-                <input type="hidden" id="sec-id">
-                <button class="btn" onclick="saveSec()">Salvar Seção</button>
-                <div id="adm-list-sec" style="margin-top:10px"></div>
-            </div>
-            <div class="input-group">
-                <h4>Opcionais</h4>
-                <input type="text" id="opc-n" placeholder="Ex: Manteiga">
-                <input type="number" id="opc-p" placeholder="Preço Adicional">
-                <input type="hidden" id="opc-id">
-                <button class="btn" onclick="saveOpc()">Salvar Opcional</button>
-                <div id="adm-list-opc" style="margin-top:10px"></div>
-            </div>
-            <div class="input-group">
-                <h4>Produtos</h4>
-                <select id="sel-sec"></select>
-                <input type="text" id="it-n" placeholder="Nome do Produto">
-                <input type="number" id="it-p" placeholder="Preço Base">
-                <input type="text" id="it-img" placeholder="URL da Imagem">
-                <p style="font-size:0.8rem; margin:10px 0 5px;">Selecione os Opcionais:</p>
-                <div id="adm-opc-checks" style="max-height:120px; overflow-y:auto; border:1px solid #ddd; padding:5px; margin-bottom:10px;"></div>
-                <input type="hidden" id="it-id">
-                <button class="btn" onclick="saveItem()">Salvar Produto</button>
-                <div id="adm-list-itens" style="margin-top:10px"></div>
-            </div>
+        <div class="input-group">
+            <h4>🔐 Informações do Cardápio</h4>
+            <p>O cardápio está sendo lido automaticamente do arquivo <b>cardapio.js</b>.</p>
+            <div id="status-adm">Aguardando dados...</div>
+            <hr>
+            <small>Versão do Sistema: cardapio.v2;0</small>
         </div>
     </div>
 </div>
 
-<div id="v-hist" class="view"><div class="container" id="render-hist"></div></div>
+<script src="cardapio.js"></script>
 
 <script>
+    /* Identificação Interna: cardapio.v2;0 */
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk9SYaDVnCxA-r4vncPNtDcYXHRKCccaHj-595XsLQjIkhtIz96XU8x4m_nQJfWRyG/exec"; 
-    const CRED = { u: 'admin', p: 'adminpwd' };
-    let db = JSON.parse(localStorage.getItem('ciso_final')) || { secoes: [], opcionais: [], pedidos: [] };
+    let db = { secoes: [], opcionais: [] };
     let car = [];
 
     const $ = id => document.getElementById(id);
-    const sv = () => { localStorage.setItem('ciso_final', JSON.stringify(db)); rd(); };
-    const vw = v => { document.querySelectorAll('.view, nav button').forEach(e=>e.classList.remove('active')); $('v-'+v).classList.add('active'); $('nav-'+v).classList.add('active'); rd(); window.scrollTo(0,0); };
-    
-    const auth = () => { if($('u-in').value===CRED.u && $('p-in').value===CRED.p) { $('login-adm').style.display='none'; $('painel').style.display='block'; rd(); } else alert("Erro!"); };
-    const logoff = () => { $('u-in').value=''; $('p-in').value=''; $('login-adm').style.display='block'; $('painel').style.display='none'; };
+    const vw = v => { document.querySelectorAll('.view, nav button').forEach(e=>e.classList.remove('active')); $('v-'+v).classList.add('active'); $('nav-'+v).classList.add('active'); };
+    const tglCesta = () => { const c=$('cesta'); c.style.display = c.style.display==='block' ? 'none' : 'block'; };
 
-    const saveSec = () => { const n=$('sec-n').value, id=$('sec-id').value; if(id) db.secoes.find(s=>s.id==id).nome=n; else db.secoes.push({id:Date.now(), nome:n, itens:[]}); $('sec-n').value=''; $('sec-id').value=''; sv(); };
-    const saveOpc = () => { const n=$('opc-n').value, p=parseFloat($('opc-p').value)||0, id=$('opc-id').value; if(id) { let o=db.opcionais.find(x=>x.id==id); o.nome=n; o.preco=p; } else db.opcionais.push({id:Date.now(), nome:n, preco:p}); $('opc-n').value=''; $('opc-p').value=''; $('opc-id').value=''; sv(); };
-    
-    const saveItem = () => {
-        const sid=$('sel-sec').value, n=$('it-n').value, p=parseFloat($('it-p').value), img=$('it-img').value, id=$('it-id').value;
-        const oIds=[...document.querySelectorAll('.adm-ck:checked')].map(c=>parseInt(c.value));
-        if(!sid || !n) return alert("Erro nos campos!");
-        if(id) { db.secoes.forEach(s=>{ const i=s.itens.find(x=>x.id==id); if(i) { Object.assign(i, {nome:n, preco:p, img, opcionaisIds:oIds}); if(s.id!=sid){ s.itens=s.itens.filter(x=>x.id!=id); db.secoes.find(ns=>ns.id==sid).itens.push(i); } } }); }
-        else db.secoes.find(s=>s.id==sid).itens.push({id:Date.now(), nome:n, preco:p, img, opcionaisIds:oIds});
-        $('it-n').value=''; $('it-p').value=''; $('it-img').value=''; $('it-id').value=''; sv();
+    const processarIniciais = (raw) => {
+        try {
+            const novosOpc = raw.opcionais.map((o, i) => ({ id: i+1, nome: o[0], preco: parseFloat(o[1]) }));
+            const novasSec = raw.secoes.map((s, si) => ({
+                nome: s.nome,
+                itens: s.itens.map((it, ii) => ({
+                    id: Date.now() + ii + si,
+                    nome: it[0],
+                    preco: parseFloat(it[1]),
+                    img: it[2],
+                    opcionaisIds: (it[3] || []).map(n => {
+                        const f = novosOpc.find(x => x.nome === n);
+                        return f ? f.id : null;
+                    }).filter(x => x)
+                }))
+            }));
+            db.opcionais = novosOpc;
+            db.secoes = novasSec;
+            rd();
+            $('status-adm').innerHTML = "✅ Dados carregados com sucesso!";
+        } catch(e) { $('status-adm').innerHTML = "❌ Erro no cardapio.js"; }
     };
 
-    const edit = (type, id) => {
-        if(type==='sec'){ const s=db.secoes.find(x=>x.id==id); $('sec-n').value=s.nome; $('sec-id').value=s.id; }
-        if(type==='opc'){ const o=db.opcionais.find(x=>x.id==id); $('opc-n').value=o.nome; $('opc-p').value=o.preco; $('opc-id').value=o.id; }
-        if(type==='it'){ let it; db.secoes.forEach(s=>{ const f=s.itens.find(x=>x.id==id); if(f){ it=f; $('sel-sec').value=s.id; } }); $('it-n').value=it.nome; $('it-p').value=it.preco; $('it-img').value=it.img; $('it-id').value=it.id; document.querySelectorAll('.adm-ck').forEach(c=>c.checked=it.opcionaisIds.includes(parseInt(c.value))); }
-        window.scrollTo(0,0);
-    };
-
-    const upPrice = (itId, baseP) => {
-        const card = $(`card-${itId}`);
-        const qPao = parseInt(card.querySelector('.qty-pao').value);
-        let somaOpc = 0; card.querySelectorAll('.qty-opc').forEach(i => somaOpc += (parseFloat(i.dataset.p) * parseInt(i.value)));
-        card.querySelector('.btn-total').innerText = ((baseP + somaOpc) * qPao).toFixed(2);
-    };
-
-    const toggleCesta = () => { const el=$('resumo-cesta'); el.style.display = (el.style.display==='block') ? 'none' : 'block'; };
+    window.onload = () => { if(typeof dadosIniciais !== 'undefined') processarIniciais(dadosIniciais); };
 
     const rd = () => {
-        $('adm-list-sec').innerHTML = db.secoes.map(s => `<div class="adm-item">${s.nome} <button onclick="edit('sec',${s.id})">✎</button></div>`).join('');
-        $('adm-list-opc').innerHTML = db.opcionais.map(o => `<div class="adm-item">${o.nome} <button onclick="edit('opc',${o.id})">✎</button></div>`).join('');
-        $('sel-sec').innerHTML = db.secoes.map(s => `<option value="${s.id}">${s.nome}</option>`).join('');
-        $('adm-opc-checks').innerHTML = db.opcionais.map(o => `<label class="opc-check-label"><input type="checkbox" class="adm-ck" value="${o.id}"> ${o.nome}</label>`).join('');
-        $('adm-list-itens').innerHTML = db.secoes.map(s => s.itens.map(i => `<div class="adm-item">${i.nome} <button onclick="edit('it',${i.id})">✎</button></div>`).join('')).join('');
-
-        $('render-cli').innerHTML = db.secoes.map(s => s.itens.length ? `<div style="margin:25px 0 10px; font-weight:bold; color:var(--a-brown); border-bottom: 2px solid var(--nav)">${s.nome.toUpperCase()}</div>` + s.itens.map(i => {
-            const opcs = i.opcionaisIds.map(oid => db.opcionais.find(x=>x.id==oid)).filter(o=>o);
-            return `<div class="card" id="card-${i.id}">
-                <div class="prod-header">
-                    <img src="${i.img || 'https://via.placeholder.com/85'}" class="img-thumb">
-                    <div><b>${i.nome}</b><br><span style="color:var(--p-green); font-weight:bold">R$ ${i.preco.toFixed(2)}</span></div>
-                </div>
-                ${opcs.map(o => `<div class="opc-row"><span>${o.nome} (+R$ ${o.preco.toFixed(2)})</span><div class="qty-box"><button class="btn-q" onclick="const i=this.nextElementSibling; i.value=Math.max(0,parseInt(i.value)-1); upPrice(${i.id},${i.preco})">-</button><input type="number" value="0" readonly class="qty-val qty-opc" data-p="${o.preco}" data-n="${o.nome}"><button class="btn-q" onclick="const i=this.previousElementSibling; i.value=parseInt(i.value)+1; upPrice(${i.id},${i.preco})">+</button></div></div>`).join('')}
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:15px; border-top:2px solid #f0f0f0">
-                    <div class="qty-box"><button class="btn-q" onclick="const i=this.nextElementSibling; i.value=Math.max(1,parseInt(i.value)-1); upPrice(${i.id},${i.preco})">-</button><input type="number" value="1" readonly class="qty-val qty-pao"><button class="btn-q" onclick="const i=this.previousElementSibling; i.value=parseInt(i.value)+1; upPrice(${i.id},${i.preco})">+</button></div>
-                    <button class="btn" style="width:auto; height:45px; padding-inline:15px; background:var(--p-green)" onclick="addCar(${i.id})">ADICIONAR R$ <span class="btn-total">${i.preco.toFixed(2)}</span></button>
-                </div>
-            </div>`;
-        }).join('') : '').join('');
-
-        $('render-hist').innerHTML = "<h3>Histórico de Vendas</h3>" + db.pedidos.slice().reverse().map(p => `<div class="card"><b>${p.data} - ${p.cliente}</b><br>${p.itens_texto}<br><b>Total: R$ ${p.total}</b></div>`).join('');
+        $('render-cli').innerHTML = db.secoes.map(s => `
+            <div style="margin:20px 0 10px; font-weight:bold; color:var(--a-brown); border-bottom: 2px solid var(--nav)">${s.nome.toUpperCase()}</div>
+            ${s.itens.map(i => {
+                const ops = i.opcionaisIds.map(oid => db.opcionais.find(x => x.id == oid)).filter(x=>x);
+                return `
+                <div class="card" id="card-${i.id}">
+                    <div class="prod-header">
+                        <img src="${i.img || 'https://via.placeholder.com/80'}" class="img-thumb">
+                        <div><b>${i.nome}</b><br>R$ ${i.preco.toFixed(2)}</div>
+                    </div>
+                    ${ops.map(o => `
+                        <div class="opc-row">
+                            <span>${o.nome} (+R$ ${o.preco.toFixed(2)})</span>
+                            <div class="qty-box">
+                                <button class="btn-q" onclick="const i=this.nextElementSibling; i.value=Math.max(0,parseInt(i.value)-1); upLocal(${i.id},${i.preco})">-</button>
+                                <input type="number" value="0" readonly class="qty-val qty-opc" data-p="${o.preco}" data-n="${o.nome}">
+                                <button class="btn-q" onclick="const i=this.previousElementSibling; i.value=parseInt(i.value)+1; upLocal(${i.id},${i.preco})">+</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1px solid #eee">
+                        <div class="qty-box">
+                            <button class="btn-q" onclick="const i=this.nextElementSibling; i.value=Math.max(1,parseInt(i.value)-1); upLocal(${i.id},${i.preco})">-</button>
+                            <input type="number" value="1" readonly class="qty-val qty-pao">
+                            <button class="btn-q" onclick="const i=this.previousElementSibling; i.value=parseInt(i.value)+1; upLocal(${i.id},${i.preco})">+</button>
+                        </div>
+                        <button class="btn" style="width:auto; padding:0 15px; background:var(--p-green)" onclick="add(${i.id}, '${i.nome}')">ADD R$ <span class="local-total">${i.preco.toFixed(2)}</span></button>
+                    </div>
+                </div>`;
+            }).join('')}
+        `).join('');
     };
 
-    const addCar = (id) => {
-        let it; db.secoes.forEach(s=> { const f=s.itens.find(x=>x.id==id); if(f) it=f; });
-        const card = $(`card-${id}`), qPao = parseInt(card.querySelector('.qty-pao').value);
-        let extras = []; card.querySelectorAll('.qty-opc').forEach(i => { if(parseInt(i.value) > 0) extras.push(`${i.value}x ${i.dataset.n}`); });
-        car.push({ n: it.nome, q: qPao, t: parseFloat(card.querySelector('.btn-total').innerText), e: extras });
-        $('total-carrinho').innerText = car.reduce((a,b)=>a+b.t, 0).toFixed(2);
-        $('resumo-cesta').innerHTML = car.map(c => `<div style="border-bottom:1px solid #eee; padding:5px 0">🛒 ${c.q}x ${c.n} <span style="float:right">R$ ${c.t.toFixed(2)}</span></div>`).join('');
-        $('resumo-cesta').style.display = 'block';
+    const upLocal = (id, base) => {
+        const c = $(`card-${id}`);
+        const q = parseInt(c.querySelector('.qty-pao').value);
+        let ex = 0; c.querySelectorAll('.qty-opc').forEach(o => ex += (parseInt(o.value) * parseFloat(o.dataset.p)));
+        c.querySelector('.local-total').innerText = ((base + ex) * q).toFixed(2);
     };
 
-    const pedir = async () => {
-        const n=$('cli-n').value, t=$('cli-t').value;
-        if(!n || t.length !== 11 || !car.length) return alert("Preencha Nome, WhatsApp e adicione itens!");
-        
-        const itensTexto = car.map(c => `${c.q}x ${c.n} ${c.e.length ? '('+c.e.join(', ')+')' : ''}`).join(' | ');
-        const pedido = { 
-            cliente: n, 
-            tel: t, 
-            data: new Date().toLocaleString('pt-BR'), 
-            itens_texto: itensTexto, 
-            total: $('total-carrinho').innerText 
-        };
-        
-        db.pedidos.push(pedido); sv();
-
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pedido)
-        });
-
-        let txt = `*PEDIDO PÃO DO CISO*%0A*Cliente:* ${n}%0A*Tel:* ${t}%0A%0A${car.map(c=>`*${c.q}x ${c.n}*${c.e.length ? `%0AExtras: ${c.e.join(', ')}` : ''}%0AValor: R$ ${c.t.toFixed(2)}`).join('%0A%0A')}%0A%0A*TOTAL: R$ ${pedido.total}*`;
-        window.open(`https://wa.me/5511982391781?text=${txt}`);
-        
-        car = []; rd(); $('resumo-cesta').style.display='none'; $('total-carrinho').innerText="0.00";
+    const add = (id, nome) => {
+        const c = $(`card-${id}`);
+        const q = parseInt(c.querySelector('.qty-pao').value);
+        const t = parseFloat(c.querySelector('.local-total').innerText);
+        let ex = []; c.querySelectorAll('.qty-opc').forEach(o => { if(parseInt(o.value)>0) ex.push(`${o.value}x ${o.dataset.n}`); });
+        car.push({ n: nome, q, t, ex });
+        const total = car.reduce((a,b)=>a+b.t, 0).toFixed(2);
+        $('total-carrinho').innerText = total;
+        $('cesta').innerHTML = car.map(x => `<div>🛒 ${x.q}x ${x.n} <span style="float:right">R$ ${x.t.toFixed(2)}</span></div>`).join('');
+        $('cesta').style.display = 'block';
     };
 
-    rd();
+    const enviarPedido = async () => {
+        const n = $('cli-n').value, t = $('cli-t').value;
+        if(!n || t.length < 11 || !car.length) return alert("Preencha Nome, WhatsApp e adicione itens!");
+        const txtProd = car.map(c => `${c.q}x ${c.n} ${c.ex.length ? '('+c.ex.join(', ')+')' : ''}`).join(' | ');
+        const total = $('total-carrinho').innerText;
+        const p = { cliente: n, tel: t, data: new Date().toLocaleString('pt-BR'), itens_texto: txtProd, total: total };
+        
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p) });
+        
+        let wpp = `*NOVO PEDIDO - PÃO DO CISO*%0A*Cliente:* ${n}%0A%0A${car.map(c => `*${c.q}x ${c.n}*%0A${c.ex.join(', ')}%0AValor: R$ ${c.t.toFixed(2)}`).join('%0A%0A')}%0A%0A*TOTAL: R$ ${total}*`;
+        window.open(`https://wa.me/5511982391781?text=${wpp}`);
+        car = []; rd(); $('total-carrinho').innerText = "0.00"; $('cesta').style.display='none';
+    };
 </script>
 </body>
 </html>
