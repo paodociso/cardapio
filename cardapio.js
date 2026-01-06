@@ -1,17 +1,18 @@
 // cardapio.js
 const dadosIniciais = {
+
   // =========================
-  // OPCIONAIS – PORÇÕES
+  // OPCIONAIS – PORÇÕES (100g)
   // =========================
   opcionaisGerais: [
-    ["Alichella (100g)", "20.00"],
-    ["Sardella (100g)", "20.00"],
-    ["Melanzane Sott'olio (100g)", "20.00"],
-    ["Manteiga temperada (100g)", "17.00"],
-    ["Confit de alho (100g)", "20.00"],
-    ["Confit de alho e tomates cereja (100g)", "20.00"],
-    ["Picles de cebola (100g)", "15.00"],
-    ["Pote de vidro", "5.00"]
+    ["Potinho de Alichella (100g)", "20.00"],
+    ["Potinho de Sardella (100g)", "20.00"],
+    ["Potinho de Melanzane Sott'olio (100g)", "20.00"],
+    ["Potinho de Manteiga temperada (100g)", "17.00"],
+    ["Potinho de Confit de alho (100g)", "20.00"],
+    ["Potinho de Confit de alho e tomates cereja (100g)", "20.00"],
+    ["Potinho de Picles de cebola (100g)", "15.00"],
+    ["Potinho de vidro", "5.00"]
   ],
 
   // =========================
@@ -59,7 +60,7 @@ const dadosIniciais = {
   // =========================
   // SEÇÕES
   // =========================
-    secoes: [
+  secoes: [
     {
       nome: "Antipasti",
       itens: [
@@ -67,49 +68,49 @@ const dadosIniciais = {
           "Sardella (porção de 100g)",
           "20.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjQr6FhXNpHgq1UNH0_J2bSno3jBTP98sUzlCXzFAAHXXdPFD2ml002SzVE-fvX8pnZ7TXAPZ45fcbMvN6oypcIspRmQzvSvyH9On2BUgnWzrEt77mQWdDo5XSk0hsrg5OrfCEGZWB1a-7htRxs10OhXCM504N4-b1mSmK8FX5z9O4d84Y3pri-cJtqUOE/s320/IMG_20201202_174720.jpg",
-          ["Pote de vidro"],
+          ["Potinho de vidro"],
           "Pasta condimentada e cremosa, elaborada com aliche (sardinha pequena), pimenta e azeite de oliva. Traduz a intensidade de sabores do Mediterrâneo, perfeita para canapés."
         ],
         [
           "Alichella (porção de 100g)",
           "20.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjB6CH6FBqAhBXaVZiqLdjRqhlXGeDsrhkxKNgpRaeZw6lVWyGJ92hhVzNU4GxLFqq_B651AwJVwi1axSj58lPa6bkByQtR8RuSBk2EkdFLmPhcb-y3V4yyt-WOXjCBvVsaRbS2IsIW_b4YglTwG9YkHncLqWdrEo7SiFdLT3f7KIq4Mfi3ayKaN_vJSp4/s320/IMG_20201202_174740.jpg",
-          ["Pote de vidro"],
+          ["Potinho de vidro"],
           "Conserva de aliche inteiras, curadas e acondicionadas em azeite com salsa fresca. Oferece um sabor marinho puro e distinto, ideal para antepastos."
         ],
         [
           "Melanzane Sottolio (porção de 100g)",
           "20.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjygUAEJw4jjQR0fWMII5hc7QX1Ppu22I32LXjNTfcxf7B43coy-6gOXmdPiwCrL_NyWFuPM3HYzifiS_CuiqAD6efRxq9eYdbrr5I8C7x_jyn6I3w-OBplN5w184KYh5ZDnSF6iR6Bl6HQP5kRz8iycmQtRIfbeSR-5WvkfyQ7CFOuQKVLwwNPs5H_nj4/s4032/IMG_20201202_174658.jpg",
-          ["Pote de vidro"],
+          ["Potinho de vidro"],
           "Berinjelas curtidas no vinagre e preservada no azeite com ervas e alho. Textura suave e paladar marcante, um acompanhamento versátil e autêntico."
         ],
         [
           "Manteiga temperada (porção de 100g)",
           "17.00",
           "https://i0.wp.com/essareceitafunciona.com.br/wp-content/uploads/2022/08/Manteiga-temperada-Essa-Receita-Funciona-1.jpg?resize=683%2C1024&ssl=1",
-          ["Pote de vidro"],
+          ["Potinho de vidro"],
           "Manteiga batida com ervas finas e alho assado. Condimento aromático e nobre que derrete sublime sobre pães e grelhados."
         ],
         [
           "Picles de cebola (porção de 100g)",
           "17.00",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj4_qCb1HDgQQJ_28yAzCCZ1DkiP9OQNHrQA&s",
-          ["Pote de vidro"],
+          ["Potinho de vidro"],
           "Cebolas em conserva agridoce, que conservam uma agradável crocância. Frescor e acidez balanceados, o contraponto perfeito para pães e antepastos."
         ],
         [
           "Confit de alho (porção de 100g)",
           "20.00",
           "https://francinha.com/novo/wp-content/uploads/2020/12/alho-confit-10.jpg",
-          ["Pote de vidro"],
+          ["Potinho de vidro"],
           "Dentes de alho cozidos lentamente em azeite até ficarem cremosos e adocicados. Versátil para enriquecer molhos, patês ou espalhar sobre torradas."
         ],
         [
           "Confit de alho e tomates cereja (porção de 100g)",
           "20.00",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg-1J_u_Kx2CIKSxLN1kASv_KQoogDYMioEA&s",
-          ["Pote de vidro"],
+          ["Potinho de vidro"],
           "Mistura de alho confitado e tomates cereja assados. Harmoniza doçura e acidez suave, excelente para acompanhar queijos e bruschettas."
         ]
       ]
@@ -122,14 +123,14 @@ const dadosIniciais = {
           "35.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg",
           [
-            "Sardella",
-            "Alichella",
-            "Melanzane Sott'olio",
-            "Manteiga temperada",
-            "Picles de cebola",
-            "Confit de alho",
-            "Confit de alho e tomates cereja",
-            "Pote de vidro"
+            "Potinho de Sardella (100g)",
+            "Potinho de Alichella (100g)",
+            "Potinho de Melanzane Sott'olio (100g)",
+            "Potinho de Manteiga temperada (100g)",
+            "Potinho de Picles de cebola (100g)",
+            "Potinho de Confit de alho (100g)",
+            "Potinho de Confit de alho e tomates cereja (100g)",
+            "Potinho de vidro"
           ],
           "Pão artesanal de fermentação lenta, feito com farinha de trigo italiana refinada. Caracteriza-se pela casca fina e dourada, miolo alveolado e úmido, e um sabor autêntico e equilibrado."
         ],
@@ -138,14 +139,14 @@ const dadosIniciais = {
           "35.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBRTRiWaC_PMwgQXyjJfzsIWy_J3hkIHunKRcZYcLdN-CYG35K1L1EswxZ_Ath9EYFbaxbD8H9H7oDPCbQKtwhD5nVusLs7K0kOJHFzz7vmBr008_0VKT-lJ7fvn3WkneNE5oX6s3AoQC17B8urlCJlSIMH-payx2WCgUdjEx_ZuKxfesnfpHxiOTWBo0/s914/1000055109.jpg",
           [
-            "Sardella",
-            "Alichella",
-            "Melanzane Sott'olio",
-            "Manteiga temperada",
-            "Picles de cebola",
-            "Confit de alho",
-            "Confit de alho e tomates cereja",
-            "Pote de vidro"
+            "Potinho de Sardella (100g)",
+            "Potinho de Alichella (100g)",
+            "Potinho de Melanzane Sott'olio (100g)",
+            "Potinho de Manteiga temperada (100g)",
+            "Potinho de Picles de cebola (100g)",
+            "Potinho de Confit de alho (100g)",
+            "Potinho de Confit de alho e tomates cereja (100g)",
+            "Potinho de vidro"
           ],
           "Pão rústico de longa fermentação, com blend de trigo italiano refinado, trigo integral orgânico e centeio integral orgânico. Casca crocante e miolo úmido e saboroso."
         ]
@@ -153,6 +154,7 @@ const dadosIniciais = {
     },
     {
       nome: "Panini",
+      tipoOpcional: "panini",
       itens: [
         [
           "Monte seu Panino",
@@ -186,22 +188,15 @@ const dadosIniciais = {
             "Sardella",
             "Alichella",
             "Melanzane sott'olio",
+            "Manteiga",
+            "Manteiga temperada com alho e parmesão",
             "Confit de alho",
             "Confit de alho e tomates cereja",
-            "Manteiga",
-            "Manteiga temperada com alho e parmesão"
+            "Picles de cebola"
           ],
-          "Base de pão artesanal com escolha livre de adicionais (exceto porções de 100g e potes)."
+          "Base de pão artesanal."
         ]
       ]
     }
   ]
 };
-
-// =========================
-// COMPATIBILIDADE COM index.html
-// =========================
-dadosIniciais.opcionais = [
-  ...dadosIniciais.opcionaisPanini,
-  ...dadosIniciais.opcionaisGerais
-];
