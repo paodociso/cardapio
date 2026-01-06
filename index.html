@@ -88,7 +88,6 @@
 <script>
 let carrinho = [];
 let totalGeral = 0;
-// COLE A URL DA SUA IMPLANTAÇÃO DO GOOGLE SCRIPT ABAIXO
 const CONST_URL_PLANILHA = "https://script.google.com/macros/s/AKfycbwgn3RRmPoIgpkPnNrOoQwX8nUovXdCvIn0nVJLMosCsQJYFjA8OQFLvlVHMq23qKs2rw/exec";
 
 const rd = (db) => {
@@ -101,7 +100,15 @@ const rd = (db) => {
                 const id = `it-${si}-${ii}`;
                 const f = s.tipoOpcional === "panini" ? opsPanini : opsGerais;
                 const iOps = (i[3] || []).map(n => f.find(x => x.n.toLowerCase() === n.trim().toLowerCase())).filter(Boolean);
-                return `<div class="card" id="card-${id}"><div class="prod-header"><img src="${i[2]}" class="img-thumb"><div class="prod-info"><b>${i[0]}</b><small>R$ ${parseFloat(i[1]).toFixed(2)}</small></div></div>
+                return `<div class="card" id="card-${id}">
+                    <div class="prod-header">
+                        <img src="${i[2]}" class="img-thumb">
+                        <div class="prod-info">
+                            <b>${i[0]}</b>
+                            <div style="font-size: 0.85rem; color: #666; margin: 4px 0; line-height: 1.2;">${i[4]}</div>
+                            <small>R$ ${parseFloat(i[1]).toFixed(2)}</small>
+                        </div>
+                    </div>
                     ${iOps.map(o => `<div class="qty-row"><span>${o.n} (+${o.p.toFixed(2)})</span><div class="qty-box"><button class="btn-q" onclick="mudar(this,-1)">-</button><input type="text" value="0" readonly class="qty-val" data-n="${o.n}" data-p="${o.p}"><button class="btn-q" onclick="mudar(this,1)">+</button></div></div>`).join('')}
                     <button class="btn-add" onclick="add('${i[0]}', ${i[1]}, '${id}')">Adicionar à Cesta</button></div>`;
             }).join('')}
@@ -139,48 +146,27 @@ function exibirForm() {
 
 async function processarFinalizacao() {
     const nome = document.getElementById('nome').value.trim();
-    const tel = document.getElementById('tel').value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
+    const tel = document.getElementById('tel').value.trim().replace(/\D/g, '');
     const opcao = document.getElementById('opcao').value;
     const end = document.getElementById('end').value.trim();
 
-    // VALIDAÇÃO DE NOME
     if(!nome) { alert("Por favor, informe seu nome."); return; }
-
-    // VALIDAÇÃO DE TELEFONE (10 ou 11 dígitos)
-    if(tel.length < 10 || tel.length > 11) {
-        alert("O telefone deve ter 10 ou 11 dígitos (DDD + Número).");
-        return;
-    }
-
+    if(tel.length < 10 || tel.length > 11) { alert("O telefone deve ter 10 ou 11 dígitos (DDD + Número)."); return; }
     if(opcao === 'entrega' && !end) { alert("Por favor, informe o endereço."); return; }
     if(opcao === 'entrega') alert("Atenção: Uma taxa de entrega pode ser cobrada.");
 
     const agora = new Date();
     const dataHora = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR');
-    
     const itensTexto = carrinho.map(it => `${it.nome} (${it.extras.map(e => e.q+'x '+e.n).join(', ')})`).join(' | ');
 
-    const payload = {
-        dataHora: dataHora,
-        nome: nome,
-        telefone: tel,
-        tipoEntrega: opcao === 'retirada' ? 'Retirada' : 'Entrega',
-        endereco: end || "N/A",
-        itens: itensTexto,
-        total: totalGeral.toFixed(2)
-    };
+    const payload = { dataHora, nome, telefone: tel, tipoEntrega: opcao === 'retirada' ? 'Retirada' : 'Entrega', endereco: end || "N/A", itens: itensTexto, total: totalGeral.toFixed(2) };
 
     const btn = document.getElementById('btn-enviar-wa');
     btn.innerText = "SALVANDO PEDIDO...";
     btn.disabled = true;
 
     try {
-        await fetch(CONST_URL_PLANILHA, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+        await fetch(CONST_URL_PLANILHA, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
     } catch (e) { console.error("Erro ao salvar planilha", e); }
 
     let msg = `*PEDIDO PÃO DO CISO*\n📅 ${dataHora}\n\n*Cliente:* ${nome}\n*Telefone:* ${tel}\n*Opção:* ${opcao=='retirada'?'Retirada':'Entrega'}\n${opcao=='entrega'?'*End:* '+end+'\n':''}\n*ITENS:*\n`;
@@ -191,9 +177,7 @@ async function processarFinalizacao() {
     });
     msg += `*TOTAL: R$ ${totalGeral.toFixed(2)}*`;
 
-    // ABRIR EM NOVA JANELA
     window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(msg)}`, '_blank');
-    
     btn.innerText = "ENVIAR PELO WHATSAPP";
     btn.disabled = false;
 }
