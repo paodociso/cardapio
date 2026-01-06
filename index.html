@@ -6,82 +6,57 @@
     <title>Pão do Ciso</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --p-green: #2d3a27; --a-brown: #7d4f39; --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; }
+        :root { --p-green: #2d3a27; --a-brown: #7d4f39; --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; --red: #b22222; }
         * { box-sizing: border-box; }
-        
         html, body { height: 100%; margin: 0; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); font-family: 'Calibri', sans-serif; }
-        
-        header { 
-            background: var(--p-green); 
-            color: #fdf5e6; 
-            padding: 15px; 
-            border-bottom: 4px solid var(--a-brown); 
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .header-info { text-align: left; }
-        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--a-brown); object-fit: cover; background: white; }
-        header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase; line-height: 1.1; }
-        
-        /* Subtítulo com fonte aumentada */
-        header p { margin: 4px 0; font-size: 1.1rem; opacity: 1; font-style: italic; font-weight: 500; }
-        
-        .contact-links { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
-        .contact-link { color: #fdf5e6; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
 
-        .main-scroll { flex-grow: 1; overflow-y: auto; padding: 15px; -webkit-overflow-scrolling: touch; }
+        header { background: var(--p-green); color: #fdf5e6; padding: 15px; border-bottom: 4px solid var(--a-brown); flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--a-brown); object-fit: cover; background: white; }
+        header h1 { margin: 0; font-size: 1.4rem; text-transform: uppercase; line-height: 1.1; }
+        header p { margin: 4px 0; font-size: 1.1rem; font-style: italic; }
+        .contact-links { display: flex; flex-direction: column; gap: 4px; }
+        .contact-link { color: #fdf5e6; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+
+        .main-scroll { flex: 1; overflow-y: auto; padding: 15px; }
         .container { max-width: 600px; margin: auto; }
 
-        .collapsible { background: var(--nav); color: var(--text); cursor: pointer; padding: 12px; width: 100%; border: none; text-align: left; font-size: 1rem; font-weight: bold; border-radius: 8px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .collapsible { background: var(--nav); color: var(--text); cursor: pointer; padding: 12px; width: 100%; border: none; text-align: left; font-weight: bold; border-radius: 8px; margin-top: 15px; display: flex; justify-content: space-between; }
         .collapsible-content { display: none; }
-
-        .card { background: var(--w); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #eaddca; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .prod-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 10px; }
+        .card { background: var(--w); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #eaddca; }
+        .prod-header { display: flex; gap: 15px; margin-bottom: 10px; }
         .img-thumb { width: 75px; height: 75px; object-fit: cover; border-radius: 10px; }
-        .prod-info { flex-grow: 1; }
         .prod-info b { font-size: 1.1rem; color: var(--p-green); display: block; }
-        .prod-info .desc { font-size: 0.85rem; color: #666; display: block; margin: 4px 0; line-height: 1.3; }
-        .prod-info small { font-weight: bold; color: var(--a-brown); font-size: 1.05rem; }
+        .prod-info small { font-weight: bold; color: var(--a-brown); }
 
         .qty-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
-        .qty-box { display: flex; align-items: center; border: 2px solid var(--p-green); border-radius: 8px; height: 32px; background: white; overflow: hidden; }
-        .btn-q { background: var(--p-green); border: none; width: 32px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
-        .qty-val { width: 32px; border: none; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        .qty-box { display: flex; align-items: center; border: 2px solid var(--p-green); border-radius: 8px; overflow: hidden; height: 34px; background: white; }
+        .btn-q { background: var(--p-green); border: none; width: 34px; height: 100%; color: white; cursor: pointer; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; padding: 0; }
+        .qty-val { width: 34px; border: none; text-align: center; font-weight: bold; font-size: 1rem; color: var(--text); }
+        .btn-add { background: var(--p-green); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
 
-        .footer-cart { background: white; border-top: 4px solid var(--p-green); padding: 15px; flex-shrink: 0; z-index: 1000; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); }
-        #cesta-itens { max-height: 0; overflow-y: auto; transition: max-height 0.3s ease; }
-        #cesta-itens.open { max-height: 35vh; padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+        #cesta-rodape { background: var(--nav); border-top: 3px solid var(--a-brown); display: none; flex-direction: column; flex-shrink: 0; }
+        .cesta-lista { max-height: 150px; overflow-y: auto; padding: 10px 15px; }
+        .item-cesta { background: var(--w); padding: 8px; border-radius: 6px; margin-bottom: 5px; font-size: 0.9rem; border: 1px solid #ccc; }
         
-        .item-cesta { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
-        .btn-add { background: var(--p-green); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
-        
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--bg); padding: 25px; border-radius: 20px; width: 100%; max-width: 450px; text-align: center; max-height: 90vh; overflow-y: auto; }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: var(--text); font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
-        .taxa-aviso { font-size: 0.8rem; color: #d32f2f; margin-top: 5px; font-weight: bold; display: none; }
+        .barra-total { background: var(--red); color: white; padding: 10px 15px; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; }
+
+        #form-dados { display: none; padding: 15px; background: #f9f0e0; flex-direction: column; gap: 10px; border-top: 1px solid #ccc; }
+        #form-dados input, #form-dados select { padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; font-size: 1rem; }
+
+        .btn-checkout { background: var(--p-green); color: white; border: none; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; }
+        .btn-whatsapp { background: #25d366; color: white; border: none; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; display: none; font-size: 1rem; }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="https://www.instagram.com/paodociso" target="_blank">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg" class="logo-img" alt="Pão do Ciso">
-    </a>
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMFsu1AGezB-IwKPTAOIKWgIFGjyNAdFfGctT8EsfFLIPX0dFTpVSVuCgF2MYYpmoc1n30aJubSS1I2u6WNmueDDioKeV6yVLIC46C_vxPLxuN82nA4P5kPfHF6A2Qq67v4STkPL4a_ZrYkQCy7OmrEP4qCAjj79bm0Jst4LpKEd0VgU9pzRhgPSmvZY8/s320/IMG_20201101_192911-01.jpeg" class="logo-img">
     <div class="header-info">
         <h1>Pão do Ciso</h1>
         <p>Nanopadaria artesanal</p>
         <div class="contact-links">
-            <a href="https://www.instagram.com/paodociso" target="_blank" class="contact-link">
-                <i class="fab fa-instagram"></i> @paodociso
-            </a>
-            <a href="https://wa.me/5511982391781" target="_blank" class="contact-link">
-                <i class="fab fa-whatsapp"></i> +55 11 98239-1781
-            </a>
+            <a href="https://www.instagram.com/paodociso" target="_blank" class="contact-link"><i class="fab fa-instagram"></i> @paodociso</a>
+            <a href="https://wa.me/5511982391781" class="contact-link"><i class="fab fa-whatsapp"></i> +55 11 98239-1781</a>
         </div>
     </div>
 </header>
@@ -90,175 +65,140 @@
     <div class="container" id="render-cli"></div>
 </div>
 
-<div class="footer-cart">
-    <div id="cesta-itens"></div>
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div onclick="toggleCesta()" style="cursor:pointer">
-            <span style="font-size:0.9rem; font-weight:bold; color:var(--a-brown); text-decoration: underline;">🛒 Ver Cesta (<span id="cart-count">0</span>)</span><br>
-            <b style="font-size:1.1rem">Total: R$ <span id="total-geral">0.00</span></b>
-        </div>
-        <button class="btn-add" style="background:var(--a-brown); width:auto;" onclick="abrirModal()">Finalizar Pedido</button>
+<div id="cesta-rodape">
+    <div class="cesta-lista" id="itens-cesta"></div>
+    <div id="form-dados">
+        <input type="text" id="nome" placeholder="Seu Nome">
+        <input type="tel" id="tel" placeholder="Seu Telefone (DDD + Número)" maxlength="11">
+        <select id="opcao" onchange="document.getElementById('end').style.display = this.value=='entrega'?'block':'none'">
+            <option value="retirada">Vou retirar</option>
+            <option value="entrega">Entrega</option>
+        </select>
+        <input type="text" id="end" placeholder="Endereço (Rua, nº, compl, ponto ref.)" style="display:none">
     </div>
-</div>
-
-<div id="modal-dados" class="modal">
-    <div class="modal-content">
-        <h3 style="margin-top:0; color:var(--p-green)">Dados do Pedido</h3>
-        <div class="form-group"><label>Nome Completo</label><input type="text" id="f-nome" placeholder="Seu nome"></div>
-        <div class="form-group"><label>WhatsApp (DDD + Número)</label><input type="tel" id="f-fone" placeholder="Ex: 11988887777" maxlength="11"></div>
-        <div class="form-group">
-            <label>Como deseja receber?</label>
-            <select id="f-tipo" onchange="toggleEndereco()">
-                <option value="retirada">Retirar na Padaria</option>
-                <option value="entrega">Entrega em Domicílio</option>
-            </select>
-        </div>
-        <div id="sessao-endereco" style="display:none">
-            <div class="form-group"><label>Endereço completo</label><input type="text" id="f-endereco" placeholder="Rua, nº, apto, bairro"></div>
-            <p class="taxa-aviso" id="aviso-taxa">⚠️ Taxa de entrega a combinar via WhatsApp.</p>
-        </div>
-        <button class="btn-add" onclick="processarPedido()">Enviar Pedido</button>
-        <button onclick="fecharModal()" style="width:100%; margin-top:12px; background:none; border:none; color:#666; cursor:pointer;">Voltar</button>
+    <div class="barra-total">
+        <span>TOTAL:</span>
+        <span id="valor-total">R$ 0,00</span>
     </div>
+    <button id="btn-finalizar-cesta" class="btn-checkout" onclick="exibirForm()">FINALIZAR COMPRA</button>
+    <button id="btn-enviar-wa" class="btn-whatsapp" onclick="processarFinalizacao()">ENVIAR PELO WHATSAPP</button>
 </div>
 
 <script src="cardapio.js"></script>
 <script>
-    let carrinho = [];
-    // ATENÇÃO: Mantenha sua URL do script abaixo para a planilha funcionar
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBf2XS6pV3ZcX2rO1tF41TcXmN8IL9N8ndoGsLjJHj2z_UsEjrfTAI9ww9SnfNOTSI/exec    "; 
+let carrinho = [];
+let totalGeral = 0;
+// COLE A URL DA SUA IMPLANTAÇÃO DO GOOGLE SCRIPT ABAIXO
+const CONST_URL_PLANILHA = "https://script.google.com/macros/s/AKfycbwgn3RRmPoIgpkPnNrOoQwX8nUovXdCvIn0nVJLMosCsQJYFjA8OQFLvlVHMq23qKs2rw/exec";
 
-    const rd = (db) => {
-        const opsFull = db.opcionais.map(o => ({ n: o[0].trim(), p: parseFloat(o[1]) }));
-        document.getElementById('render-cli').innerHTML = db.secoes.map((s, si) => `
-            <button class="collapsible" onclick="toggleColl(this)">${s.nome.toUpperCase()} <span>+</span></button>
-            <div class="collapsible-content">
-                ${s.itens.map((i, ii) => {
-                    const id = `it-${si}-${ii}`;
-                    const itemOps = (i[3] || []).map(n => opsFull.find(x => x.n.toLowerCase().includes(n.trim().toLowerCase()))).filter(x => x);
-                    return `
-                    <div class="card" id="card-${id}">
-                        <div class="prod-header">
-                            <img src="${i[2]}" class="img-thumb">
-                            <div class="prod-info">
-                                <div style="display:flex; justify-content:space-between; align-items:center;">
-                                    <b>${i[0]}</b>
-                                    <div class="qty-box">
-                                        <button class="btn-q" onclick="mudar('${id}',${i[1]},-1,true,this)">-</button>
-                                        <input type="text" value="1" readonly class="qty-val qty-pao">
-                                        <button class="btn-q" onclick="mudar('${id}',${i[1]},1,true,this)">+</button>
-                                    </div>
-                                </div>
-                                <span class="desc">${i[4] || ''}</span>
-                                <small>R$ ${parseFloat(i[1]).toFixed(2)}</small>
-                            </div>
-                        </div>
-                        ${itemOps.map(o => `
-                            <div class="qty-row">
-                                <span style="font-size:0.85rem">${o.n} (+${o.p.toFixed(2)})</span>
-                                <div class="qty-box">
-                                    <button class="btn-q" onclick="mudar('${id}',${i[1]},-1,false,this)">-</button>
-                                    <input type="text" value="0" readonly class="qty-val qty-opc" data-p="${o.p}" data-n="${o.n}">
-                                    <button class="btn-q" onclick="mudar('${id}',${i[1]},1,false,this)">+</button>
-                                </div>
-                            </div>`).join('')}
-                        <button class="btn-add" onclick="add('${id}','${i[0]}')">
-                            Adicionar R$ <span class="local-total">${parseFloat(i[1]).toFixed(2)}</span>
-                        </button>
-                    </div>`;
-                }).join('')}
-            </div>`).join('');
+const rd = (db) => {
+    const opsGerais = db.opcionaisGerais.map(o => ({ n: o[0].trim(), p: parseFloat(o[1]) }));
+    const opsPanini = db.opcionaisPanini.map(o => ({ n: o[0].trim(), p: parseFloat(o[1]) }));
+    document.getElementById('render-cli').innerHTML = db.secoes.map((s, si) => `
+        <button class="collapsible" onclick="toggleColl(this)">${s.nome.toUpperCase()} <span>+</span></button>
+        <div class="collapsible-content">
+            ${s.itens.map((i, ii) => {
+                const id = `it-${si}-${ii}`;
+                const f = s.tipoOpcional === "panini" ? opsPanini : opsGerais;
+                const iOps = (i[3] || []).map(n => f.find(x => x.n.toLowerCase() === n.trim().toLowerCase())).filter(Boolean);
+                return `<div class="card" id="card-${id}"><div class="prod-header"><img src="${i[2]}" class="img-thumb"><div class="prod-info"><b>${i[0]}</b><small>R$ ${parseFloat(i[1]).toFixed(2)}</small></div></div>
+                    ${iOps.map(o => `<div class="qty-row"><span>${o.n} (+${o.p.toFixed(2)})</span><div class="qty-box"><button class="btn-q" onclick="mudar(this,-1)">-</button><input type="text" value="0" readonly class="qty-val" data-n="${o.n}" data-p="${o.p}"><button class="btn-q" onclick="mudar(this,1)">+</button></div></div>`).join('')}
+                    <button class="btn-add" onclick="add('${i[0]}', ${i[1]}, '${id}')">Adicionar à Cesta</button></div>`;
+            }).join('')}
+        </div>`).join('');
+};
+
+function toggleColl(btn) { const c = btn.nextElementSibling; c.style.display = c.style.display === 'block' ? 'none' : 'block'; btn.querySelector('span').innerText = c.style.display === 'block' ? '-' : '+'; }
+function mudar(btn, d) { const i = btn.parentNode.querySelector('input'); i.value = Math.max(0, parseInt(i.value) + d); }
+
+function add(nome, preco, id) {
+    const card = document.getElementById(`card-${id}`);
+    const inps = card.querySelectorAll('.qty-val');
+    let extras = []; let subtotal = preco;
+    inps.forEach(inp => { const q = parseInt(inp.value); if(q > 0) { const p = parseFloat(inp.dataset.p); extras.push({ n: inp.dataset.n, q: q }); subtotal += (p * q); inp.value = 0; } });
+    carrinho.push({ nome, subtotal, extras });
+    totalGeral += subtotal;
+    atualizarCesta();
+}
+
+function atualizarCesta() {
+    const r = document.getElementById('cesta-rodape');
+    const l = document.getElementById('itens-cesta');
+    const v = document.getElementById('valor-total');
+    if(carrinho.length > 0) r.style.display = 'flex';
+    v.innerText = `R$ ${totalGeral.toFixed(2)}`;
+    l.innerHTML = carrinho.map(i => `<div class="item-cesta"><b>${i.nome}</b> (R$ ${i.subtotal.toFixed(2)})${i.extras.length ? `<br><small>${i.extras.map(e => e.q+'x '+e.n).join(', ')}</small>` : ''}</div>`).join('');
+    l.scrollTop = l.scrollHeight;
+}
+
+function exibirForm() {
+    document.getElementById('form-dados').style.display = 'flex';
+    document.getElementById('btn-finalizar-cesta').style.display = 'none';
+    document.getElementById('btn-enviar-wa').style.display = 'block';
+}
+
+async function processarFinalizacao() {
+    const nome = document.getElementById('nome').value.trim();
+    const tel = document.getElementById('tel').value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
+    const opcao = document.getElementById('opcao').value;
+    const end = document.getElementById('end').value.trim();
+
+    // VALIDAÇÃO DE NOME
+    if(!nome) { alert("Por favor, informe seu nome."); return; }
+
+    // VALIDAÇÃO DE TELEFONE (10 ou 11 dígitos)
+    if(tel.length < 10 || tel.length > 11) {
+        alert("O telefone deve ter 10 ou 11 dígitos (DDD + Número).");
+        return;
+    }
+
+    if(opcao === 'entrega' && !end) { alert("Por favor, informe o endereço."); return; }
+    if(opcao === 'entrega') alert("Atenção: Uma taxa de entrega pode ser cobrada.");
+
+    const agora = new Date();
+    const dataHora = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR');
+    
+    const itensTexto = carrinho.map(it => `${it.nome} (${it.extras.map(e => e.q+'x '+e.n).join(', ')})`).join(' | ');
+
+    const payload = {
+        dataHora: dataHora,
+        nome: nome,
+        telefone: tel,
+        tipoEntrega: opcao === 'retirada' ? 'Retirada' : 'Entrega',
+        endereco: end || "N/A",
+        itens: itensTexto,
+        total: totalGeral.toFixed(2)
     };
 
-    function toggleColl(btn) {
-        const content = btn.nextElementSibling;
-        const isOpen = content.style.display === 'block';
-        content.style.display = isOpen ? 'none' : 'block';
-        btn.querySelector('span').innerText = isOpen ? '+' : '-';
-    }
+    const btn = document.getElementById('btn-enviar-wa');
+    btn.innerText = "SALVANDO PEDIDO...";
+    btn.disabled = true;
 
-    function mudar(id, base, d, isP, btn) {
-        let inp = btn.parentNode.querySelector('input');
-        let v = parseInt(inp.value) + d;
-        if(isP) v = v < 1 ? 1 : v; else v = v < 0 ? 0 : v;
-        inp.value = v;
-        const c = document.getElementById('card-'+id);
-        const qPao = parseInt(c.querySelector('.qty-pao').value);
-        let somaOps = 0;
-        c.querySelectorAll('.qty-opc').forEach(o => somaOps += (parseInt(o.value) * parseFloat(o.dataset.p)));
-        c.querySelector('.local-total').innerText = ((base + somaOps) * qPao).toFixed(2);
-    }
-
-    function add(id, nome) {
-        const c = document.getElementById('card-'+id);
-        const total = parseFloat(c.querySelector('.local-total').innerText);
-        const qtd = parseInt(c.querySelector('.qty-pao').value);
-        let ops = [];
-        c.querySelectorAll('.qty-opc').forEach(o => { if(parseInt(o.value) > 0) ops.push(`${o.value}x ${o.dataset.n}`); });
-        carrinho.push({ nome, total, qtd, ops, cid: Date.now() });
-        updateCart();
-        document.getElementById('cesta-itens').classList.add('open');
-    }
-
-    function updateCart() {
-        const total = carrinho.reduce((a,b) => a + b.total, 0);
-        document.getElementById('total-geral').innerText = total.toFixed(2);
-        document.getElementById('cart-count').innerText = carrinho.length;
-        document.getElementById('cesta-itens').innerHTML = carrinho.map(x => `
-            <div class="item-cesta">
-                <div><b>${x.qtd}x ${x.nome}</b><br><small>${x.ops.join(' | ')}</small></div>
-                <div style="text-align:right"><b>R$ ${x.total.toFixed(2)}</b><br><button onclick="remover(${x.cid})" style="color:red; background:none; border:none; cursor:pointer;">Remover</button></div>
-            </div>`).join('');
-    }
-
-    function remover(cid) { carrinho = carrinho.filter(x => x.cid !== cid); updateCart(); }
-    function toggleCesta() { if(carrinho.length > 0) document.getElementById('cesta-itens').classList.toggle('open'); }
-    function abrirModal() { if(carrinho.length === 0) return alert("Cesta vazia!"); document.getElementById('modal-dados').style.display = 'flex'; }
-    function fecharModal() { document.getElementById('modal-dados').style.display = 'none'; }
-    function toggleEndereco() {
-        const tipo = document.getElementById('f-tipo').value;
-        document.getElementById('sessao-endereco').style.display = tipo === 'entrega' ? 'block' : 'none';
-        document.getElementById('aviso-taxa').style.display = tipo === 'entrega' ? 'block' : 'none';
-    }
-
-    async function processarPedido() {
-        const nome = document.getElementById('f-nome').value;
-        const fone = document.getElementById('f-fone').value.replace(/\D/g, '');
-        const tipo = document.getElementById('f-tipo').value;
-        const endereco = document.getElementById('f-endereco').value;
-
-        if(!nome || nome.length < 3) return alert("Informe seu nome completo.");
-        if(fone.length < 10 || fone.length > 11) return alert("Telefone inválido! Use DDD + Número (10 ou 11 dígitos).");
-        if(tipo === 'entrega' && !endereco) return alert("Por favor, informe o endereço de entrega.");
-
-        let resumoItensPlanilha = "";
-        let msgWhats = `*PEDIDO PÃO DO CISO*%0A*Cliente:* ${nome}%0A*WhatsApp:* ${fone}%0A*Opção:* ${tipo.toUpperCase()}%0A`;
-        if(tipo === 'entrega') msgWhats += `*Endereço:* ${endereco}%0A_Taxa a combinar_%0A`;
-        msgWhats += `%0A*ITENS:*%0A`;
-
-        carrinho.forEach((i, idx) => {
-            let itemTexto = `${i.qtd}x ${i.nome}`;
-            let detalhesOps = i.ops.length > 0 ? ` [${i.ops.join(' / ')}]` : "";
-            resumoItensPlanilha += itemTexto + detalhesOps + (idx < carrinho.length -1 ? " | " : "");
-            msgWhats += `*${idx + 1}. ${itemTexto}*%0A`;
-            i.ops.forEach(op => msgWhats += `   └ _${op}_%0A`);
-            msgWhats += `   Subtotal: R$ ${i.total.toFixed(2)}%0A%0A`;
+    try {
+        await fetch(CONST_URL_PLANILHA, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
         });
+    } catch (e) { console.error("Erro ao salvar planilha", e); }
 
-        const totalFinal = document.getElementById('total-geral').innerText;
-        msgWhats += `*TOTAL GERAL: R$ ${totalFinal}*`;
+    let msg = `*PEDIDO PÃO DO CISO*\n📅 ${dataHora}\n\n*Cliente:* ${nome}\n*Telefone:* ${tel}\n*Opção:* ${opcao=='retirada'?'Retirada':'Entrega'}\n${opcao=='entrega'?'*End:* '+end+'\n':''}\n*ITENS:*\n`;
+    carrinho.forEach(it => {
+        msg += `• ${it.nome}\n`;
+        it.extras.forEach(ex => msg += `  + ${ex.q}x ${ex.n}\n`);
+        msg += `  Subtotal: R$ ${it.subtotal.toFixed(2)}\n\n`;
+    });
+    msg += `*TOTAL: R$ ${totalGeral.toFixed(2)}*`;
 
-        const pedidoData = { nome, fone, tipo: tipo.toUpperCase(), endereco: tipo === 'entrega' ? endereco : 'RETIRADA NA LOJA', total: totalFinal, itens: resumoItensPlanilha };
+    // ABRIR EM NOVA JANELA
+    window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(msg)}`, '_blank');
+    
+    btn.innerText = "ENVIAR PELO WHATSAPP";
+    btn.disabled = false;
+}
 
-        if(SCRIPT_URL !== "SUA_URL_DA_SPREADSHEET_AQUI") {
-            try { fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(pedidoData) }); } catch(e) {}
-        }
-
-        window.open(`https://wa.me/5511982391781?text=${msgWhats}`);
-        fecharModal();
-    }
-
-    window.onload = () => rd(dadosIniciais);
+window.onload = () => rd(dadosIniciais);
 </script>
 </body>
 </html>

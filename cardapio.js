@@ -132,7 +132,7 @@ const dadosIniciais = {
             "Potinho de Confit de alho e tomates cereja (100g)",
             "Potinho de vidro"
           ],
-          "Pão artesanal de fermentação lenta, feito com farinha de trigo italiana refinada. Caracteriza-se pela casca fina e dourada, miolo alveolado e úmido, e um sabor autêntico e equilibrado."
+          "Pão artesanal de fermentação lenta, feito com farinha de trigo italiana refinada. Casca fina e dourada, miolo alveolado e úmido, com sabor autêntico."
         ],
         [
           "Pão de Campanha",
@@ -194,7 +194,7 @@ const dadosIniciais = {
             "Confit de alho e tomates cereja",
             "Picles de cebola"
           ],
-          "Base de pão artesanal."
+          "Sanduíche feito na focaccia."
         ]
       ]
     }
