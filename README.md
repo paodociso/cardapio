@@ -1,86 +1,146 @@
-Este código é um **WebApp de Cardápio Digital Interativo**, projetado especificamente para uma nanopadaria artesanal (**Pão do Ciso**). Ele funciona como uma "Single Page Application" (SPA) que permite ao cliente selecionar produtos, personalizar com opcionais, visualizar o total em tempo real e enviar o pedido diretamente para o WhatsApp e para uma planilha de controle.
+# Pão do Ciso - Sistema de Pedidos Online
 
-Abaixo, organizei o arquivo `README.md` detalhando as funcionalidades e a estrutura técnica:
+## Visão Geral
+Sistema completo para pedidos online da nanopadaria artesanal "Pão do Ciso", com cardápio dinâmico, carrinho de compras e integração com WhatsApp.
 
----
+## Funcionalidades Existentes Mantidas
 
-# 🍞 Pão do Ciso - Cardápio Digital v2.0
+### ✅ Layout e Interface
+- Design responsivo com cores personalizadas (var(--banner), var(--p-green), etc.)
+- Banner com logo, nome da loja e links de contato
+- Sistema de seções colapsáveis para organizar o cardápio
+- Modal para ampliação de imagens dos produtos (com animações)
 
-Este repositório contém o código-fonte do sistema de pedidos da **Pão do Ciso**. O objetivo é oferecer uma experiência de compra fluida para o cliente e uma gestão organizada para o administrador.
+### ✅ Sistema de Cardápio
+- Carregamento dinâmico do cardápio a partir de `cardapio.js`
+- Produtos organizados em seções (Antipasti, Pães, Panini)
+- Sistema de opcionais por categoria (gerais e específicos para panini)
+- Quantificadores para produtos principais e opcionais
+- Cálculo automático de subtotal por item
 
-## 🚀 Funcionalidades Principais
+### ✅ Carrinho de Compras
+- Adição de itens com quantidades e opcionais
+- Cálculo automático do total geral
+- Remoção individual de itens do carrinho
+- Exibição do carrinho no rodapé da página
+- Persistência dos itens durante a sessão
 
-### Para o Cliente
+### ✅ Processamento de Pedidos
+- Integração com Google Sheets via API
+- Envio automático de pedidos por WhatsApp
+- Formatação básica da mensagem de pedido
 
-* **Identificação Simples:** Cadastro rápido de nome e WhatsApp.
-* **Menu por Categorias:** Navegação rápida com botões fixos (âncoras) para diferentes seções do cardápio.
-* **Personalização Dinâmica:** Itens podem ter opcionais (ex: azeite, recheios extras). O valor é somado instantaneamente ao preço do item.
-* **Cesta de Compras Inteligente:**
-* Visualização de subtotal e itens selecionados.
-* Possibilidade de remover itens individualmente.
-* Cálculo automático de total com suporte a múltiplas quantidades.
+## Novas Funcionalidades Implementadas
 
+### 🆕 1. Banner Aprimorado
+- **Melhor espaçamento** entre os links de contato (@paodociso e telefone)
+- Organização em coluna flexível com gap de 8px
+- Mantida a aparência visual original
 
-* **Finalização via WhatsApp:** Gera uma mensagem formatada profissionalmente com todos os detalhes do pedido e envia para o número da padaria.
+### 🆕 2. Sistema de Carrinho Aprimorado
+- **Limitação de exibição** para 2 itens visíveis
+- **Indicador visual** de rolagem (gradiente no fundo)
+- Manutenção da funcionalidade completa de remoção
+- Scroll automático quando há mais de 2 itens
 
-### Para o Administrador
+### 🆕 3. Novo Fluxo de Compra (Multi-etapas)
+#### Etapa 1: Confirmação do Pedido
+- Botão **"PROSSEGUIR"** no lugar de "FINALIZAR COMPRA"
+- **Modal centralizado** com fundo opaco
+- **Lista completa** de itens com numeração romana (I, II, III...)
+- **Hierarquia visual** clara para itens e extras (└ indicação)
+- Opções: **"ADICIONAR MAIS ITENS"** ou **"CONFIRMAR"**
 
-* **Integração com Google Sheets:** O sistema envia os dados de cada pedido (Cliente, Itens, Total, Data) para uma planilha via Google Apps Script.
-* **Alimentação Dinâmica:** O cardápio é alimentado por um arquivo externo `cardapio.js`, facilitando a atualização de preços e produtos sem mexer na estrutura do código principal.
+#### Etapa 2: Coleta de Dados
+- **Validação de telefone** (10-11 dígitos obrigatórios)
+- **Máscara automática** (XX) XXXXX-XXXX
+- Opção: **Retirada** ou **Entrega**
+- **Campo condicional** para endereço (aparece só para entrega)
+- **Informação sobre taxa** de entrega "a combinar"
 
----
+#### Etapa 3: Seleção de Pagamento
+- **Três opções**: Dinheiro, Cartão, PIX (Preferido)
+- **Interface visual** com cards selecionáveis
+- **Informações específicas** por forma de pagamento:
+  - Dinheiro/Cartão: "Pagamento no recebimento"
+  - PIX: Exibe chave `paodociso@gmail.com` e suporte para **QR Code** (IMGPIX)
+- **Integração para QR Code**: `<img src="" id="imgPixQR">` - administrador pode inserir imagem
 
-## 🛠️ Estrutura Técnica
+### 🆕 4. Formato de Mensagem WhatsApp Aprrimorado
+```
+PEDIDO PÃO DO CISO
+Cliente: [Nome]
+WhatsApp: [Telefone]
+Opção: [RETIRADA/ENTREGA]
+[Endereço completo] (se entrega)
+Taxa a combinar (se entrega)
 
-O projeto foi construído utilizando tecnologias nativas (Vanilla Tech), garantindo leveza e velocidade:
+ITENS:
+I 1x [Nome do Item]
+   └ 1x [Opcional 1]
+   └ 2x [Opcional 2]
+   Subtotal: R$ XX.XX
 
-* **HTML5 & CSS3:** Layout responsivo focado em dispositivos móveis (*Mobile First*), com variáveis CSS para fácil alteração da paleta de cores.
-* **JavaScript (ES6+):**
-* **Renderização Dinâmica:** Os cards de produtos são gerados a partir de um objeto JSON.
-* **Lógica de Estado:** Gerenciamento de carrinho em tempo real.
-* **Ajuste de Padding Dinâmico:** O corpo da página se adapta ao tamanho da cesta para evitar que o rodapé oculte conteúdo.
+II. 1x [Nome do Item]
+   └ 1x [Opcional]
+   Subtotal: R$ XX.XX
 
+TOTAL GERAL: R$ XX.XX
 
-* **Integração de Dados:** Uso da API `fetch` para comunicação assíncrona com o Google Apps Script.
+FORMA DE PAGAMENTO: [PIX/DINHEIRO/CARTÃO]
+[Chave PIX: paodociso@gmail.com] (se PIX)
+(Pagamento no recebimento) (se dinheiro/cartão)
 
----
-
-## 📂 Arquivos do Projeto
-
-| Arquivo | Função |
-| --- | --- |
-| `index.html` | Estrutura principal, estilos (CSS) e lógica do cliente (JS). |
-| `cardapio.js` | Banco de dados dos produtos, preços, fotos e opcionais. |
-| `script_google.gs` | (Servidor) Recebe os pedidos e grava na Planilha Google. |
-
----
-
-## 🎨 Identidade Visual (Design)
-
-* **Cores Primárias:** Verde Musgo (`#2d3a27`) e Marrom Café (`#7d4f39`).
-* **Fundo:** Creme Papel (`#fdf5e6`) para uma leitura confortável e estética artesanal.
-* **Ícones:** Integrados via SVG (Instagram) para garantir carregamento instantâneo.
-
----
-
-## 📝 Como Atualizar o Cardápio
-
-Para alterar produtos ou preços, basta editar o arquivo `cardapio.js` seguindo o formato:
-
-```javascript
-{
-  nome: "Nome do Panino",
-  preco: 18.00,
-  img: "url-da-foto.jpg",
-  opcionaisIds: ["Azeite", "Dobro de Queijo"]
-}
-
+[Data e hora]
 ```
 
+### 🆕 5. Reestruturação do Arquivo cardapio.js
+- **Nova ordem dos campos**: 
+  ```javascript
+  ["Nome do Item", "Descrição", "Preço", "URL da Imagem", ["Opcionais"]]
+  ```
+- **Compatibilidade total** com o sistema existente
+- **Atualização automática** na função de renderização
+
+## Características Técnicas
+
+### 🛡️ Manutenção de Compatibilidade
+- Todas as funções JavaScript originais preservadas
+- Mesmas classes CSS mantidas
+- Sistema de modais coexistente (imagens + pedido)
+- Integração com Google Sheets intacta
+
+### 🎨 Design Consistente
+- Mesma paleta de cores
+- Mesmas fontes e tamanhos
+- Animações suaves mantidas
+- Responsividade preservada
+
+### 🔄 Fluxo Aprimorado
+1. **Navegação no cardápio** → Adição de itens
+2. **Carrinho** (rodapé limitado) → PROSSEGUIR
+3. **Confirmação** (modal completo) → CONFIRMAR
+4. **Dados do cliente** → AVANÇAR
+5. **Pagamento** → ENVIAR PELO WHATSAPP
+6. **WhatsApp** abre com mensagem formatada
+
+## Pontos de Personalização
+
+### Para o Administrador:
+1. **QR Code PIX**: Inserir imagem em `<img src="" id="imgPixQR">`
+2. **Cardápio**: Editar `cardapio.js` na nova ordem [nome, descrição, preço, imagem, opcionais]
+3. **Opcionais**: Modificar arrays `opcionaisGerais` e `opcionaisPanini`
+4. **Contato**: Alterar número do WhatsApp no header e função de envio
+
+## Observações
+- Sistema otimizado para mobile-first
+- Não requer backend complexo (usa Google Sheets como "database")
+- Código totalmente client-side
+- Fácil manutenção e atualização
+- Experiência do usuário significativamente aprimorada
+
 ---
 
-**Desenvolvido para Pão do Ciso.** *Boas fornadas e boas vendas!* 🥖
-
----
-
-Deseja que eu te ajude a criar também o código do **Google Apps Script** para garantir que a planilha receba esses dados corretamente?
+**Status**: ✅ Todas as funcionalidades implementadas e testadas  
+**Compatibilidade**: Total com sistema anterior  
+**Experiência**: Fluxo mais intuitivo e profissional
