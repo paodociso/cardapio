@@ -157,41 +157,64 @@ let carrinho = [], totalGeral = 0, pgtoSel = "";
 let memory = { nome: "", tel: "", entrega: "Retirada", endereco: "" };
 
 function render() {
-    const { secoes, opcionaisGerais: opsG, opcionaisPanini: opsP } = dadosIniciais;
-    document.getElementById('render-cli').innerHTML = secoes.map((s, si) => `
+    const { secoes } = dadosIniciais;
+    
+    document.getElementById('render-cli').innerHTML = secoes.map((s, si) => {
+        // DINAMISMO: Busca no banco de dados a chave 'opcionais' + NomeDaSecao
+        const chaveOpcionais = "opcionais" + s.nome;
+        const bancoDeOpcionaisDaSecao = dadosIniciais[chaveOpcionais] || [];
+
+        return `
         <button class="collapsible" onclick="toggleC(this)">${s.nome.toUpperCase()} <span>+</span></button>
         <div class="collapsible-content">
             ${s.itens.map((i, ii) => {
                 const id = `it-${si}-${ii}`;
-                const iOps = (i[4] || []).map(n => (s.tipoOpcional === "panini" ? opsP : opsG).find(x => x[0].trim() === n.trim())).filter(Boolean);
+                
+                // Filtra apenas os opcionais que estão autorizados dentro deste item específico
+                const iOps = (i[4] || [])
+                    .map(nomeOpcional => bancoDeOpcionaisDaSecao.find(x => x[0].trim() === nomeOpcional.trim()))
+                    .filter(Boolean);
+                
                 return `
                 <div class="card" id="card-${id}">
                     <div class="prod-header">
-                        <img src="${i[3]}" class="img-thumb">
+                        <img src="${i[3]}" class="img-thumb" onerror="this.src='https://via.placeholder.com/80'">
                         <div class="prod-info"><b>${i[0]}</b><p>${i[1]}</p><small>R$ ${(+i[2]).toFixed(2)}</small></div>
                     </div>
                     <div class="frame-quantidade">
                         <div class="linha-controle">
                             <span class="titulo-frame">QUANTIDADE</span>
-                            <div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val main-qty"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div>
+                            <div class="qty-box">
+                                <button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button>
+                                <input type="text" value="0" readonly class="qty-val main-qty">
+                                <button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button>
+                            </div>
                         </div>
                     </div>
                     ${iOps.length ? `
                     <div class="frame-opcionais">
-                        <div class="header-opcionais" onclick="toggleOps('${id}')"><span class="titulo-frame">OPCIONAIS</span><span id="seta-${id}">▼</span></div>
+                        <div class="header-opcionais" onclick="toggleOps('${id}')">
+                            <span class="titulo-frame">OPCIONAIS</span>
+                            <span id="seta-${id}">▼</span>
+                        </div>
                         <div id="lista-ops-${id}" class="lista-opcionais-interna">
                             <div class="divisor-opcional"></div>
                             ${iOps.map(o => `
                                 <div class="linha-controle" style="margin-bottom:8px">
                                     <span style="font-size:0.85rem">${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span>
-                                    <div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val op-qty" data-n="${o[0]}" data-p="${o[1]}"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div>
+                                    <div class="qty-box">
+                                        <button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button>
+                                        <input type="text" value="0" readonly class="qty-val op-qty" data-n="${o[0]}" data-p="${o[1]}">
+                                        <button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button>
+                                    </div>
                                 </div>`).join('')}
                         </div>
                     </div>` : ''}
                     <div class="subtotal-item" id="sub-${id}">Subtotal: R$ 0,00</div>
                     <button class="btn-add" onclick="add('${i[0]}', ${i[2]}, '${id}')">ADICIONAR</button>
                 </div>`}).join('')}
-        </div>`).join('');
+        </div>`
+    }).join('');
     carregarDadosSalvos();
 }
 
@@ -301,7 +324,6 @@ function finalizar() {
     salvarNaPlanilha();
     document.getElementById('modalDados').style.display = 'none';
     document.getElementById('modalSucesso').style.display = 'block';
-    // Reset visual do modal de sucesso caso tenha sido usado antes
     document.getElementById('status-final').style.display = 'block';
     document.getElementById('aviso-redirecionando').style.display = 'none';
     document.getElementById('novo-pedido-area').style.display = 'none';
@@ -350,4 +372,4 @@ function fecharModais() { document.querySelectorAll('.modal-pedido, .modal-overl
 window.onload = render;
 </script>
 </body>
-</html>
+</html> 

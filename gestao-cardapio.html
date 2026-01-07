@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Gestão Pão do Ciso v9.1</title>
+    <title>Gestão Pão do Ciso v11.3</title>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <style>
         :root { --p-green: #2d3a27; --a-brown: #7d4f39; --bg: #f5f5f5; --white: #ffffff; }
@@ -22,112 +22,185 @@
         .btn-azul { background: #007bff; }
         .btn-cinza { background: #6c757d; }
 
-        /* SEÇÃO */
-        .secao-container { background: white; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #ddd; }
+        .secao-container { background: white; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #ddd; overflow: hidden; }
         .secao-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #f8f9fa; cursor: pointer; }
         .drag-handle-secao { cursor: grab; margin-right: 15px; color: #888; font-size: 20px; padding: 5px; }
         .secao-titulo { flex: 1; font-weight: bold; color: var(--p-green); font-size: 15px; }
-        .secao-corpo { display: block; min-height: 60px; padding: 0 10px; border-top: 1px solid #eee; background: #fff; }
+        .secao-corpo { display: block; padding: 0 10px; background: #fff; border-top: 1px solid #eee; min-height: 50px; }
         .secao-corpo.fechado { display: none; }
 
-        /* ITEM */
-        .item-detalhado { display: flex; gap: 15px; padding: 15px; border-bottom: 1px solid #eee; align-items: center; background: white; cursor: grab; }
-        .img-preview { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #eee; }
+        .item-detalhado { display: flex; gap: 15px; padding: 15px; border-bottom: 1px solid #eee; align-items: flex-start; background: white; cursor: grab; position: relative; }
+        .drag-handle-item { color: #ccc; font-size: 18px; align-self: center; cursor: grab; padding-right: 5px; }
+        .img-preview { width: 85px; height: 85px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #eee; border: 1px solid #ddd; }
         .item-info { flex: 1; }
-        .item-info strong { font-size: 15px; color: var(--p-green); display: block; }
-        .item-info p { margin: 3px 0; font-size: 12px; color: #666; }
-        .acoes-item { display: flex; gap: 5px; }
+        .item-info strong { font-size: 16px; color: var(--p-green); display: block; margin-bottom: 4px; }
+        .item-info p { margin: 4px 0; font-size: 13px; color: #666; }
+        .item-info b { color: var(--a-brown); font-size: 14px; }
+        
+        .acoes-item { display: flex; gap: 5px; align-self: center; }
 
-        /* MODAIS */
+        .badges-opcionais { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+        .badge { background: #f1f3f5; padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #666; border: 1px solid #ddd; }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
-        .modal-card { background: white; width: 90%; max-width: 550px; padding: 30px; border-radius: 15px; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0 18px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
-        .opcionais-grid { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border: 1px solid #eee; border-radius: 8px; max-height: 150px; overflow-y: auto; }
-        .opc-tag { padding: 6px 12px; border-radius: 20px; background: #eee; font-size: 11px; cursor: pointer; border: 1px solid #ccc; }
-        .opc-tag.active { background: var(--p-green); color: white; }
+        .modal-card { background: white; width: 95%; max-width: 650px; padding: 25px; border-radius: 15px; max-height: 90vh; overflow-y: auto; }
+
+        .campo-grupo { margin-bottom: 15px; }
+        .campo-grupo label { display: block; font-weight: bold; font-size: 12px; margin-bottom: 5px; color: var(--p-green); }
+        .campo-grupo input, .campo-grupo textarea, .campo-grupo select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        
+        .lista-selecao-opcionais { border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-height: 200px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 8px; background: #fafafa; }
+        .balao-opcional { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid #ccc; background: #fff; font-size: 11px; transition: all 0.2s; user-select: none; }
+        .balao-opcional.selecionado { background: var(--a-brown); color: white; border-color: var(--a-brown); }
+
+        .opc-secao-header { background: #f8f9fa; padding: 12px 15px; margin-top: 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; font-size: 13px; border: 1px solid #eee; border-left: 5px solid var(--a-brown); }
+        .opc-lista-container { padding: 5px 0 15px 0; display: block; }
+        .opc-lista-container.fechado { display: none; }
+
+        .codigo-viewer { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 12px; font-family: 'Consolas', monospace; white-space: pre-wrap; font-size: 13px; border: 1px solid #333; overflow-x: auto; line-height: 1.5; }
     </style>
 </head>
 <body>
 
+<div id="modal-item" class="modal-overlay">
+    <div class="modal-card">
+        <h2 id="titulo-modal-item" style="color: var(--p-green); margin-top: 0;">Novo Item</h2>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+        <input type="hidden" id="item-indice-secao">
+        <input type="hidden" id="item-indice-item">
+        
+        <div class="campo-grupo">
+            <label>SEÇÃO DE DESTINO</label>
+            <input type="text" id="campo-secao-nome" readonly style="background: #f0f0f0; font-weight: bold; color: #555;">
+        </div>
+
+        <div class="campo-grupo">
+            <label>NOME DO ITEM</label>
+            <input type="text" id="campo-nome-item" placeholder="Ex: Panini de Frango">
+        </div>
+
+        <div class="campo-grupo">
+            <label>DESCRIÇÃO</label>
+            <textarea id="campo-descricao-item" rows="2" placeholder="Detalhes do produto..."></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px;">
+            <div class="campo-grupo">
+                <label>VALOR (R$)</label>
+                <input type="number" id="campo-valor-item" step="0.01" placeholder="0.00">
+            </div>
+            <div class="campo-grupo">
+                <label>IMAGEM (URL) 
+                   <button onclick="buscarImagemHQ()" class="btn-azul" style="float: right; font-size: 8px; padding: 3px 6px; margin-top: -3px;">BUSCAR IMAGEM</button>
+                </label>
+                <input type="text" id="campo-imagem-item" placeholder="https://link-da-foto.jpg">
+            </div>
+        </div>
+
+        <div class="campo-grupo">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                <label id="label-opcionais-dinamico" style="margin-bottom: 0;">OPCIONAIS DISPONÍVEIS</label>
+                <button onclick="alternarTodosOpcionais()" class="btn-azul" style="font-size: 8px; padding: 4px 8px;">Inverter Seleção</button>
+            </div>
+            <div id="lista-opcionais-disponiveis" class="lista-selecao-opcionais"></div>
+        </div>
+
+        <div style="margin-top: 20px; text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="document.getElementById('modal-item').style.display='none'" class="btn-cinza">Cancelar</button>
+            <button onclick="salvarDadosDoItem()" class="btn-verde" id="botao-salvar-item">Salvar Item</button>
+        </div>
+    </div>
+</div>
+
+<div id="modal-status-inicial" class="modal-overlay" style="display: flex;">
+    <div class="modal-card" style="text-align: center;">
+        <h2 style="color: var(--p-green);">Status do Banco de Dados</h2>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        <p><span id="status-texto" style="font-weight: bold; font-size: 1.2em;">A verificar...</span></p>
+        <p><strong>Caminho Completo da Origem:</strong></p>
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #ddd; word-break: break-all; font-family: monospace; font-size: 11px; color: #555;" id="modal-caminho-js"></div>
+        <br>
+        <button onclick="document.getElementById('modal-status-inicial').style.display='none'" class="btn-verde" style="padding: 12px 30px; font-size: 12px;">ACESSAR PAINEL</button>
+    </div>
+</div>
+
 <div class="container">
     <header>
-        <h1>Painel de Controle v9.1</h1>
-        <p>Gestão Pão do Ciso: Liberdade de Movimento</p>
+        <h1>Painel de Controle v11.3</h1>
+        <p>Gestão Pão do Ciso: Auto-seleção de novos opcionais</p>
+        <p id="caminho-js-banner" style="font-size: 11px; opacity: 0.7; margin-top: 10px; word-break: break-all; font-family: monospace;"></p>
     </header>
 
     <div class="nav-abas">
         <div id="aba-itens" class="aba ativa" onclick="mudarAba('itens')">PRODUTOS</div>
         <div id="aba-secoes" class="aba" onclick="mudarAba('secoes')">SEÇÕES</div>
-        <div id="aba-opcionais" class="aba" onclick="mudarAba('opcionais')">OPCIONAIS</div>
-        <div style="flex:1; text-align: right; padding-top: 5px;">
-            <button onclick="baixar()" class="btn-verde">SALVAR CARDAPIO.JS</button>
+        <div id="aba-opcionais" class="aba" onclick="mudarAba('opcionais')">BANCO DE OPCIONAIS</div>
+        <div id="aba-codigo" class="aba" onclick="mudarAba('codigo')">VER CÓDIGO</div>
+        <div style="flex:1; text-align: right; padding-top: 5px; display: flex; gap: 8px; justify-content: flex-end;">
+            <button onclick="baixar()" class="btn-verde">BAIXAR ARQUIVO</button>
         </div>
     </div>
 
     <div id="view-itens" class="aba-content ativa">
-        <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center;">
-            <input type="text" id="busca-produtos" placeholder="Localizar produto..." onkeyup="filtrarProdutos()" style="margin:0; flex:1;">
-            <button onclick="alternarTodas(true)" class="btn-cinza">↕ Abrir Todas</button>
-            <button onclick="alternarTodas(false)" class="btn-cinza">↕ Colapsar Todas</button>
-        </div>
         <div id="render-lista-secoes"></div>
     </div>
 
     <div id="view-secoes" class="aba-content">
         <div style="background:#fff; padding:25px; border-radius:12px; border:1px solid #ddd;">
-            <h3>Categorias</h3>
-            <div style="display:flex; gap:10px;"><input type="text" id="nova-secao-nome" placeholder="Nova Seção..."><button onclick="adicionarSecao()" class="btn-verde">Adicionar</button></div>
+            <h3>Gerir Categorias</h3>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="nova-secao-nome" placeholder="Ex: Panini, Pães..." style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+                <button onclick="adicionarSecao()" class="btn-verde">Adicionar</button>
+            </div>
             <div id="render-secoes-gestao" style="margin-top:20px;"></div>
         </div>
     </div>
 
     <div id="view-opcionais" class="aba-content">
         <div style="background:#fff; padding:25px; border-radius:12px; border:1px solid #ddd;">
-            <h3>Opcionais</h3>
+            <h3>Cadastro de Opcionais</h3>
             <div style="display:grid; grid-template-columns: 2fr 1fr 1.5fr; gap:10px;">
-                <input type="text" id="opc-nome" placeholder="Nome"><input type="number" id="opc-preco" placeholder="Preço"><select id="opc-destino"></select>
+                <input type="text" id="opc-nome" placeholder="Nome do Opcional" style="padding:10px; border-radius:8px; border:1px solid #ccc;">
+                <input type="number" id="opc-preco" placeholder="Preço R$" step="0.01" style="padding:10px; border-radius:8px; border:1px solid #ccc;">
+                <select id="opc-destino" style="padding:10px; border-radius:8px; border:1px solid #ccc;"></select>
             </div>
-            <button onclick="adicionarOpcional()" class="btn-verde">Salvar Opcional</button>
-            <div id="render-opcionais-lista" style="margin-top:20px;"></div>
+            <button onclick="adicionarOpcional()" class="btn-verde" style="margin-top:10px;">Cadastrar no Banco</button>
+            
+            <div style="margin-top:30px; border-top: 1px solid #eee; padding-top: 20px;">
+                <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin:0;">Listagem de Opcionais</h3>
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="toggleTodosOpcionaisBanco(false)" class="btn-cinza" style="font-size: 9px;">Recolher Todos</button>
+                        <button onclick="toggleTodosOpcionaisBanco(true)" class="btn-cinza" style="font-size: 9px;">Expandir Todos</button>
+                    </div>
+                </div>
+                <div id="render-opcionais-lista"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-codigo" class="aba-content">
+        <div style="background:#fff; padding:25px; border-radius:12px; border:1px solid #ddd;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin:0;">Conteúdo do cardapio.js</h3>
+                <button onclick="baixar()" class="btn-verde">Baixar Arquivo</button>
+            </div>
+            <div id="bloco-codigo-interno" class="codigo-viewer"></div>
         </div>
     </div>
 </div>
 
-<div id="modal-produto" class="modal-overlay">
-    <div class="modal-card">
-        <h2>Editar Produto</h2>
-        <form id="form-item">
-            <input type="hidden" id="edit-s-idx"> <input type="hidden" id="edit-i-idx">
-            <input type="text" id="f-nome" placeholder="Nome" required>
-            <textarea id="f-desc" rows="3" placeholder="Descrição"></textarea>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                <input type="number" id="f-preco" step="0.01" placeholder="Preço R$" required>
-                <select id="f-secao" onchange="atualizarOpcionaisForm()"></select>
-            </div>
-            <div style="display:flex; gap:10px;"><input type="url" id="f-img" placeholder="Link da Imagem"><button type="button" onclick="buscarNoGoogle()" class="btn-azul">🔍</button></div>
-            <div id="f-opc-container" class="opcionais-grid" style="margin-top:15px;"></div>
-            <div style="margin-top:25px; display:flex; gap:10px; justify-content:flex-end;"><button type="button" class="btn-cinza" onclick="fecharModal()">Sair</button><button type="submit" class="btn-verde">Salvar</button></div>
-        </form>
-    </div>
-</div>
+<script id="script-cardapio" src="cardapio.js"></script>
 
-<div id="modal-mover" class="modal-overlay">
-    <div class="modal-card" style="max-width: 400px;">
-        <h3>Mover Produto</h3>
-        <p id="mover-nome-item" style="font-weight:bold;"></p>
-        <input type="hidden" id="mover-s-origem">
-        <input type="hidden" id="mover-i-origem">
-        <select id="mover-secao-destino"></select>
-        <div style="display:flex; gap:10px; justify-content:flex-end;">
-            <button class="btn-cinza" onclick="fecharModalMover()">Cancelar</button>
-            <button class="btn-verde" onclick="confirmarMover()">Confirmar</button>
-        </div>
-    </div>
-</div>
-
-<script src="cardapio.js"></script>
 <script>
-    let db = typeof dadosIniciais !== 'undefined' ? dadosIniciais : { secoes: [], opcionaisGerais: [] };
+    let db = typeof dadosIniciais !== 'undefined' ? dadosIniciais : null;
+
+    function buscarImagemHQ() {
+        const nomeItem = document.getElementById('campo-nome-item').value;
+        if (!nomeItem) { alert("Digite o nome do item primeiro."); return; }
+        const query = encodeURIComponent(nomeItem + " food photography high resolution");
+        window.open(`https://www.google.com/search?q=${query}&tbm=isch&tbs=isz:l`, '_blank');
+    }
 
     function mudarAba(id) {
         document.querySelectorAll('.aba-content').forEach(c => c.classList.remove('ativa'));
@@ -137,191 +210,246 @@
         if(id === 'itens') renderizarTudo();
         if(id === 'secoes') renderizarSecoesGestao();
         if(id === 'opcionais') { atualizarDropdownDestino(); renderizarOpcionaisLista(); }
+        if(id === 'codigo') { document.getElementById('bloco-codigo-interno').innerText = construirSaidaJS(); }
+    }
+
+    function toggleTodosOpcionaisBanco(expandir) {
+        document.querySelectorAll('.opc-lista-container').forEach(c => expandir ? c.classList.remove('fechado') : c.classList.add('fechado'));
+    }
+
+    function renderizarOpcionaisLista() {
+        const container = document.getElementById('render-opcionais-lista');
+        let html = "";
+        for (let chave in db) {
+            if (chave.startsWith('opcionais') && Array.isArray(db[chave]) && db[chave].length > 0) {
+                const titulo = chave.replace('opcionais', '').toUpperCase();
+                html += `
+                <div class="opc-grupo-wrapper">
+                    <div class="opc-secao-header" onclick="this.nextElementSibling.classList.toggle('fechado')">
+                        <span>${titulo} (${db[chave].length})</span>
+                        <span class="icon-seta">↕</span>
+                    </div>
+                    <div class="opc-lista-container">
+                        ${db[chave].map((opcional, indice) => `
+                            <div style="display:flex; justify-content:space-between; background:#fff; padding:10px; border-bottom:1px solid #eee; font-size:12px; align-items:center;">
+                                <span>${opcional[0]} - <b>R$ ${opcional[1]}</b></span>
+                                <button class="btn-vermelho" style="padding:4px 8px; font-size:8px;" onclick="excluirOpcional('${chave}', ${indice})">REMOVER</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            }
+        }
+        container.innerHTML = html || "<p style='color:#999; padding:20px;'>Nenhum opcional cadastrado.</p>";
+    }
+
+    function carregarBaloesOpcionais(nomeSecao, listaSalvaNoItem = null) {
+        const container = document.getElementById('lista-opcionais-disponiveis');
+        const label = document.getElementById('label-opcionais-dinamico');
+        container.innerHTML = "";
+        const chaveBanco = "opcionais" + nomeSecao;
+        label.innerText = `OPCIONAIS DISPONÍVEIS PARA: ${nomeSecao.toUpperCase()}`;
+        if (!db[chaveBanco] || db[chaveBanco].length === 0) {
+            container.innerHTML = `<p style="font-size:11px; color:#999; padding:10px;">Nenhum opcional cadastrado para a seção "${nomeSecao}".</p>`;
+            return;
+        }
+        db[chaveBanco].forEach(opcional => {
+            const nomeOpcional = opcional[0];
+            let selecionado = (listaSalvaNoItem === null || listaSalvaNoItem.includes(nomeOpcional)) ? "selecionado" : "";
+            container.innerHTML += `<div class="balao-opcional ${selecionado}" onclick="this.classList.toggle('selecionado')">${nomeOpcional}</div>`;
+        });
     }
 
     function renderizarTudo() {
+        if(!db) return;
         const container = document.getElementById('render-lista-secoes');
-        const selForm = document.getElementById('f-secao');
-        const selMover = document.getElementById('mover-secao-destino');
-        
-        // Salva quais seções estavam fechadas para manter o estado
-        const estadosFechados = Array.from(document.querySelectorAll('.secao-corpo.fechado')).map(el => el.id);
-
-        container.innerHTML = ""; selForm.innerHTML = ""; selMover.innerHTML = "";
-        
-        db.secoes.forEach((sec, sIdx) => {
-            const opt = `<option value="${sec.nome}">${sec.nome}</option>`;
-            selForm.innerHTML += opt;
-            selMover.innerHTML += opt;
-            
-            const isFechada = estadosFechados.includes(`corpo-${sIdx}`);
+        container.innerHTML = "";
+        db.secoes.forEach((secao, indiceSecao) => {
             const div = document.createElement('div');
             div.className = 'secao-container';
             div.innerHTML = `
-                <div class="secao-header" onclick="toggleSecao(${sIdx})">
-                    <span class="drag-handle-secao" onclick="event.stopPropagation()">☰</span>
-                    <span class="secao-titulo">${sec.nome.toUpperCase()} (${sec.itens.length})</span>
-                    <div style="display:flex; gap:10px; align-items:center;">
-                        <button class="btn-verde" onclick="event.stopPropagation(); prepararNovo('${sec.nome}')">+ PRODUTO</button>
-                        <span id="seta-${sIdx}">${isFechada ? '▶' : '▼'}</span>
-                    </div>
+                <div class="secao-header" onclick="this.nextElementSibling.classList.toggle('fechado')">
+                    <span class="drag-handle-secao">☰</span>
+                    <span class="secao-titulo">${secao.nome.toUpperCase()} (${secao.itens.length})</span>
+                    <button class="btn-verde" style="margin-right: 15px;" onclick="event.stopPropagation(); abrirModalParaNovoItem(${indiceSecao})">NOVO ITEM</button>
+                    <span>↕</span>
                 </div>
-                <div class="secao-corpo ${isFechada ? 'fechado' : ''}" id="corpo-${sIdx}" data-sidx="${sIdx}"></div>
+                <div class="secao-corpo" data-sidx="${indiceSecao}"></div>
             `;
-            container.appendChild(div);
-
             const corpo = div.querySelector('.secao-corpo');
-            sec.itens.forEach((it, iIdx) => {
-                const el = document.createElement('div');
-                el.className = 'item-detalhado';
-                el.innerHTML = `
-                    <img src="${it[3]||''}" class="img-preview" onerror="this.src='https://via.placeholder.com/70'">
-                    <div class="item-info">
-                        <strong>${it[0]}</strong>
-                        <p>${it[1] || '---'}</p>
-                        <b>R$ ${it[2]}</b>
-                    </div>
-                    <div class="acoes-item">
-                        <button class="btn-azul" onclick="event.stopPropagation(); abrirMoverModal(${sIdx}, ${iIdx})">Mover</button>
-                        <button class="btn-cinza" onclick="event.stopPropagation(); editar(${sIdx}, ${iIdx})">Editar</button>
-                        <button class="btn-vermelho" onclick="event.stopPropagation(); excluir(${sIdx}, ${iIdx})">X</button>
+            secao.itens.forEach((item, indiceItem) => {
+                const badges = item[4] ? item[4].map(opcional => `<span class="badge">${opcional}</span>`).join('') : '';
+                corpo.innerHTML += `
+                    <div class="item-detalhado">
+                        <span class="drag-handle-item">↕</span>
+                        <img src="${item[3] || 'https://via.placeholder.com/85'}" class="img-preview" onerror="this.src='https://via.placeholder.com/85'">
+                        <div class="item-info">
+                            <strong>${item[0]}</strong>
+                            <p>${item[1] || 'Sem descrição.'}</p>
+                            <b>R$ ${item[2]}</b>
+                            <div class="badges-opcionais">${badges}</div>
+                        </div>
+                        <div class="acoes-item">
+                            <button class="btn-cinza" onclick="event.stopPropagation(); abrirModalParaEditarItem(${indiceSecao},${indiceItem})">EDITAR</button>
+                            <button class="btn-azul" onclick="event.stopPropagation(); duplicarItem(${indiceSecao},${indiceItem})">DUPLICAR</button>
+                            <button class="btn-vermelho" onclick="event.stopPropagation(); excluirItem(${indiceSecao},${indiceItem})">REMOVER</button>
+                        </div>
                     </div>`;
-                corpo.appendChild(el);
             });
-
-            // Sortable para ITENS (entre seções)
+            container.appendChild(div);
             new Sortable(corpo, {
-                group: 'produtos',
+                group: 'produtos-compartilhados',
                 animation: 150,
-                onEnd: (evt) => {
-                    const sDe = evt.from.dataset.sidx;
-                    const sPara = evt.to.dataset.sidx;
-                    const item = db.secoes[sDe].itens.splice(evt.oldIndex, 1)[0];
-                    db.secoes[sPara].itens.splice(evt.newIndex, 0, item);
-                    if(sDe !== sPara) renderizarTudo();
+                handle: '.drag-handle-item',
+                onEnd: (evento) => {
+                    const secaoOrigem = evento.from.dataset.sidx;
+                    const secaoDestino = evento.to.dataset.sidx;
+                    const itemMovido = db.secoes[secaoOrigem].itens.splice(evento.oldIndex, 1)[0];
+                    const nomeNovaSecao = db.secoes[secaoDestino].nome;
+                    const chaveNova = "opcionais" + nomeNovaSecao;
+                    itemMovido[4] = db[chaveNova] ? db[chaveNova].map(o => o[0]) : [];
+                    db.secoes[secaoDestino].itens.splice(evento.newIndex, 0, itemMovido);
+                    renderizarTudo();
                 }
             });
         });
-
-        // Sortable para SEÇÕES
-        new Sortable(container, {
-            animation: 150,
-            handle: '.drag-handle-secao',
-            onEnd: (evt) => {
-                const item = db.secoes.splice(evt.oldIndex, 1)[0];
-                db.secoes.splice(evt.newIndex, 0, item);
-                renderizarTudo();
-            }
-        });
+        new Sortable(container, { animation: 150, handle: '.drag-handle-secao', onEnd: (evento) => {
+            const secaoMovida = db.secoes.splice(evento.oldIndex, 1)[0];
+            db.secoes.splice(evento.newIndex, 0, secaoMovida);
+            renderizarTudo();
+        }});
     }
 
-    function toggleSecao(idx) {
-        const c = document.getElementById(`corpo-${idx}`), s = document.getElementById(`seta-${idx}`);
-        const fechado = c.classList.toggle('fechado');
-        s.innerText = fechado ? '▶' : '▼';
+    function alternarTodosOpcionais() { document.querySelectorAll('.balao-opcional').forEach(b => b.classList.toggle('selecionado')); }
+
+    function abrirModalParaNovoItem(indiceSecao) {
+        const nomeSecao = db.secoes[indiceSecao].nome;
+        document.getElementById('titulo-modal-item').innerText = "Novo Item";
+        document.getElementById('item-indice-secao').value = indiceSecao;
+        document.getElementById('campo-secao-nome').value = nomeSecao.toUpperCase();
+        document.getElementById('item-indice-item').value = "-1";
+        document.getElementById('campo-nome-item').value = "";
+        document.getElementById('campo-descricao-item').value = "";
+        document.getElementById('campo-valor-item').value = "";
+        document.getElementById('campo-imagem-item').value = "";
+        carregarBaloesOpcionais(nomeSecao);
+        document.getElementById('modal-item').style.display = 'flex';
     }
 
-    function alternarTodas(abrir) {
-        document.querySelectorAll('.secao-corpo').forEach(c => abrir ? c.classList.remove('fechado') : c.classList.add('fechado'));
-        document.querySelectorAll('[id^="seta-"]').forEach(s => s.innerText = abrir ? '▼' : '▶');
+    function abrirModalParaEditarItem(indiceSecao, indiceItem) {
+        const secao = db.secoes[indiceSecao];
+        const item = secao.itens[indiceItem];
+        document.getElementById('titulo-modal-item').innerText = "Editar Item";
+        document.getElementById('item-indice-secao').value = indiceSecao;
+        document.getElementById('campo-secao-nome').value = secao.nome.toUpperCase();
+        document.getElementById('item-indice-item').value = indiceItem;
+        document.getElementById('campo-nome-item').value = item[0];
+        document.getElementById('campo-descricao-item').value = item[1];
+        document.getElementById('campo-valor-item').value = item[2];
+        document.getElementById('campo-imagem-item').value = item[3];
+        carregarBaloesOpcionais(secao.nome, item[4]);
+        document.getElementById('modal-item').style.display = 'flex';
     }
 
-    // MODAIS E EDIÇÃO
-    function abrirModal() { document.getElementById('modal-produto').style.display = 'flex'; }
-    function fecharModal() { document.getElementById('modal-produto').style.display = 'none'; }
-    function prepararNovo(sec) { document.getElementById('form-item').reset(); document.getElementById('edit-s-idx').value = ""; document.getElementById('f-secao').value = sec; atualizarOpcionaisForm(); abrirModal(); }
-    
-    function editar(s, i) {
-        const it = db.secoes[s].itens[i];
-        document.getElementById('edit-s-idx').value = s; document.getElementById('edit-i-idx').value = i;
-        document.getElementById('f-nome').value = it[0]; document.getElementById('f-desc').value = it[1];
-        document.getElementById('f-preco').value = it[2]; document.getElementById('f-img').value = it[3];
-        document.getElementById('f-secao').value = db.secoes[s].nome;
-        renderOpcionaisBotoes(it[4]||[], db.secoes[s].nome);
-        abrirModal();
+    function salvarDadosDoItem() {
+        const indiceSecao = document.getElementById('item-indice-secao').value;
+        const indiceItem = document.getElementById('item-indice-item').value;
+        const nome = document.getElementById('campo-nome-item').value;
+        const opcionaisSelecionados = Array.from(document.querySelectorAll('.balao-opcional.selecionado')).map(b => b.innerText.trim());
+        if(!nome) { alert("Nome obrigatório!"); return; }
+        const dadosItem = [nome, document.getElementById('campo-descricao-item').value, parseFloat(document.getElementById('campo-valor-item').value || 0).toFixed(2), document.getElementById('campo-imagem-item').value, opcionaisSelecionados];
+        indiceItem === "-1" ? db.secoes[indiceSecao].itens.push(dadosItem) : db.secoes[indiceSecao].itens[indiceItem] = dadosItem;
+        document.getElementById('modal-item').style.display = 'none';
+        renderizarTudo();
     }
 
-    document.getElementById('form-item').onsubmit = function(e) {
-        e.preventDefault();
-        const sOld = document.getElementById('edit-s-idx').value, iOld = document.getElementById('edit-i-idx').value, sAlvo = document.getElementById('f-secao').value;
-        const opcs = Array.from(document.querySelectorAll('input[name="opc"]:checked')).map(c=>c.value);
-        const novo = [document.getElementById('f-nome').value, document.getElementById('f-desc').value, document.getElementById('f-preco').value, document.getElementById('f-img').value, opcs, "ativo"];
-        if(sOld !== "") db.secoes[sOld].itens.splice(iOld, 1);
-        db.secoes.find(s => s.nome === sAlvo).itens.push(novo);
-        fecharModal(); renderizarTudo();
-    }
-
-    // MOVER VIA SELECT
-    function abrirMoverModal(s, i) {
-        const it = db.secoes[s].itens[i];
-        document.getElementById('mover-nome-item').innerText = it[0];
-        document.getElementById('mover-s-origem').value = s;
-        document.getElementById('mover-i-origem').value = i;
-        document.getElementById('modal-mover').style.display = 'flex';
-    }
-    function fecharModalMover() { document.getElementById('modal-mover').style.display = 'none'; }
-    function confirmarMover() {
-        const sOri = document.getElementById('mover-s-origem').value, iOri = document.getElementById('mover-i-origem').value, sDest = document.getElementById('mover-secao-destino').value;
-        const item = db.secoes[sOri].itens.splice(iOri, 1)[0];
-        db.secoes.find(s => s.nome === sDest).itens.push(item);
-        fecharModalMover(); renderizarTudo();
-    }
-
-    // GESTÃO DE SEÇÕES/OPCIONAIS
-    function renderizarSecoesGestao() {
-        document.getElementById('render-secoes-gestao').innerHTML = db.secoes.map((s, idx) => `
-            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;">
-                <strong>${s.nome}</strong><button class="btn-vermelho" onclick="removerSecao(${idx})">Remover</button>
-            </div>`).join('') || "Vazio";
-    }
-    function adicionarSecao() { const n = document.getElementById('nova-secao-nome').value; if(n){ db.secoes.push({nome:n, itens:[]}); renderizarTudo(); renderizarSecoesGestao(); } }
-    function removerSecao(i) { if(db.secoes[i].itens.length===0){ db.secoes.splice(i,1); renderizarSecoesGestao(); renderizarTudo(); } }
     function atualizarDropdownDestino() {
-        let opt = `<option value="opcionaisGerais">Geral</option>`;
-        db.secoes.forEach(s => opt += `<option value="opcionais${s.nome}">${s.nome}</option>`);
-        document.getElementById('opc-destino').innerHTML = opt;
+        let html = "";
+        if(db.secoes) db.secoes.forEach(secao => html += `<option value="opcionais${secao.nome}">${secao.nome}</option>`);
+        document.getElementById('opc-destino').innerHTML = html || "<option>Crie uma seção primeiro</option>";
     }
-    function renderizarOpcionaisLista() {
-        let h = "";
-        for(let k in db) { if(k.startsWith('opcionais') && db[k].length > 0) {
-            h += `<h4>${k}</h4>`;
-            db[k].forEach((op, i) => h += `<div style="padding:5px; border-bottom:1px solid #eee;">${op[0]} <button class="btn-vermelho" onclick="removerOpcional('${k}',${i})">X</button></div>`);
-        }}
-        document.getElementById('render-opcionais-lista').innerHTML = h;
-    }
-    function adicionarOpcional() {
-        const n = document.getElementById('opc-nome').value, p = document.getElementById('opc-preco').value, a = document.getElementById('opc-destino').value;
-        if(n && p){ if(!db[a])db[a]=[]; db[a].push([n, parseFloat(p).toFixed(2)]); renderizarOpcionaisLista(); }
-    }
-    function removerOpcional(k, i) { db[k].splice(i,1); renderizarOpcionaisLista(); }
-    function atualizarOpcionaisForm() { renderOpcionaisBotoes([], document.getElementById('f-secao').value); }
-    function renderOpcionaisBotoes(sel=[], secName="") {
-        const cont = document.getElementById('f-opc-container'), chaveSec = "opcionais" + secName, lista = [...(db.opcionaisGerais||[]), ...(db[chaveSec]||[])];
-        cont.innerHTML = lista.map(op => { const active = sel.includes(op[0]); return `<div class="opc-tag ${active?'active':''}" onclick="toggleTag(this)"><input type="checkbox" name="opc" value="${op[0]}" ${active?'checked':''}>${op[0]}</div>`; }).join('') || "Sem opcionais.";
-    }
-    function toggleTag(el) { const cb = el.querySelector('input'); cb.checked = !cb.checked; el.classList.toggle('active', cb.checked); }
 
-    function excluir(s, i) { if(confirm("Excluir?")) { db.secoes[s].itens.splice(i,1); renderizarTudo(); } }
-    function buscarNoGoogle() { const n = document.getElementById('f-nome').value; if(n) window.open(`https://www.google.com/search?q=${n}+foto+cardapio&tbm=isch`, '_blank'); }
-    function filtrarProdutos() {
-        const t = document.getElementById('busca-produtos').value.toLowerCase();
-        document.querySelectorAll('.item-detalhado').forEach(el => el.style.display = el.innerText.toLowerCase().includes(t) ? 'flex' : 'none');
+    // --- MUDANÇA SOLICITADA: AUTO-SELEÇÃO EM TODOS OS ITENS ---
+    function adicionarOpcional() {
+        const nome = document.getElementById('opc-nome').value;
+        const preco = document.getElementById('opc-preco').value;
+        const destino = document.getElementById('opc-destino').value; // Ex: opcionaisPães
+        const nomeSecaoDestino = destino.replace("opcionais", "");
+
+        if(nome && preco) {
+            if(!db[destino]) db[destino] = [];
+            db[destino].push([nome, parseFloat(preco).toFixed(2)]);
+
+            // Percorre todos os produtos da seção correspondente para injetar o novo opcional na lista de ativos deles
+            db.secoes.forEach(secao => {
+                if (secao.nome === nomeSecaoDestino) {
+                    secao.itens.forEach(item => {
+                        if (!item[4]) item[4] = []; // Cria a lista de opcionais se não existir
+                        if (!item[4].includes(nome)) {
+                            item[4].push(nome); // Adiciona o novo opcional automaticamente como selecionado
+                        }
+                    });
+                }
+            });
+
+            document.getElementById('opc-nome').value = ""; document.getElementById('opc-preco').value = "";
+            renderizarOpcionaisLista();
+            alert(`Opcional "${nome}" adicionado e selecionado automaticamente em todos os itens da seção ${nomeSecaoDestino}.`);
+        }
+    }
+
+    function excluirOpcional(chave, indice) { if(confirm("Excluir?")) { db[chave].splice(indice, 1); renderizarOpcionaisLista(); } }
+    function adicionarSecao() { 
+        const nome = document.getElementById('nova-secao-nome').value;
+        if(nome) { db.secoes.push({nome: nome, itens: []}); document.getElementById('nova-secao-nome').value = ""; renderizarSecoesGestao(); }
+    }
+    function renderizarSecoesGestao() {
+        document.getElementById('render-secoes-gestao').innerHTML = db.secoes.map((secao, indice) => `
+            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee; background:#fff; margin-bottom:5px; border-radius:8px;">
+                <strong>${secao.nome}</strong>
+                <button class="btn-vermelho" onclick="db.secoes.splice(${indice},1); renderizarSecoesGestao();">REMOVER</button>
+            </div>`).join('');
+    }
+    function excluirItem(indiceSecao, indiceItem) { if(confirm("Excluir?")) { db.secoes[indiceSecao].itens.splice(indiceItem, 1); renderizarTudo(); } }
+    function duplicarItem(indiceSecao, indiceItem) {
+        const itemCopiado = JSON.parse(JSON.stringify(db.secoes[indiceSecao].itens[indiceItem]));
+        itemCopiado[0] += " (Cópia)";
+        db.secoes[indiceSecao].itens.splice(indiceItem + 1, 0, itemCopiado);
+        renderizarTudo();
+    }
+
+    function construirSaidaJS() {
+        const opcionaisObjeto = {};
+        for (let chave in db) { if (chave.startsWith('opcionais')) opcionaisObjeto[chave] = db[chave]; }
+        let saida = "// cardapio.js\nconst dadosIniciais = {\n  //OPCIONAIS\n";
+        const strOpc = JSON.stringify(opcionaisObjeto, null, 2);
+        saida += "  " + strOpc.substring(1, strOpc.length - 1).trim() + ",\n  //SECOES\n";
+        const strSec = JSON.stringify({secoes: db.secoes}, null, 2);
+        saida += "  " + strSec.substring(1, strSec.length - 1).trim() + "\n};";
+        return saida;
     }
 
     function baixar() {
-        let out = "// cardapio.js\nconst dadosIniciais = {\n";
-        for(let k in db) { if(k.startsWith('opcionais') && db[k].length > 0) out += `  "${k}": ${JSON.stringify(db[k], null, 4)},\n`; }
-        out += `  "secoes": [\n`;
-        db.secoes.forEach((sec, sIdx) => {
-            out += `    {\n      "nome": "${sec.nome}",\n      "itens": [\n`;
-            sec.itens.forEach((it, iIdx) => out += `        ${JSON.stringify(it)}${iIdx===sec.itens.length-1?'':','}\n`);
-            out += `      ]\n    }${sIdx === db.secoes.length - 1 ? "" : ","}\n`;
-        });
-        out += `  ]\n};`;
-        const blob = new Blob([out], {type: 'text/javascript'});
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = "cardapio.js"; a.click();
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(new Blob([construirSaidaJS()], {type: 'text/javascript'}));
+        link.download = "cardapio.js";
+        link.click();
     }
-    window.onload = () => { renderizarTudo(); renderizarSecoesGestao(); };
+
+    window.onload = () => {
+        const caminho = document.getElementById('script-cardapio').src;
+        document.getElementById('caminho-js-banner').innerText = "Origem: " + caminho;
+        document.getElementById('modal-caminho-js').innerText = caminho;
+        if (db) {
+            document.getElementById('status-texto').innerText = "✓ Banco Carregado!";
+            document.getElementById('status-texto').style.color = "#28a745";
+            renderizarTudo();
+        } else {
+            document.getElementById('status-texto').innerText = "✗ Erro ao carregar cardapio.js";
+            document.getElementById('status-texto').style.color = "#dc3545";
+            db = { secoes: [] };
+        }
+    };
 </script>
 </body>
 </html>

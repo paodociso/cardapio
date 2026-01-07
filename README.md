@@ -1,49 +1,60 @@
-# 🥖 Pão do Ciso - Loja Digital (Versão 17.0)
-
-Esta é a solução definitiva de e-commerce para o **Pão do Ciso**, projetada para operar diretamente do navegador com integração dupla: **WhatsApp** para atendimento e **Google Sheets** para gestão administrativa.
-
-## 🚀 Novidades da Versão 17
-
-* **Automação de Dados (Google Sheets):** Ao finalizar um pedido, os dados são enviados automaticamente para uma planilha Google antes mesmo de abrir o WhatsApp. Isso garante que nenhum pedido seja perdido.
-* **Persistência de Recompra:** O sistema memoriza Nome, Telefone e Endereço do cliente. Em pedidos futuros, os campos já aparecem preenchidos para conferência, agilizando a jornada de compra.
-* **Cabeçalho Profissional:** Layout refinado com alinhamento preciso de logótipo e informações de contato.
-* **Delay de Finalização:** Uma pausa de 3 segundos com mensagem de "Finalizado!" antes do redirecionamento, melhorando a percepção de segurança do usuário.
-
-## 🛠️ Funcionalidades Principais
-
-1. **Cardápio Inteligente:** Categorias expansíveis com suporte a opcionais complexos (potinhos e recheios de paninis).
-2. **Cálculo em Tempo Real:** Subtotais atualizados instantaneamente conforme o usuário adiciona opcionais ou altera quantidades.
-3. **Gestão de Entrega:** Diferenciação clara entre Retirada e Entrega em domicílio.
-4. **Pagamento Integrado:** - Pix com QR Code e Chave visíveis.
-* Opções de Cartão e Dinheiro com avisos de pagamento no ato da entrega.
-
-
-5. **Relatório de Pedido:** Mensagem de WhatsApp profissionalmente formatada com hierarquia visual (itens e opcionais).
-
-## 📊 Estrutura da Planilha
-
-O sistema está configurado para enviar os dados para as seguintes colunas (a partir da Coluna A):
-
-1. **Data/Hora** (Gerado automaticamente pelo script)
-2. **Nome**
-3. **Telefone**
-4. **Tipo de Entrega**
-5. **Endereço**
-6. **Itens** (Lista consolidada de produtos e opcionais)
-7. **Total** (Valor final em R$)
-
-## 🔧 Configuração e Manutenção
-
-1. **Link da Planilha:** No arquivo `index.html`, localize a variável `urlPlanilha` na função `salvarNaPlanilha` e substitua `"linkspreadsheet"` pela sua URL do Google Apps Script.
-2. **WhatsApp:** O número de destino está definido na função `enviarWhatsApp()`.
-3. **Imagens:** Utilize o arquivo `cardapio.js` para atualizar preços, descrições e links de fotos.
-
-## 💻 Requisitos Técnicos
-
-* Desenvolvido em **Vanilla JavaScript** (sem dependências externas).
-* **CSS3** com variáveis para fácil alteração da paleta de cores.
-* **Google Apps Script** para a ponte entre o site e a planilha.
+Este README descreve o ecossistema do **Pão do Ciso (V19.0)**, um webapp focado em vendas via WhatsApp com gestão de cardápio dinâmica. O sistema é composto por uma interface de vendas para o cliente (`index-teste.html`) e uma interface de administração (`gestao-cardapio.html`).
 
 ---
 
-**Pão do Ciso - A tecnologia servindo à tradição.**
+# 🥖 Pão do Ciso - V19.0
+
+Sistema de cardápio digital interativo projetado para automação de pedidos, cálculo de opcionais e integração direta com WhatsApp e Google Sheets.
+
+## 🚀 Funcionalidades Principais
+
+### 1. Cardápio Inteligente e Dinâmico
+
+* **Categorias Expansíveis**: Organização dos produtos em seções colapsáveis (Pães, Antipasti, Panini, etc.) para facilitar a navegação.
+* **Cálculo em Tempo Real**: O sistema calcula automaticamente o subtotal de cada item conforme a quantidade e os opcionais selecionados são alterados.
+* **Gestão de Opcionais**: Suporte a diferentes listas de opcionais baseadas no tipo de produto (ex: opcionais específicos para Panini vs. opcionais gerais para Pães).
+
+### 2. Fluxo de Checkout Automatizado
+
+* **Cesta de Compras**: Barra inferior fixa que exibe o total acumulado e permite revisar os itens antes de finalizar.
+* **Persistência de Dados**: Utiliza `localStorage` para salvar os dados do cliente (nome, telefone e endereço), evitando que ele precise digitar tudo novamente em pedidos futuros.
+* **Múltiplas Formas de Pagamento**: Suporte a Pix (com cópia de chave e QR Code), Cartão e Dinheiro.
+
+### 3. Confirmação e Envio (WhatsApp)
+
+* **Modal de Salvamento**: Ao finalizar, o sistema exibe um modal de confirmação: *"Seu pedido foi salvo! Você será automaticamente direcionado..."*.
+* **Timer de Redirecionamento**: Aguarda **4 segundos** para garantir que o usuário leia a confirmação antes de abrir o WhatsApp.
+* **Integração com Planilha**: Envia os dados do pedido automaticamente para uma Planilha Google via API (Google Apps Script) para controle gerencial.
+
+### 4. Gestor de Cardápio (`gestao-cardapio.html`)
+
+* **Edição Direta**: Interface administrativa para alterar nomes, descrições, preços e links de imagens dos produtos.
+* **Gerenciamento de Seções**: Permite adicionar ou remover itens de categorias específicas e gerenciar as listas de opcionais.
+* **Exportação de Dados**: Gera o código formatado para o arquivo `cardapio.js`, permitindo atualizações rápidas do inventário.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* **Frontend**: HTML5, CSS3 (variáveis e animações), JavaScript (Vanilla).
+* **Ícones**: Font Awesome 6.0.
+* **Backend/Storage**:
+* Google Apps Script (para integração com Planilhas).
+* `localStorage` (armazenamento local no navegador do cliente).
+
+
+* **Comunicação**: Protocolo `wa.me` para integração com WhatsApp.
+
+---
+
+## 📋 Como Atualizar o Cardápio
+
+1. Abra o arquivo `gestao-cardapio.html` no seu navegador.
+2. Realize as alterações desejadas nos itens ou preços.
+3. Clique em **"Gerar Código para cardapio.js"**.
+4. Copie o código gerado e substitua todo o conteúdo do seu arquivo `cardapio.js` atual.
+5. Salve o arquivo e atualize o site do cliente.
+
+---
+
+**Deseja que eu adicione uma seção de "Guia de Instalação" detalhando como configurar o Google Apps Script para a planilha?**
