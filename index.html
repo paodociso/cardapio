@@ -11,53 +11,42 @@
             --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; 
             --red: #b22222; --highlight: #f9f0e0;
         }
-        * { box-sizing: border-box; margin: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); font-family: 'Calibri', sans-serif; color: var(--text); }
 
-        /* Cabeçalho */
         header { background: var(--banner); color: #fdf5e6; padding: 15px; border-bottom: 4px solid var(--a-brown); display: flex; align-items: center; justify-content: center; gap: 15px; flex-shrink: 0; }
-        .logo-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--a-brown); object-fit: cover; background: white; }
-        .sub-link { color: #fdf5e6; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--a-brown); object-fit: cover; background: white; }
+        header h1 { font-size: 1.4rem; text-transform: uppercase; }
+        .sub-link { color: #fdf5e6; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; margin-top: 4px; }
 
-        /* Scroll Principal */
         .main-scroll { flex: 1; overflow-y: auto; padding: 15px; }
         .container { max-width: 600px; margin: auto; }
-
+        
         .collapsible { background: var(--nav); color: var(--text); cursor: pointer; padding: 12px; width: 100%; border: none; text-align: left; font-weight: bold; border-radius: 8px; margin-top: 10px; display: flex; justify-content: space-between; }
         .collapsible-content { display: none; }
 
         .card { background: var(--w); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #eaddca; }
-        .prod-header { display: flex; gap: 12px; margin-bottom: 12px; }
-        .img-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
-        
         .frame-quantidade { background: var(--highlight); border: 1px solid #eaddca; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
         .frame-opcionais { border: 1px solid #eaddca; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
         
         .linha-controle { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
-        .qty-box { display: flex; align-items: center; border: 2px solid var(--p-green); border-radius: 6px; height: 34px; background: white; overflow: hidden; width: 105px; flex-shrink: 0; }
-        .btn-q { background: var(--p-green); border: none; width: 34px; height: 100%; color: white; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .qty-box { display: flex; align-items: center; border: 2px solid var(--p-green); border-radius: 6px; height: 34px; width: 105px; background: white; flex-shrink: 0; }
+        .btn-q { background: var(--p-green); border: none; width: 34px; height: 100%; color: white; cursor: pointer; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
         .qty-val { width: 37px; border: none; text-align: center; font-weight: bold; font-size: 1rem; }
 
         .subtotal-item { text-align: right; font-weight: bold; color: var(--p-green); margin: 10px 0; padding-top: 8px; border-top: 1px solid #eee; }
         .btn-add, .btn-prosseguir { background: var(--p-green); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; }
 
-        /* Cesta Rodapé Horizontal */
-        #cesta-rodape { background: var(--nav); border-top: 3px solid var(--a-brown); display: none; flex-direction: column; flex-shrink: 0; }
-        .cesta-scroll { display: flex; overflow-x: auto; padding: 10px; gap: 10px; }
-        .cesta-item-card { background: white; padding: 8px 12px; border-radius: 8px; min-width: 200px; border: 1px solid #c4b49c; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
-        .btn-remove-mini { color: var(--red); border: none; background: none; font-size: 1.1rem; cursor: pointer; padding-left: 10px; }
+        /* CESTA NO RODAPÉ */
+        #cesta-rodape { background: var(--nav); border-top: 3px solid var(--a-brown); display: none; flex-direction: column; flex-shrink: 0; max-height: 250px; }
+        .cesta-scroll { flex: 1; overflow-y: auto; padding: 10px; }
+        .cesta-item-linha { background: white; padding: 10px; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #c4b49c; }
         .barra-total { background: var(--red); color: white; padding: 10px 15px; display: flex; justify-content: space-between; font-weight: bold; }
 
-        /* Modais */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; }
+        /* MODAIS */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 999; }
         .modal-pedido { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; padding: 20px; max-height: 85vh; overflow-y: auto; }
-        .opcao-pagamento { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold; }
-        .opcao-pagamento.preferida { border-color: var(--p-green); background: #e8f5e9; position: relative; }
-        .opcao-pagamento.preferida::after { content: "RECOMENDADO"; position: absolute; top: -10px; right: 10px; background: var(--p-green); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; }
-        .pix-info { display: none; text-align: center; margin-top: 15px; padding: 15px; background: #f0f7f0; border-radius: 8px; }
-        .qr-placeholder { width: 150px; height: 150px; margin: 10px auto; background: #ddd; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
-        
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; }
     </style>
 </head>
 <body>
@@ -66,68 +55,51 @@
     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png" class="logo-img">
     <div>
         <h1>Pão do Ciso</h1>
-        <a href="https://www.instagram.com/paodociso" target="_blank" class="sub-link"><i class="fab fa-instagram"></i> @paodociso</a>
-        <a href="https://wa.me/5511982391781?text=Olá,%20cheguei%20aqui%20pela%20lojinha" class="sub-link"><i class="fab fa-whatsapp"></i> +55 11 98239-1781</a>
+        <div class="subtitulos">
+            <a href="https://wa.me/5511982391781" class="sub-link"><i class="fab fa-whatsapp"></i> +55 11 98239-1781</a>
+        </div>
     </div>
 </header>
 
 <div class="main-scroll"><div class="container" id="render-cli"></div></div>
 
 <div id="cesta-rodape">
-    <div class="cesta-scroll" id="cesta-lista"></div>
-    <div class="barra-total"><span>TOTAL DO PEDIDO:</span><span id="total-txt">R$ 0,00</span></div>
+    <div class="cesta-scroll" id="lista-rodape"></div>
+    <div class="barra-total"><span>TOTAL:</span><span id="total-txt">R$ 0,00</span></div>
     <button class="btn-prosseguir" onclick="abrirRevisao()">PROSSEGUIR</button>
 </div>
 
 <div id="modalOverlay" class="modal-overlay" onclick="fecharModais()"></div>
 <div id="modalRevisao" class="modal-pedido">
-    <h3 style="margin-bottom:15px; color:var(--p-green)">Sua Cesta</h3>
-    <div id="lista-revisao-completa"></div>
-    <div style="font-weight:bold; margin-top:15px; text-align:right" id="revisao-total-txt"></div>
+    <h3 style="margin-bottom:15px">Revisão do Pedido</h3>
+    <div id="revisao-conteudo"></div>
+    <div style="font-weight:bold; margin-top:15px; text-align:right" id="revisao-total"></div>
     <div style="display:flex; gap:10px; margin-top:20px">
-        <button class="btn-add" style="background:#888" onclick="fecharModais()">+ ADICIONAR ITENS</button>
+        <button class="btn-add" style="background:#888" onclick="fecharModais()">+ ITENS</button>
         <button class="btn-add" onclick="abrirDados()">PROSSEGUIR</button>
     </div>
 </div>
 
 <div id="modalDados" class="modal-pedido">
-    <div id="etapa-dados">
-        <h3 style="margin-bottom:10px">Seus Dados</h3>
-        <input type="text" id="nomeCli" placeholder="Nome Completo">
-        <input type="tel" id="telCli" placeholder="WhatsApp (11) 99999-9999" maxlength="11">
-        
-        <h3 style="margin-top:15px">Entrega</h3>
-        <select id="tipoEntrega" onchange="toggleEndereco()">
-            <option value="Retirada">Vou retirar no local</option>
-            <option value="Entrega">Entrega em domicílio</option>
-        </select>
-        <div id="campo-endereco" style="display:none">
-            <input type="text" id="endCli" placeholder="Endereço Completo (Rua, Número, Bairro)">
-        </div>
-        <button class="btn-add" style="margin-top:15px" onclick="abrirPagamento()">ESCOLHER PAGAMENTO</button>
-    </div>
-
-    <div id="etapa-pagamento" style="display:none">
-        <h3 style="margin-bottom:10px">Forma de Pagamento</h3>
-        <div class="opcao-pagamento preferida" onclick="selPgto('Pix', this)">PIX (paodociso@gmail.com)</div>
-        <div class="opcao-pagamento" onclick="selPgto('Cartão', this)">Cartão (Débito/Crédito)</div>
-        <div class="opcao-pagamento" onclick="selPgto('Dinheiro', this)">Dinheiro</div>
-        
-        <div id="pix-detalhes" class="pix-info">
-            <p>Escaneie o QR Code abaixo:</p>
-            <div class="qr-placeholder">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=paodociso@gmail.com" alt="QR PIX">
-            </div>
-            <p style="font-size:0.8rem">Chave: <b>paodociso@gmail.com</b></p>
-        </div>
-        
-        <button class="btn-add" style="margin-top:20px" onclick="finalizarTudo()">FINALIZAR E ENVIAR</button>
-    </div>
+    <h3>Seus Dados</h3>
+    <input type="text" id="nomeCli" placeholder="Nome">
+    <input type="tel" id="telCli" placeholder="WhatsApp (11999999999)" maxlength="11">
+    <select id="tipoEntrega" onchange="document.getElementById('end-box').style.display = this.value === 'Entrega' ? 'block' : 'none'">
+        <option value="Retirada">Vou retirar</option>
+        <option value="Entrega">Entrega em domicílio</option>
+    </select>
+    <div id="end-box" style="display:none"><input type="text" id="endCli" placeholder="Endereço completo"></div>
+    <select id="pagamento">
+        <option value="Pix">Pix (paodociso@gmail.com)</option>
+        <option value="Cartão">Cartão</option>
+        <option value="Dinheiro">Dinheiro</option>
+    </select>
+    <button class="btn-prosseguir" style="margin-top:15px" onclick="finalizar()">FINALIZAR PEDIDO</button>
 </div>
 
 <script src="cardapio.js"></script>
 <script>
-let carrinho = [], totalGeral = 0, pgtoSel = "";
+let carrinho = [], totalGeral = 0;
 
 function render() {
     const { secoes, opcionaisGerais: opsG, opcionaisPanini: opsP } = dadosIniciais;
@@ -139,59 +111,74 @@ function render() {
                 const iOps = (i[4] || []).map(n => (s.tipoOpcional === "panini" ? opsP : opsG).find(x => x[0].trim() === n.trim())).filter(Boolean);
                 return `
                 <div class="card" id="card-${id}">
-                    <div class="prod-header">
-                        <img src="${i[3]}" class="img-thumb">
-                        <div class="prod-info"><b>${i[0]}</b><p>${i[1]}</p><small>R$ ${(+i[2]).toFixed(2)}</small></div>
+                    <div style="display:flex; gap:10px; margin-bottom:10px">
+                        <img src="${i[3]}" style="width:70px; height:70px; object-fit:cover; border-radius:8px">
+                        <div><b>${i[0]}</b><br><small>R$ ${(+i[2]).toFixed(2)}</small></div>
                     </div>
                     <div class="frame-quantidade">
                         <div class="linha-controle">
-                            <span class="texto-label">Quantidade do produto</span>
+                            <span>Quantidade do item</span>
                             <div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val main-qty"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div>
                         </div>
                     </div>
-                    ${iOps.length ? `<div class="frame-opcionais"><span class="titulo-opcionais">OPCIONAIS</span>${iOps.map(o => `
+                    ${iOps.length ? `<div class="frame-opcionais"><small>OPCIONAIS</small>${iOps.map(o => `
                         <div class="linha-controle">
-                            <span class="texto-label">${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span>
+                            <span>${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span>
                             <div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val op-qty" data-n="${o[0]}" data-p="${o[1]}"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div>
                         </div>`).join('')}</div>` : ''}
                     <div class="subtotal-item" id="sub-${id}">Subtotal: R$ 0,00</div>
-                    <button class="btn-add" onclick="add('${i[0]}', ${i[2]}, '${id}')">ADICIONAR À CESTA</button>
+                    <button class="btn-add" onclick="add('${i[0]}', ${i[2]}, '${id}')">ADICIONAR</button>
                 </div>`}).join('')}
         </div>`).join('');
 }
 
-function toggleC(b) { const c = b.nextElementSibling; c.style.display = c.style.display === 'block' ? 'none' : 'block'; b.querySelector('span').innerText = c.style.display === 'block' ? '-' : '+'; }
+function toggleC(b) { const c = b.nextElementSibling; c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
 
 function mudar(d, id, base) {
     const box = event.target.parentNode;
     const inp = box.querySelector('input');
     inp.value = Math.max(0, +inp.value + d);
+    
     const card = document.getElementById(`card-${id}`);
     const qP = +card.querySelector('.main-qty').value;
-    let tO = 0; card.querySelectorAll('.op-qty').forEach(o => tO += (+o.value * +o.dataset.p));
-    let sub = qP > 0 ? qP * (base + tO) : tO;
-    document.getElementById(`sub-${id}`).innerText = `Subtotal: R$ ${sub.toFixed(2)}`;
+    
+    let somaOpcionais = 0;
+    card.querySelectorAll('.op-qty').forEach(o => somaOpcionais += (+o.value * +o.dataset.p));
+
+    // REABILITADO: Soma tudo o que tiver índice (quantidade) maior que 0
+    // Se tiver produto principal, ele multiplica o preço base + opcionais.
+    // Se NÃO tiver produto principal, ele soma apenas os opcionais.
+    let totalCard = qP > 0 ? qP * (base + somaOpcionais) : somaOpcionais;
+    
+    document.getElementById(`sub-${id}`).innerText = `Subtotal: R$ ${totalCard.toFixed(2)}`;
 }
 
 function add(nome, preco, id) {
     const card = document.getElementById(`card-${id}`);
-    const q = +card.querySelector('.main-qty').value;
-    let ex = []; let pE = 0;
-    card.querySelectorAll('.op-qty').forEach(o => { if(+o.value > 0){ ex.push({n: o.dataset.n, q: o.value}); pE += (+o.value * +o.dataset.p); }});
-    if (q <= 0 && pE <= 0) return alert("Selecione um item!");
-    const sub = q > 0 ? q * (preco + pE) : pE;
-    carrinho.push({ nome: q > 0 ? `${q}x ${nome}` : `Opcionais de ${nome}`, sub, ex });
+    const qP = +card.querySelector('.main-qty').value;
+    let extras = [], pE = 0;
+    card.querySelectorAll('.op-qty').forEach(o => { if(+o.value > 0){ extras.push({n: o.dataset.n, q: o.value}); pE += (+o.value * +o.dataset.p); }});
+    
+    if (qP <= 0 && pE <= 0) return alert("Selecione algo!");
+
+    const sub = qP > 0 ? qP * (preco + pE) : pE;
+    carrinho.push({ nome: qP > 0 ? `${qP}x ${nome}` : `Opcionais: ${nome}`, sub, extras });
     totalGeral += sub;
+    
     atualizarCesta();
+    // Reset card
+    card.querySelector('.main-qty').value = 0;
+    card.querySelectorAll('.op-qty').forEach(o => o.value = 0);
+    document.getElementById(`sub-${id}`).innerText = "Subtotal: R$ 0,00";
 }
 
 function atualizarCesta() {
     document.getElementById('cesta-rodape').style.display = carrinho.length ? 'flex' : 'none';
     document.getElementById('total-txt').innerText = `R$ ${totalGeral.toFixed(2)}`;
-    document.getElementById('cesta-lista').innerHTML = carrinho.map((i, idx) => `
-        <div class="cesta-item-card">
-            <span>${i.nome} - R$ ${i.sub.toFixed(2)}</span>
-            <button class="btn-remove-mini" onclick="remover(${idx})"><i class="fas fa-trash"></i></button>
+    document.getElementById('lista-rodape').innerHTML = carrinho.map((i, idx) => `
+        <div class="cesta-item-linha">
+            <div><b>${i.nome}</b><br><small>R$ ${i.sub.toFixed(2)}</small></div>
+            <button style="color:red; border:none; background:none; cursor:pointer" onclick="remover(${idx})">REMOVER</button>
         </div>`).join('');
 }
 
@@ -205,53 +192,48 @@ function remover(idx) {
 function abrirRevisao() {
     document.getElementById('modalOverlay').style.display = 'block';
     document.getElementById('modalRevisao').style.display = 'block';
-    document.getElementById('revisao-total-txt').innerText = `TOTAL: R$ ${totalGeral.toFixed(2)}`;
-    document.getElementById('lista-revisao-completa').innerHTML = carrinho.map((i, idx) => `
-        <div style="background:#f9f9f9; padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid #ddd">
+    document.getElementById('revisao-total').innerText = `TOTAL: R$ ${totalGeral.toFixed(2)}`;
+    document.getElementById('revisao-conteudo').innerHTML = carrinho.map((i, idx) => `
+        <div style="border-bottom:1px solid #eee; padding:10px 0">
             <div style="display:flex; justify-content:space-between"><b>${i.nome}</b><button onclick="remover(${idx})" style="color:red; border:none; background:none; cursor:pointer">Remover</button></div>
-            ${i.ex.map(e => `<div style="font-size:0.8rem; color:#666">└ ${e.q}x ${e.n}</div>`).join('')}
-            <div style="text-align:right; font-weight:bold; color:var(--p-green)">R$ ${i.sub.toFixed(2)}</div>
+            ${i.extras.map(e => `<div style="font-size:0.8rem; color:#666">└ ${e.q}x ${e.n}</div>`).join('')}
+            <div style="text-align:right">R$ ${i.sub.toFixed(2)}</div>
         </div>`).join('');
 }
 
 function abrirDados() { document.getElementById('modalRevisao').style.display = 'none'; document.getElementById('modalDados').style.display = 'block'; }
-function toggleEndereco() { document.getElementById('campo-endereco').style.display = document.getElementById('tipoEntrega').value === 'Entrega' ? 'block' : 'none'; }
-function abrirPagamento() { 
-    if(!document.getElementById('nomeCli').value || document.getElementById('telCli').value.length < 10) return alert("Preencha nome e telefone válidos.");
-    document.getElementById('etapa-dados').style.display = 'none'; 
-    document.getElementById('etapa-pagamento').style.display = 'block'; 
-}
+function fecharModais() { document.getElementById('modalOverlay').style.display = 'none'; document.querySelectorAll('.modal-pedido').forEach(m => m.style.display = 'none'); }
 
-function selPgto(t, el) { 
-    pgtoSel = t; 
-    document.querySelectorAll('.opcao-pagamento').forEach(o => o.classList.remove('preferida'));
-    el.classList.add('preferida');
-    document.getElementById('pix-detalhes').style.display = t === 'Pix' ? 'block' : 'none';
-}
-
-function fecharModais() { document.getElementById('modalOverlay').style.display = 'none'; document.getElementById('modalRevisao').style.display = 'none'; document.getElementById('modalDados').style.display = 'none'; }
-
-function finalizarTudo() {
-    if(!pgtoSel) return alert("Escolha a forma de pagamento.");
+async function finalizar() {
     const nome = document.getElementById('nomeCli').value;
+    const tel = document.getElementById('telCli').value;
     const entrega = document.getElementById('tipoEntrega').value;
-    const endereco = document.getElementById('endCli').value;
+    const endereco = entrega === 'Entrega' ? document.getElementById('endCli').value : 'Retirada';
     
-    let msg = `*NOVO PEDIDO - PÃO DO CISO*\n\n`;
-    msg += `*Cliente:* ${nome}\n*WhatsApp:* ${document.getElementById('telCli').value}\n`;
-    msg += `*Tipo:* ${entrega}\n${entrega === 'Entrega' ? `*Endereço:* ${endereco}\n` : ''}`;
-    msg += `*Pagamento:* ${pgtoSel}\n\n*ITENS:*\n`;
-    carrinho.forEach(i => {
-        msg += `- ${i.nome} (R$ ${i.sub.toFixed(2)})\n`;
-        i.ex.forEach(e => msg += `  └ ${e.q}x ${e.n}\n`);
+    if(!nome || tel.length < 10) return alert("Dados incompletos!");
+
+    const itensPlanilha = carrinho.map(i => `${i.nome} (${i.extras.map(e => e.q+'x '+e.n).join(', ')})`).join(' | ');
+
+    // 1. SPREADSHEET (Substitua a URL abaixo pela sua URL do Apps Script)
+    const dados = {
+        Data: new Date().toLocaleString('pt-BR'),
+        Nome: nome,
+        Telefone: tel,
+        Tipo: entrega,
+        Endereco: endereco,
+        Itens: itensPlanilha,
+        Total: totalGeral.toFixed(2)
+    };
+
+    fetch('SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(dados)
     });
-    msg += `\n*TOTAL GERAL: R$ ${totalGeral.toFixed(2)}*`;
 
-    // 1. Enviar para WhatsApp
+    // 2. WHATSAPP
+    let msg = `*NOVO PEDIDO - PÃO DO CISO*\n\nCliente: ${nome}\nEntrega: ${entrega}\nTotal: R$ ${totalGeral.toFixed(2)}`;
     window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(msg)}`);
-
-    // 2. Aqui você pode adicionar o código do Google Scripts para salvar na Planilha (Spreadsheet)
-    // console.log("Dados salvos na planilha...");
 }
 
 window.onload = render;
