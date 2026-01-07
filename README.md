@@ -1,146 +1,49 @@
-# Pão do Ciso - Sistema de Pedidos Online
+# 🥖 Pão do Ciso - Loja Digital (Versão 17.0)
 
-## Visão Geral
-Sistema completo para pedidos online da nanopadaria artesanal "Pão do Ciso", com cardápio dinâmico, carrinho de compras e integração com WhatsApp.
+Esta é a solução definitiva de e-commerce para o **Pão do Ciso**, projetada para operar diretamente do navegador com integração dupla: **WhatsApp** para atendimento e **Google Sheets** para gestão administrativa.
 
-## Funcionalidades Existentes Mantidas
+## 🚀 Novidades da Versão 17
 
-### ✅ Layout e Interface
-- Design responsivo com cores personalizadas (var(--banner), var(--p-green), etc.)
-- Banner com logo, nome da loja e links de contato
-- Sistema de seções colapsáveis para organizar o cardápio
-- Modal para ampliação de imagens dos produtos (com animações)
+* **Automação de Dados (Google Sheets):** Ao finalizar um pedido, os dados são enviados automaticamente para uma planilha Google antes mesmo de abrir o WhatsApp. Isso garante que nenhum pedido seja perdido.
+* **Persistência de Recompra:** O sistema memoriza Nome, Telefone e Endereço do cliente. Em pedidos futuros, os campos já aparecem preenchidos para conferência, agilizando a jornada de compra.
+* **Cabeçalho Profissional:** Layout refinado com alinhamento preciso de logótipo e informações de contato.
+* **Delay de Finalização:** Uma pausa de 3 segundos com mensagem de "Finalizado!" antes do redirecionamento, melhorando a percepção de segurança do usuário.
 
-### ✅ Sistema de Cardápio
-- Carregamento dinâmico do cardápio a partir de `cardapio.js`
-- Produtos organizados em seções (Antipasti, Pães, Panini)
-- Sistema de opcionais por categoria (gerais e específicos para panini)
-- Quantificadores para produtos principais e opcionais
-- Cálculo automático de subtotal por item
+## 🛠️ Funcionalidades Principais
 
-### ✅ Carrinho de Compras
-- Adição de itens com quantidades e opcionais
-- Cálculo automático do total geral
-- Remoção individual de itens do carrinho
-- Exibição do carrinho no rodapé da página
-- Persistência dos itens durante a sessão
+1. **Cardápio Inteligente:** Categorias expansíveis com suporte a opcionais complexos (potinhos e recheios de paninis).
+2. **Cálculo em Tempo Real:** Subtotais atualizados instantaneamente conforme o usuário adiciona opcionais ou altera quantidades.
+3. **Gestão de Entrega:** Diferenciação clara entre Retirada e Entrega em domicílio.
+4. **Pagamento Integrado:** - Pix com QR Code e Chave visíveis.
+* Opções de Cartão e Dinheiro com avisos de pagamento no ato da entrega.
 
-### ✅ Processamento de Pedidos
-- Integração com Google Sheets via API
-- Envio automático de pedidos por WhatsApp
-- Formatação básica da mensagem de pedido
 
-## Novas Funcionalidades Implementadas
+5. **Relatório de Pedido:** Mensagem de WhatsApp profissionalmente formatada com hierarquia visual (itens e opcionais).
 
-### 🆕 1. Banner Aprimorado
-- **Melhor espaçamento** entre os links de contato (@paodociso e telefone)
-- Organização em coluna flexível com gap de 8px
-- Mantida a aparência visual original
+## 📊 Estrutura da Planilha
 
-### 🆕 2. Sistema de Carrinho Aprimorado
-- **Limitação de exibição** para 2 itens visíveis
-- **Indicador visual** de rolagem (gradiente no fundo)
-- Manutenção da funcionalidade completa de remoção
-- Scroll automático quando há mais de 2 itens
+O sistema está configurado para enviar os dados para as seguintes colunas (a partir da Coluna A):
 
-### 🆕 3. Novo Fluxo de Compra (Multi-etapas)
-#### Etapa 1: Confirmação do Pedido
-- Botão **"PROSSEGUIR"** no lugar de "FINALIZAR COMPRA"
-- **Modal centralizado** com fundo opaco
-- **Lista completa** de itens com numeração romana (I, II, III...)
-- **Hierarquia visual** clara para itens e extras (└ indicação)
-- Opções: **"ADICIONAR MAIS ITENS"** ou **"CONFIRMAR"**
+1. **Data/Hora** (Gerado automaticamente pelo script)
+2. **Nome**
+3. **Telefone**
+4. **Tipo de Entrega**
+5. **Endereço**
+6. **Itens** (Lista consolidada de produtos e opcionais)
+7. **Total** (Valor final em R$)
 
-#### Etapa 2: Coleta de Dados
-- **Validação de telefone** (10-11 dígitos obrigatórios)
-- **Máscara automática** (XX) XXXXX-XXXX
-- Opção: **Retirada** ou **Entrega**
-- **Campo condicional** para endereço (aparece só para entrega)
-- **Informação sobre taxa** de entrega "a combinar"
+## 🔧 Configuração e Manutenção
 
-#### Etapa 3: Seleção de Pagamento
-- **Três opções**: Dinheiro, Cartão, PIX (Preferido)
-- **Interface visual** com cards selecionáveis
-- **Informações específicas** por forma de pagamento:
-  - Dinheiro/Cartão: "Pagamento no recebimento"
-  - PIX: Exibe chave `paodociso@gmail.com` e suporte para **QR Code** (IMGPIX)
-- **Integração para QR Code**: `<img src="" id="imgPixQR">` - administrador pode inserir imagem
+1. **Link da Planilha:** No arquivo `index.html`, localize a variável `urlPlanilha` na função `salvarNaPlanilha` e substitua `"linkspreadsheet"` pela sua URL do Google Apps Script.
+2. **WhatsApp:** O número de destino está definido na função `enviarWhatsApp()`.
+3. **Imagens:** Utilize o arquivo `cardapio.js` para atualizar preços, descrições e links de fotos.
 
-### 🆕 4. Formato de Mensagem WhatsApp Aprrimorado
-```
-PEDIDO PÃO DO CISO
-Cliente: [Nome]
-WhatsApp: [Telefone]
-Opção: [RETIRADA/ENTREGA]
-[Endereço completo] (se entrega)
-Taxa a combinar (se entrega)
+## 💻 Requisitos Técnicos
 
-ITENS:
-I 1x [Nome do Item]
-   └ 1x [Opcional 1]
-   └ 2x [Opcional 2]
-   Subtotal: R$ XX.XX
-
-II. 1x [Nome do Item]
-   └ 1x [Opcional]
-   Subtotal: R$ XX.XX
-
-TOTAL GERAL: R$ XX.XX
-
-FORMA DE PAGAMENTO: [PIX/DINHEIRO/CARTÃO]
-[Chave PIX: paodociso@gmail.com] (se PIX)
-(Pagamento no recebimento) (se dinheiro/cartão)
-
-[Data e hora]
-```
-
-### 🆕 5. Reestruturação do Arquivo cardapio.js
-- **Nova ordem dos campos**: 
-  ```javascript
-  ["Nome do Item", "Descrição", "Preço", "URL da Imagem", ["Opcionais"]]
-  ```
-- **Compatibilidade total** com o sistema existente
-- **Atualização automática** na função de renderização
-
-## Características Técnicas
-
-### 🛡️ Manutenção de Compatibilidade
-- Todas as funções JavaScript originais preservadas
-- Mesmas classes CSS mantidas
-- Sistema de modais coexistente (imagens + pedido)
-- Integração com Google Sheets intacta
-
-### 🎨 Design Consistente
-- Mesma paleta de cores
-- Mesmas fontes e tamanhos
-- Animações suaves mantidas
-- Responsividade preservada
-
-### 🔄 Fluxo Aprimorado
-1. **Navegação no cardápio** → Adição de itens
-2. **Carrinho** (rodapé limitado) → PROSSEGUIR
-3. **Confirmação** (modal completo) → CONFIRMAR
-4. **Dados do cliente** → AVANÇAR
-5. **Pagamento** → ENVIAR PELO WHATSAPP
-6. **WhatsApp** abre com mensagem formatada
-
-## Pontos de Personalização
-
-### Para o Administrador:
-1. **QR Code PIX**: Inserir imagem em `<img src="" id="imgPixQR">`
-2. **Cardápio**: Editar `cardapio.js` na nova ordem [nome, descrição, preço, imagem, opcionais]
-3. **Opcionais**: Modificar arrays `opcionaisGerais` e `opcionaisPanini`
-4. **Contato**: Alterar número do WhatsApp no header e função de envio
-
-## Observações
-- Sistema otimizado para mobile-first
-- Não requer backend complexo (usa Google Sheets como "database")
-- Código totalmente client-side
-- Fácil manutenção e atualização
-- Experiência do usuário significativamente aprimorada
+* Desenvolvido em **Vanilla JavaScript** (sem dependências externas).
+* **CSS3** com variáveis para fácil alteração da paleta de cores.
+* **Google Apps Script** para a ponte entre o site e a planilha.
 
 ---
 
-**Status**: ✅ Todas as funcionalidades implementadas e testadas  
-**Compatibilidade**: Total com sistema anterior  
-**Experiência**: Fluxo mais intuitivo e profissional
+**Pão do Ciso - A tecnologia servindo à tradição.**

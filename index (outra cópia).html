@@ -264,7 +264,7 @@ function selPgto(t, el) {
 }
 
 function salvarNaPlanilha() {
-    const urlPlanilha = "https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec";
+    const urlPlanilha = "linkspreadsheet";
     const itensTexto = carrinho.map(i => {
         let det = i.nomeFormatado;
         if(i.ex.length) det += " (" + i.ex.map(e => `${e.q}x ${e.n}`).join(', ') + ")";

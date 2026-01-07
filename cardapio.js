@@ -188,8 +188,9 @@ const dadosIniciais = {
     },
     {
       "nome": "Panini",
+      "tipoOpcional": "panini",
       "itens": [
-        ["Monte seu Panino","Sanduíche feito na focaccia.","5.00","https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitZymyPMeuU_jGjxwn3OHAYNZBI-HjQ3iDgT2h30x_bYHjuJ9yLVEujlN7ePgElLUsFoPEtuZ_50Dk1h6b7RDegdHkgfPn4jjX_aJ3V99nvLovOxgm5-3zIDDhEJndTiCwcV5F0_gx-j-M-bkHTzqv180cOFqVoJQETTlTnVDC1Fmw2QI8dqoBCUMoFLc/s984/panino-focaccia.webp",["Bresaola","Lombo piripiri","Mortadela","Pastrame","Presunto cru","Salame","Chancliche","Chancliche apimentado","Muçarela","Provolone","Queijo Prato","Alface","Pepino","Pimentão","Rúcula","Tomate","Azeite","Pesto tradicional (manjericão)","Pesto de azeitona","Maionese","Maionese temperada","Pastinha de goronzola","Pastinha de parmesão","Pastinha de pimentão vermelho","Sardella","Alichella","Melanzane sott'olio","Manteiga","Manteiga temperada com alho e parmesão","Confit de alho","Confit de alho e tomates cereja","Picles de cebola"]]
+        ["Monte seu Panino","Sanduíche feito na focaccia.","5.00","https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitZymyPMeuU_jGjxwn3OHAYNZBI-HjQ3iDgT2h30x_bYHjuJ9yLVEujlN7ePgElLUsFoPEtuZ_50Dk1h6b7RDegdHkgfPn4jjX_aJ3V99nvLovOxgm5-3zIDDhEJndTiCwcV5F0_gx-j-M-bkHTzqv180cOFqVoJQETTlTnVDC1Fmw2QI8dqoBCUMoFLc/s984/panino-focaccia.webp",["Alichella","Sardella","Melanzane sott'olio","Manteiga","Manteiga temperada com alho e parmesão","Confit de alho","Confit de alho e tomates cereja","Picles de cebola","Bresaola","Lombo piripiri","Mortadela","Pastrame","Presunto cru","Salame","Chancliche","Chancliche apimentado","Muçarela","Provolone","Queijo Prato","Alface","Pepino","Pimentão","Rúcula","Tomate","Azeite","Pesto tradicional (manjericão)","Pesto de azeitona","Maionese","Maionese temperada","Pastinha de goronzola","Pastinha de parmesão","Pastinha de pimentão vermelho"],"ativo"]
       ]
     },
     {
