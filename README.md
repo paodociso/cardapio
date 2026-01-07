@@ -56,5 +56,3 @@ Sistema de cardápio digital interativo projetado para automação de pedidos, c
 5. Salve o arquivo e atualize o site do cliente.
 
 ---
-
-**Deseja que eu adicione uma seção de "Guia de Instalação" detalhando como configurar o Google Apps Script para a planilha?**
