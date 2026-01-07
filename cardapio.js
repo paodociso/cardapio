@@ -486,7 +486,7 @@ const dadosIniciais = {
         [
           "Tábua de frios",
           "Tábua de frios variados.",
-          "100.00",
+          "20.00",
           "https://www.seara.com.br/wp-content/uploads/2025/09/tabua-de-frios-portal-minha-receita-2.jpg",
           [
             "Alichella",
