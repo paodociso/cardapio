@@ -28,7 +28,8 @@
 
         .card { background: var(--w); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #eaddca; }
         .prod-header { display: flex; gap: 12px; margin-bottom: 12px; }
-        .img-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
+        .img-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; cursor: zoom-in; transition: transform 0.2s; }
+        .img-thumb:hover { transform: scale(1.05); }
         
         .frame-quantidade { background: var(--highlight); border: 1px solid #eaddca; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
         .frame-opcionais { border: 1px solid #eaddca; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; }
@@ -56,6 +57,19 @@
 
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; }
         .modal-pedido { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; padding: 20px; max-height: 85vh; overflow-y: auto; }
+
+        /* Tamanho de abertura padronizado */
+        #modalImg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; }
+        #modalImg img { 
+            width: 75vw; 
+            height: 75vw; 
+            max-width: 450px; 
+            max-height: 450px; 
+            object-fit: cover; 
+            border-radius: 12px; 
+            border: 5px solid var(--w); 
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+        }
 
         .opcao-pagamento { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold; position: relative; background: white; }
         .opcao-pagamento.selecionada { border-color: var(--p-green); background: #f0f7f0; }
@@ -91,6 +105,10 @@
 </div>
 
 <div id="modalOverlay" class="modal-overlay" onclick="fecharModais()"></div>
+
+<div id="modalImg" onclick="fecharModais()">
+    <img id="imgExpandida" src="">
+</div>
 
 <div id="modalRevisao" class="modal-pedido">
     <h3 style="margin-bottom:15px; border-bottom: 2px solid var(--nav); padding-bottom: 10px;">Minha Cesta</h3>
@@ -160,7 +178,6 @@ function render() {
     const { secoes } = dadosIniciais;
     
     document.getElementById('render-cli').innerHTML = secoes.map((s, si) => {
-        // DINAMISMO: Busca no banco de dados a chave 'opcionais' + NomeDaSecao
         const chaveOpcionais = "opcionais" + s.nome;
         const bancoDeOpcionaisDaSecao = dadosIniciais[chaveOpcionais] || [];
 
@@ -169,8 +186,6 @@ function render() {
         <div class="collapsible-content">
             ${s.itens.map((i, ii) => {
                 const id = `it-${si}-${ii}`;
-                
-                // Filtra apenas os opcionais que estão autorizados dentro deste item específico
                 const iOps = (i[4] || [])
                     .map(nomeOpcional => bancoDeOpcionaisDaSecao.find(x => x[0].trim() === nomeOpcional.trim()))
                     .filter(Boolean);
@@ -178,7 +193,7 @@ function render() {
                 return `
                 <div class="card" id="card-${id}">
                     <div class="prod-header">
-                        <img src="${i[3]}" class="img-thumb" onerror="this.src='https://via.placeholder.com/80'">
+                        <img src="${i[3]}" class="img-thumb" onclick="ampliarImg('${i[3]}')" onerror="this.src='https://via.placeholder.com/80'">
                         <div class="prod-info"><b>${i[0]}</b><p>${i[1]}</p><small>R$ ${(+i[2]).toFixed(2)}</small></div>
                     </div>
                     <div class="frame-quantidade">
@@ -216,6 +231,12 @@ function render() {
         </div>`
     }).join('');
     carregarDadosSalvos();
+}
+
+function ampliarImg(src) {
+    document.getElementById('imgExpandida').src = src;
+    document.getElementById('modalOverlay').style.display = 'block';
+    document.getElementById('modalImg').style.display = 'block';
 }
 
 function carregarDadosSalvos() {
@@ -367,9 +388,9 @@ function reiniciarLoja() {
 }
 
 function copiarChave() { navigator.clipboard.writeText("paodociso@gmail.com").then(() => alert("Chave PIX copiada!")); }
-function fecharModais() { document.querySelectorAll('.modal-pedido, .modal-overlay').forEach(m => m.style.display = 'none'); }
+function fecharModais() { document.querySelectorAll('.modal-pedido, .modal-overlay, #modalImg').forEach(m => m.style.display = 'none'); }
 
 window.onload = render;
 </script>
 </body>
-</html> 
+</html>
