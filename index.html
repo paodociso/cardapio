@@ -628,421 +628,223 @@
 
 <script src="cardapio.js"></script>
 <script>
+// Cache de elementos e Configurações
+const el = (id) => document.getElementById(id);
 const CONST_URL_PLANILHA = "https://script.google.com/macros/s/AKfycbwgn3RRmPoIgpkPnNrOoQwX8nUovXdCvIn0nVJLMosCsQJYFjA8OQFLvlVHMq23qKs2rw/exec";
-let carrinho = [], totalGeral = 0;
-let etapaAtual = 'dados'; // 'dados' ou 'pagamento'
 
+let carrinho = [], totalGeral = 0;
+
+// Helper Numeração Romana
+const toRoman = (num) => {
+    const lookup = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
+    let roman = '';
+    for (let i in lookup) { while (num >= lookup[i]) { roman += i; num -= lookup[i]; } }
+    return roman || num + '.';
+};
+
+// Renderização do Cardápio
 const rd = (db) => {
     const opsGerais = db.opcionaisGerais.map(o => ({ n: o[0].trim(), p: +o[1] }));
     const opsPanini = db.opcionaisPanini.map(o => ({ n: o[0].trim(), p: +o[1] }));
     
-    document.getElementById('render-cli').innerHTML = db.secoes.map((s, si) => `
+    el('render-cli').innerHTML = db.secoes.map((s, si) => `
         <button class="collapsible" onclick="toggleColl(this)">${s.nome.toUpperCase()} <span>+</span></button>
         <div class="collapsible-content">
             ${s.itens.map((i, ii) => {
-                const id = `it-${si}-${ii}`;
-                // NOVA ORDEM: [0]nome, [1]descrição, [2]preço, [3]url da imagem, [4]opcionais
-                const basePreco = +i[2];
+                const id = `it-${si}-${ii}`, basePreco = +i[2];
                 const f = s.tipoOpcional === "panini" ? opsPanini : opsGerais;
                 const iOps = (i[4] || []).map(n => f.find(x => x.n.toLowerCase() === n.trim().toLowerCase())).filter(Boolean);
                 
                 return `<div class="card" id="card-${id}">
                     <div class="prod-header">
-                        <div class="img-container">
-                            <img src="${i[3]}" class="img-thumb" onclick="ampliarImagem('${i[3]}', '${i[0].replace(/'/g, "\\'")}')">
-                        </div>
-                        <div class="prod-info">
-                            <b>${i[0]}</b>
-                            <div style="font-size:0.85rem;color:#666;margin:4px 0;line-height:1.2">${i[1]}</div>
-                            <small>R$ ${basePreco.toFixed(2)}</small>
-                        </div>
+                        <div class="img-container"><img src="${i[3]}" class="img-thumb" onclick="ampliarImagem('${i[3]}', '${i[0].replace(/'/g, "\\'")}')"></div>
+                        <div class="prod-info"><b>${i[0]}</b><div class="prod-desc">${i[1]}</div><small>R$ ${basePreco.toFixed(2)}</small></div>
                     </div>
                     <div class="segment-qty">
-                        <div class="qty-row">
-                            <span style="font-weight:bold;color:var(--p-green)">QUANTIDADE DO ITEM</span>
-                            <div class="qty-box">
-                                <button class="btn-q" onclick="mudar(-1,'${id}',${basePreco})">-</button>
-                                <input type="text" value="0" readonly class="qty-val main-qty">
-                                <button class="btn-q" onclick="mudar(1,'${id}',${basePreco})">+</button>
-                            </div>
-                        </div>
+                        <div class="qty-row"><span>QUANTIDADE</span><div class="qty-box">
+                            <button class="btn-q" onclick="mudar(-1,'${id}',${basePreco})">-</button>
+                            <input type="text" value="0" readonly class="qty-val main-qty">
+                            <button class="btn-q" onclick="mudar(1,'${id}',${basePreco})">+</button>
+                        </div></div>
                     </div>
-                    ${iOps.length ? `
-                    <div class="segment-optional">
-                        <span class="optional-title">Itens Opcionais</span>
-                        ${iOps.map(o => `
-                        <div class="qty-row">
-                            <span>${o.n} (+${o.p.toFixed(2)})</span>
-                            <div class="qty-box">
-                                <button class="btn-q" onclick="mudar(-1,'${id}',${basePreco})">-</button>
-                                <input type="text" value="0" readonly class="qty-val op-qty" data-n="${o.n}" data-p="${o.p}">
-                                <button class="btn-q" onclick="mudar(1,'${id}',${basePreco})">+</button>
-                            </div>
-                        </div>`).join('')}
-                    </div>` : ''}
-                    <div class="card-footer">
-                        <div class="subtotal-item" id="subtotal-${id}">Subtotal: R$ 0,00</div>
-                        <button class="btn-add" onclick="add('${i[0]}', ${basePreco}, '${id}')" style="margin-top: 5px;">Adicionar à Cesta</button>
-                    </div>
+                    ${iOps.length ? `<div class="segment-optional"><span class="optional-title">Opcionais</span>
+                        ${iOps.map(o => `<div class="qty-row"><span>${o.n} (+${o.p.toFixed(2)})</span><div class="qty-box">
+                            <button class="btn-q" onclick="mudar(-1,'${id}',${basePreco})">-</button>
+                            <input type="text" value="0" readonly class="qty-val op-qty" data-n="${o.n}" data-p="${o.p}">
+                            <button class="btn-q" onclick="mudar(1,'${id}',${basePreco})">+</button>
+                        </div></div>`).join('')}</div>` : ''}
+                    <div class="card-footer"><div class="subtotal-item" id="subtotal-${id}">Subtotal: R$ 0,00</div>
+                    <button class="btn-add" onclick="add('${i[0]}', ${basePreco}, '${id}')">Adicionar à Cesta</button></div>
                 </div>`}).join('')}
         </div>`).join('');
 };
 
-// FUNÇÕES DO MODAL DE IMAGEM
-function ampliarImagem(src, titulo = '') {
-    const modal = document.getElementById('modalImagem');
-    const imagem = document.getElementById('imagemAmpliada');
-    const descricao = document.getElementById('descricaoImagem');
-    
-    imagem.src = src;
-    descricao.textContent = titulo;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+// Funções de Interface
+function toggleColl(btn) { 
+    const c = btn.nextElementSibling; 
+    c.style.display = c.style.display === 'block' ? 'none' : 'block';
+    btn.querySelector('span').innerText = c.style.display === 'block' ? '-' : '+';
+}
+
+function ampliarImagem(src, titulo) {
+    el('imagemAmpliada').src = src;
+    el('descricaoImagem').textContent = titulo;
+    el('modalImagem').style.display = 'flex';
 }
 
 function fecharModal(e) {
-    if (e && e.target.id === 'modalImagem') {
-        document.getElementById('modalImagem').style.display = 'none';
-        document.body.style.overflow = 'auto';
-    } else if (!e || e.target.className === 'modal-fechar') {
-        document.getElementById('modalImagem').style.display = 'none';
+    if (!e || e.target.id === 'modalImagem' || e.target.className === 'modal-fechar') {
+        el('modalImagem').style.display = 'none';
         document.body.style.overflow = 'auto';
     }
 }
 
-// Fechar modal com tecla ESC
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        if (document.getElementById('modalImagem').style.display === 'flex') {
-            fecharModal();
-        } else if (document.getElementById('modalPedido').style.display === 'block') {
-            fecharModalPedido();
-        } else if (document.getElementById('modalDados').style.display === 'block') {
-            fecharModalDados();
-        }
-    }
-});
-
-function toggleColl(btn) { 
-    const c = btn.nextElementSibling; 
-    const aberto = c.style.display === 'block';
-    c.style.display = aberto ? 'none' : 'block';
-    btn.querySelector('span').innerText = aberto ? '+' : '-';
-}
-
+// Lógica de Cálculo e Carrinho
 function mudar(d, id, basePreco) {
-    const input = event.target.parentNode.querySelector('input');
+    const row = event.target.parentNode;
+    const input = row.querySelector('input');
     input.value = Math.max(0, +input.value + d);
-    atualizarSubtotalCard(id, basePreco);
-}
-
-function atualizarSubtotalCard(id, basePreco) {
-    const card = document.getElementById(`card-${id}`);
+    
+    const card = el(`card-${id}`);
     const qPrincipal = +card.querySelector('.main-qty').value;
     let somaOps = 0;
-    card.querySelectorAll('.op-qty').forEach(o => { 
-        somaOps += (+o.value * +o.dataset.p); 
-    });
-    const subtotal = qPrincipal * (basePreco + somaOps);
-    document.getElementById(`subtotal-${id}`).innerText = `Subtotal: R$ ${subtotal.toFixed(2)}`;
+    card.querySelectorAll('.op-qty').forEach(o => somaOps += (+o.value * +o.dataset.p));
+    el(`subtotal-${id}`).innerText = `Subtotal: R$ ${(qPrincipal * (basePreco + somaOps)).toFixed(2)}`;
 }
 
 function add(nome, preco, id) {
-    const card = document.getElementById(`card-${id}`);
+    const card = el(`card-${id}`);
     const qPrincipal = +card.querySelector('.main-qty').value;
-    if (qPrincipal <= 0) { alert("Selecione a quantidade do item!"); return; }
+    if (qPrincipal <= 0) return alert("Selecione a quantidade!");
 
     let extras = [], precoComOps = preco;
     card.querySelectorAll('.op-qty').forEach(inp => { 
-        const q = +inp.value; 
-        if(q > 0) { 
-            const p = +inp.dataset.p; 
-            extras.push({ n: inp.dataset.n, q }); 
-            precoComOps += (p * q);
-            inp.value = 0; 
+        if(+inp.value > 0) { 
+            extras.push({ n: inp.dataset.n, q: +inp.value }); 
+            precoComOps += (+inp.dataset.p * +inp.value);
         } 
     });
 
     const subtotalFinal = qPrincipal * precoComOps;
-    carrinho.push({ nome: `${qPrincipal}x ${nome}`, subtotal: subtotalFinal, extras, precoUnitario: precoComOps });
+    carrinho.push({ nome: `${qPrincipal}x ${nome}`, subtotal: subtotalFinal, extras });
     totalGeral += subtotalFinal;
     
     card.querySelector('.main-qty').value = 0;
     card.querySelectorAll('.op-qty').forEach(o => o.value = 0);
-    document.getElementById(`subtotal-${id}`).innerText = `Subtotal: R$ 0,00`;
+    el(`subtotal-${id}`).innerText = `Subtotal: R$ 0,00`;
     atualizarCesta();
 }
 
 function atualizarCesta() {
-    const r = document.getElementById('cesta-rodape');
-    const l = document.getElementById('itens-cesta');
-    const v = document.getElementById('valor-total');
-    
-    r.style.display = carrinho.length ? 'flex' : 'none';
-    v.innerText = `R$ ${totalGeral.toFixed(2)}`;
-    
-    l.innerHTML = carrinho.map((i, idx) => `
+    el('cesta-rodape').style.display = carrinho.length ? 'flex' : 'none';
+    el('valor-total').innerText = `R$ ${totalGeral.toFixed(2)}`;
+    el('itens-cesta').innerHTML = carrinho.map((i, idx) => `
         <div class="item-cesta">
-            <div class="item-info">
-                <b>${i.nome}</b> (R$ ${i.subtotal.toFixed(2)})${i.extras.length ? `<br><small>${i.extras.map(e => e.q+'x '+e.n).join(', ')}</small>` : ''}
-            </div>
+            <div class="item-info"><b>${i.nome}</b><br><small>${i.extras.map(e => e.q+'x '+e.n).join(', ')}</small></div>
             <button class="btn-remove" onclick="removerItem(${idx})">REMOVER</button>
         </div>`).join('');
-    if (carrinho.length > 2) {
-        l.scrollTop = l.scrollHeight;
-    }
 }
 
-function removerItem(index) {
-    totalGeral -= carrinho[index].subtotal;
-    carrinho.splice(index, 1);
+function removerItem(idx, isModal = false) {
+    totalGeral -= carrinho[idx].subtotal;
+    carrinho.splice(idx, 1);
     atualizarCesta();
+    if(isModal) mostrarConfirmacaoPedido();
 }
 
-function removerItemModal(index) {
-    totalGeral -= carrinho[index].subtotal;
-    carrinho.splice(index, 1);
-    atualizarCesta();
-    mostrarConfirmacaoPedido();
-}
-
+// Checkout
 function mostrarConfirmacaoPedido() {
-    if (carrinho.length === 0) {
-        alert("Adicione itens ao carrinho antes de prosseguir!");
-        return;
-    }
-    
-    const modal = document.getElementById('modalPedido');
-    const overlay = document.getElementById('modalOverlay');
-    const lista = document.getElementById('modalListaItens');
-    const total = document.getElementById('modalTotalGeral');
-    
-    lista.innerHTML = carrinho.map((item, idx) => {
-        let numeroRomano = '';
-        switch(idx + 1) {
-            case 1: numeroRomano = 'I'; break;
-            case 2: numeroRomano = 'II'; break;
-            case 3: numeroRomano = 'III'; break;
-            case 4: numeroRomano = 'IV'; break;
-            case 5: numeroRomano = 'V'; break;
-            default: numeroRomano = (idx + 1) + '.'; break;
-        }
-        
-        return `
-            <div class="modal-item">
-                <div class="modal-item-header">
-                    <div class="modal-item-nome">${numeroRomano} ${item.nome}</div>
-                    <div class="modal-item-subtotal">R$ ${item.subtotal.toFixed(2)}</div>
-                </div>
-                ${item.extras.length ? `
-                <div class="modal-item-extras">
-                    ${item.extras.map(extra => `
-                        <div class="extra-item">└ ${extra.q}x ${extra.n}</div>
-                    `).join('')}
-                </div>` : ''}
-                <div style="margin-top: 10px; display: flex; justify-content: flex-end;">
-                    <button class="btn-remove" onclick="removerItemModal(${idx})">REMOVER</button>
-                </div>
-            </div>
-        `;
-    }).join('');
-    
-    total.innerText = `R$ ${totalGeral.toFixed(2)}`;
-    
-    modal.style.display = 'block';
-    overlay.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-}
-
-function fecharModalPedido() {
-    document.getElementById('modalPedido').style.display = 'none';
-    document.getElementById('modalOverlay').style.display = 'none';
-    document.body.style.overflow = 'auto';
+    if (!carrinho.length) return;
+    el('modalListaItens').innerHTML = carrinho.map((item, idx) => `
+        <div class="modal-item">
+            <div class="modal-item-header"><b>${toRoman(idx + 1)} ${item.nome}</b> <span>R$ ${item.subtotal.toFixed(2)}</span></div>
+            ${item.extras.map(e => `<div class="extra-item">└ ${e.q}x ${e.n}</div>`).join('')}
+            <button class="btn-remove" onclick="removerItem(${idx}, true)" style="margin-top:5px">Remover</button>
+        </div>`).join('');
+    el('modalTotalGeral').innerText = `R$ ${totalGeral.toFixed(2)}`;
+    el('modalPedido').style.display = 'block';
+    el('modalOverlay').style.display = 'block';
 }
 
 function prosseguirParaDados() {
-    document.getElementById('modalPedido').style.display = 'none';
-    document.getElementById('modalDados').style.display = 'block';
-    etapaAtual = 'dados';
-    
-    // Formatar máscara de telefone
-    const telefoneInput = document.getElementById('telefoneCliente');
-    telefoneInput.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.length > 11) value = value.substring(0, 11);
-        
-        if (value.length > 10) {
-            value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
-        } else if (value.length > 6) {
-            value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
-        } else if (value.length > 2) {
-            value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
-        } else if (value.length > 0) {
-            value = value.replace(/^(\d*)/, '($1');
-        }
-        
-        e.target.value = value;
-    });
-}
-
-function fecharModalDados() {
-    document.getElementById('modalDados').style.display = 'none';
-    document.getElementById('modalOverlay').style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-function voltarParaPedido() {
-    document.getElementById('modalDados').style.display = 'none';
-    mostrarConfirmacaoPedido();
-}
-
-function toggleEndereco() {
-    const tipoEntrega = document.getElementById('tipoEntrega').value;
-    const grupoEndereco = document.getElementById('grupoEndereco');
-    grupoEndereco.style.display = tipoEntrega === 'entrega' ? 'block' : 'none';
+    el('modalPedido').style.display = 'none';
+    el('modalDados').style.display = 'block';
+    el('telefoneCliente').oninput = (e) => {
+        let v = e.target.value.replace(/\D/g, '');
+        v = v.replace(/^(\d{2})(\d)/g, "($1) $2").replace(/(\d)(\d{4})$/, "$1-$2");
+        e.target.value = v.substring(0, 15);
+    };
 }
 
 function selecionarPagamento(tipo) {
-    // Remover seleção de todos
-    document.querySelectorAll('.opcao-pagamento').forEach(op => {
-        op.classList.remove('selecionada');
-        op.querySelector('.opcao-radio').checked = false;
-    });
-    
-    // Selecionar o tipo escolhido
-    const opcao = document.querySelector(`.opcao-pagamento[onclick*="${tipo}"]`);
-    opcao.classList.add('selecionada');
-    opcao.querySelector('.opcao-radio').checked = true;
-    
-    // Mostrar/ocultar informações do PIX
-    const infoPix = document.getElementById('infoPix');
-    infoPix.style.display = tipo === 'pix' ? 'block' : 'none';
-}
-
-function avancarParaPagamento() {
-    const nome = document.getElementById('nomeCliente').value.trim();
-    const telefone = document.getElementById('telefoneCliente').value.replace(/\D/g, '');
-    
-    if (!nome) {
-        alert("Por favor, informe seu nome.");
-        return;
-    }
-    
-    if (telefone.length < 10 || telefone.length > 11) {
-        alert("Por favor, informe um número de telefone válido (10 ou 11 dígitos).");
-        return;
-    }
-    
-    // Alternar para etapa de pagamento
-    document.getElementById('etapaDados').classList.remove('ativo');
-    document.getElementById('etapaPagamento').classList.add('ativo');
-    etapaAtual = 'pagamento';
-}
-
-function voltarParaDados() {
-    document.getElementById('etapaPagamento').classList.remove('ativo');
-    document.getElementById('etapaDados').classList.add('ativo');
-    etapaAtual = 'dados';
+    document.querySelectorAll('.opcao-pagamento').forEach(op => op.classList.remove('selecionada'));
+    event.currentTarget.classList.add('selecionada');
+    el('pag' + tipo.charAt(0).toUpperCase() + tipo.slice(1)).checked = true;
+    el('infoPix').style.display = tipo === 'pix' ? 'block' : 'none';
 }
 
 async function enviarPedidoWhatsApp() {
-    const nome = document.getElementById('nomeCliente').value.trim();
-    const telefone = document.getElementById('telefoneCliente').value.replace(/\D/g, '');
-    const tipoEntrega = document.getElementById('tipoEntrega').value;
-    const endereco = document.getElementById('enderecoCliente').value.trim();
-    const formaPagamento = document.querySelector('input[name="pagamento"]:checked');
-    
-    if (!nome || telefone.length < 10 || telefone.length > 11) {
-        alert("Por favor, verifique nome e telefone.");
-        return;
-    }
-    
-    if (!formaPagamento) {
-        alert("Por favor, selecione uma forma de pagamento.");
-        return;
-    }
-    
-    if (tipoEntrega === 'entrega' && !endereco) {
-        alert("Por favor, informe o endereço de entrega.");
-        return;
-    }
-    
+    // 1. Captura de valores
+    const nome = el('nomeCliente').value.trim();
+    const tel = el('telefoneCliente').value.trim();
+    const entrega = el('tipoEntrega').value;
+    const endereco = el('enderecoCliente').value.trim();
+    const pagInput = document.querySelector('input[name="pagamento"]:checked');
     const dataHora = new Date().toLocaleString('pt-BR');
-    const itensTexto = carrinho.map(it => `${it.nome} [${it.extras.map(e => e.q+'x '+e.n).join(', ')}]`).join(' | ');
-    const payload = { 
-        dataHora, 
-        nome, 
-        telefone, 
-        tipoEntrega, 
-        endereco: endereco || "N/A", 
-        itens: itensTexto, 
-        total: totalGeral.toFixed(2),
-        pagamento: formaPagamento.value
-    };
+
+    // 2. Validações OBRIGATÓRIAS (Para qualquer forma de pagamento)
+    if (!nome) return alert("Por favor, informe seu Nome.");
+    if (tel.length < 14) return alert("Por favor, informe um Telefone válido.");
+    if (!pagInput) return alert("Por favor, selecione uma forma de pagamento.");
     
-    // Salvar no Google Sheets (se disponível)
-    try { 
-        await fetch(CONST_URL_PLANILHA, { 
-            method: 'POST', 
-            mode: 'no-cors', 
-            body: JSON.stringify(payload) 
-        }); 
-    } catch(e) { /* ignorar erro no-cors */ }
-    
-    // Formatando a mensagem conforme solicitado
-    let msg = `*PEDIDO PÃO DO CISO*\n`;
-    msg += `Cliente: ${nome}\n`;
-    msg += `WhatsApp: ${telefone}\n`;
-    msg += `Opção: ${tipoEntrega.toUpperCase()}\n`;
-    if (tipoEntrega === 'entrega') {
-        msg += `Endereço: ${endereco}\n`;
-        msg += `Taxa a combinar\n\n`;
-    } else {
-        msg += `\n`;
+    // Validação de endereço se for entrega
+    if (entrega === 'entrega' && !endereco) {
+        return alert("Para entregas, o endereço é obrigatório.");
     }
+
+    const pag = pagInput.value;
+
+    // 3. Montagem da Mensagem (idêntica ao seu modelo solicitado)
+    let m = `🍞 NOVO PEDIDO - PÃO DO CISO (${dataHora})\n`;
+    m += `👤 Cliente: ${nome}\n`;
+    m += `📞 WhatsApp: ${tel}\n`;
+    m += `📍 Retirada/Entrega: ${entrega.toUpperCase()}\n`;
     
-    msg += `*ITENS:*\n`;
-    carrinho.forEach((item, idx) => {
-        let numeroRomano = '';
-        switch(idx + 1) {
-            case 1: numeroRomano = 'I'; break;
-            case 2: numeroRomano = 'II'; break;
-            case 3: numeroRomano = 'III'; break;
-            case 4: numeroRomano = 'IV'; break;
-            case 5: numeroRomano = 'V'; break;
-            default: numeroRomano = (idx + 1) + '.'; break;
+    if(entrega === 'entrega') m += `🏠 Endereço: ${endereco}\n`;
+    
+    m += `🛒 ITENS DO PEDIDO:\n`;
+    carrinho.forEach((it, i) => {
+        // I - *1x Nome do Item*
+        m += `${toRoman(i+1)} - *${it.nome}*\n`;
+        
+        if(it.extras.length > 0) {
+            it.extras.forEach(e => m += `└ ${e.q}x ${e.n}\n`);
         }
-        
-        const quantidade = item.nome.split('x ')[0].trim();
-        const nomeItem = item.nome.split('x ')[1];
-        
-        msg += `\n${numeroRomano} ${quantidade}x ${nomeItem}\n`;
-        item.extras.forEach(extra => {
-            msg += `   └ ${extra.q}x ${extra.n}\n`;
-        });
-        msg += `   Subtotal: R$ ${item.subtotal.toFixed(2)}\n`;
+        m += `Subtotal: R$ ${it.subtotal.toFixed(2)}\n`;
     });
     
-    msg += `\n*TOTAL GERAL: R$ ${totalGeral.toFixed(2)}*\n\n`;
-    msg += `*FORMA DE PAGAMENTO:* ${formaPagamento.value.toUpperCase()}\n`;
-    if (formaPagamento.value === 'pix') {
-        msg += `Chave PIX: paodociso@gmail.com\n`;
-    } else {
-        msg += `(Pagamento no recebimento)\n`;
+    m += `💰 TOTAL: R$ ${totalGeral.toFixed(2)}\n`;
+    m += `💳 PAGAMENTO: ${pag.toUpperCase()}\n`;
+    
+    if(pag === 'pix') {
+        m += `🔑 Chave: paodociso@gmail.com (Favor enviar o comprovante após o pagamento)`;
     }
-    
-    msg += `\n${dataHora}`;
-    
-    window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(msg)}`, '_blank');
-    
-    // Limpar carrinho e fechar modal
-    carrinho = [];
-    totalGeral = 0;
-    atualizarCesta();
-    fecharModalDados();
-}
 
-window.onload = () => rd(dadosIniciais);
-</script>
-</body>
+    // 4. Envio e Finalização
+    const linkWa = `https://wa.me/5511982391781?text=${encodeURIComponent(m)}`;
+    
+    // Log na planilha (opcional)
+    try {
+        fetch(CONST_URL_PLANILHA, { 
+            method: 'POST', 
+            mode: 'no-cors', 
+            body: JSON.stringify({ nome, tel, total: totalGeral.toFixed(2), pagamento: pag }) 
+        });
+    } catch(e) {}
+
+    window.open(linkWa, '_blank');
+    location.reload();
+}
+    window.onload = () => rd(dadosIniciais);
+</script></body>
 </html>
