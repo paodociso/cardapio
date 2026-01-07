@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pão do Ciso - V17.5</title>
+    <title>Pão do Ciso - V19.0</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { 
             --banner: #2e2610; --p-green: #2d3a27; --a-brown: #7d4f39; 
             --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; 
-            --red: #b22222; --highlight: #f9f0e0;
+            --red: #b22222; --highlight: #f9f0e0; --grey: #e0e0e0;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); font-family: 'Calibri', sans-serif; color: var(--text); }
@@ -30,12 +30,13 @@
         .prod-header { display: flex; gap: 12px; margin-bottom: 12px; }
         .img-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
         
-        /* FRAMES COMPACTOS */
         .frame-quantidade { background: var(--highlight); border: 1px solid #eaddca; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
         .frame-opcionais { border: 1px solid #eaddca; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; }
         
+        .header-opcionais { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
         .titulo-frame { font-size: 0.75rem; font-weight: 900; color: #000; text-transform: uppercase; letter-spacing: 0.5px; }
         .divisor-opcional { border-top: 1px solid #eaddca; margin: 8px 0; }
+        .lista-opcionais-interna { display: none; }
 
         .linha-controle { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         
@@ -45,31 +46,29 @@
 
         .subtotal-item { text-align: right; font-weight: bold; color: var(--p-green); margin: 10px 0; padding-top: 8px; border-top: 1px solid #eee; }
         .btn-add, .btn-prosseguir { background: var(--p-green); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; }
+        .btn-voltar { background: var(--grey); color: #333; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 10px; }
 
-        /* CESTA E BOTÃO REMOVER VERMELHO */
         #cesta-rodape { background: var(--nav); border-top: 3px solid var(--a-brown); display: none; flex-direction: column; flex-shrink: 0; }
         .cesta-scroll { display: flex; flex-direction: column; max-height: 160px; overflow-y: auto; padding: 10px; gap: 8px; }
         .cesta-item-linha { background: white; padding: 10px; border-radius: 6px; border: 1px solid #c4b49c; display: flex; justify-content: space-between; align-items: center; }
-        .cesta-info { text-align: left; flex: 1; font-size: 0.9rem; padding-right: 10px; }
         .btn-remover-vermelho { background: var(--red); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; }
         .barra-total { background: var(--red); color: white; padding: 10px 15px; display: flex; justify-content: space-between; font-weight: bold; }
 
-        /* MODAIS */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; }
         .modal-pedido { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; padding: 20px; max-height: 85vh; overflow-y: auto; }
 
-        /* PIX */
-        .pix-info-frame { display: none; margin-top: 10px; padding: 15px; background: #fff; border: 1px dashed var(--p-green); border-radius: 8px; text-align: center; }
-        .qr-container { width: 160px; height: 160px; margin: 10px auto; background: #fff; border: 1px solid #ddd; padding: 5px; cursor: pointer; position: relative; overflow: hidden; }
-        .qr-container img { width: 100%; height: 100%; object-fit: contain; }
-        .zoom-hint { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.5); color: white; font-size: 0.6rem; padding: 2px 0; }
-        .btn-copiar-pix { background: #f9f0e0; border: 1px solid var(--nav); padding: 10px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; margin: 5px 0; }
-        #zoomModal { display: none; position: fixed; inset: 0; z-index: 1100; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; cursor: zoom-out; }
-        #zoomModal img { width: 90%; max-width: 500px; background: white; padding: 10px; border-radius: 8px; }
+        .opcao-pagamento { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold; position: relative; background: white; }
+        .opcao-pagamento.selecionada { border-color: var(--p-green); background: #f0f7f0; }
+        .selo-rec { position: absolute; top: -10px; right: 10px; background: var(--p-green); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; }
 
+        .pix-info-frame { display: none; margin-top: 10px; padding: 15px; background: #fff; border: 1px dashed var(--p-green); border-radius: 8px; text-align: center; }
+        .qr-container { width: 160px; height: 160px; margin: 10px auto; background: #fff; border: 1px solid #ddd; padding: 5px; }
+        .qr-container img { width: 100%; height: 100%; object-fit: contain; }
+        .btn-copiar-pix { background: #f9f0e0; border: 1px solid var(--nav); padding: 10px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; margin: 5px 0; }
+        
         input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
-        .btn-whatsapp { background: #25d366; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; text-transform: uppercase; }
-        .versao-tag { text-align: center; font-size: 0.7rem; color: #aaa; margin-top: 10px; }
+        .btn-whatsapp { background: #25d366; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; }
+        .btn-novo-pedido { background: var(--a-brown); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -79,7 +78,7 @@
     <div class="header-info">
         <h1>Pão do Ciso</h1>
         <a href="https://www.instagram.com/paodociso" target="_blank" class="sub-link"><i class="fab fa-instagram"></i> @paodociso</a>
-        <a href="https://wa.me/5511982391781?text=Olá,%20cheguei%20aqui%20pela%20lojinha" class="sub-link"><i class="fab fa-whatsapp"></i> +55 11 98239-1781</a>
+        <a href="https://wa.me/5511982391781" class="sub-link"><i class="fab fa-whatsapp"></i> +55 11 98239-1781</a>
     </div>
 </header>
 
@@ -87,30 +86,25 @@
 
 <div id="cesta-rodape">
     <div class="cesta-scroll" id="cesta-lista"></div>
-    <div class="barra-total"><span>TOTAL DO PEDIDO:</span><span id="total-txt">R$ 0,00</span></div>
+    <div class="barra-total"><span>TOTAL:</span><span id="total-txt">R$ 0,00</span></div>
     <button class="btn-prosseguir" onclick="abrirRevisao()">PROSSEGUIR</button>
 </div>
-
-<div id="zoomModal" onclick="this.style.display='none'"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdMMy5OknVHvs1RNFM3tik8FXT0lwM1JmYjJmtnZJrFb46pcwkOdTMCsRA5wx3whHPeXFm_8Ql6iZCFGmoKLrQiM0lCuVDc5YFLGEwhNplENrWlYhKFGG1ONARuy8VgZR0ROpGK9MT123ng1aL69gz-rmRXGejVZqeUqDwKf81nmxOZ5RqTqJV_Lqw3g/s1000/qrcode-paodociso.png"></div>
 
 <div id="modalOverlay" class="modal-overlay" onclick="fecharModais()"></div>
 
 <div id="modalRevisao" class="modal-pedido">
-    <h3 style="margin-bottom:15px; color:var(--p-green); border-bottom: 2px solid var(--nav); padding-bottom: 10px;">Minha Cesta</h3>
+    <h3 style="margin-bottom:15px; border-bottom: 2px solid var(--nav); padding-bottom: 10px;">Minha Cesta</h3>
     <div id="lista-revisao-completa"></div>
-    <div style="font-weight:bold; margin-top:15px; text-align:right; font-size: 1.1rem;" id="revisao-total-txt"></div>
-    <div style="display:flex; flex-direction: column; gap:10px; margin-top:20px">
-        <button class="btn-prosseguir" onclick="abrirDados()">PROSSEGUIR PARA O PAGAMENTO</button>
-        <button class="btn-add" style="background:#888" onclick="fecharModais()">+ ADICIONAR MAIS ITENS</button>
-    </div>
+    <div style="font-weight:bold; margin-top:15px; text-align:right;" id="revisao-total-txt"></div>
+    <button class="btn-prosseguir" style="margin-top:20px" onclick="abrirDados()">PROSSEGUIR PARA O PAGAMENTO</button>
+    <button class="btn-voltar" onclick="fecharModais()">VOLTAR AO CARDÁPIO</button>
 </div>
 
 <div id="modalDados" class="modal-pedido">
     <div id="etapa-dados">
         <h3 style="margin-bottom:10px">Seus Dados</h3>
         <input type="text" id="nomeCli" placeholder="Nome Completo *">
-        <input type="tel" id="telCli" placeholder="WhatsApp (DDD + Número) *" maxlength="11">
-        <h3 style="margin-top:15px">Entrega</h3>
+        <input type="tel" id="telCli" placeholder="WhatsApp (Somente Números) *" maxlength="11">
         <select id="tipoEntrega" onchange="toggleEndereco()">
             <option value="Retirada">Vou retirar no local</option>
             <option value="Entrega">Entrega em domicílio</option>
@@ -119,40 +113,43 @@
             <input type="text" id="endCli" placeholder="Endereço Completo *">
         </div>
         <button class="btn-add" style="margin-top:15px" onclick="irParaPagamento()">ESCOLHER PAGAMENTO</button>
+        <button class="btn-voltar" onclick="voltarParaRevisao()">VOLTAR PARA CESTA</button>
     </div>
 
     <div id="etapa-pagamento" style="display:none">
         <h3 style="margin-bottom:10px">Forma de Pagamento</h3>
-        <div class="opcao-pagamento" id="opt-pix" onclick="selPgto('Pix', this)" style="border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold; position: relative;">PIX <span class="selo-recomendado" style="position: absolute; top: -10px; right: 10px; background: var(--p-green); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px;">RECOMENDADO</span></div>
+        <div class="opcao-pagamento" onclick="selPgto('Pix', this)">PIX <span class="selo-rec">RECOMENDADO</span></div>
         <div id="pix-detalhes-frame" class="pix-info-frame">
-            <div class="qr-container" onclick="document.getElementById('zoomModal').style.display='flex'">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdMMy5OknVHvs1RNFM3tik8FXT0lwM1JmYjJmtnZJrFb46pcwkOdTMCsRA5wx3whHPeXFm_8Ql6iZCFGmoKLrQiM0lCuVDc5YFLGEwhNplENrWlYhKFGG1ONARuy8VgZR0ROpGK9MT123ng1aL69gz-rmRXGejVZqeUqDwKf81nmxOZ5RqTqJV_Lqw3g/s1000/qrcode-paodociso.png">
-                <div class="zoom-hint"><i class="fas fa-search-plus"></i> VER MAIOR</div>
-            </div>
-            <p style="font-size: 0.85rem;">Chave E-mail:</p>
-            <div class="btn-copiar-pix" onclick="copiarChave()">
-                <b id="chaveTexto">paodociso@gmail.com</b>
-                <i class="far fa-copy"></i>
-            </div>
-            <p id="avisoCopiado" style="font-size: 0.7rem; color: var(--p-green); visibility: hidden;">Copiado!</p>
+            <div class="qr-container"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdMMy5OknVHvs1RNFM3tik8FXT0lwM1JmYjJmtnZJrFb46pcwkOdTMCsRA5wx3whHPeXFm_8Ql6iZCFGmoKLrQiM0lCuVDc5YFLGEwhNplENrWlYhKFGG1ONARuy8VgZR0ROpGK9MT123ng1aL69gz-rmRXGejVZqeUqDwKf81nmxOZ5RqTqJV_Lqw3g/s1000/qrcode-paodociso.png"></div>
+            <div class="btn-copiar-pix" onclick="copiarChave()"><b>paodociso@gmail.com</b> <i class="far fa-copy"></i></div>
+            <p style="font-size:0.75rem; color:var(--a-brown); margin-top:5px">Envie o comprovante por whatsapp após a compra</p>
         </div>
-        <div class="opcao-pagamento" onclick="selPgto('Cartão', this)" style="border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold;">Cartão (Débito/Crédito)</div>
-        <div class="opcao-pagamento" onclick="selPgto('Dinheiro', this)" style="border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold;">Dinheiro</div>
-        <div id="obs-geral-pgto" style="display:none; font-size: 0.8rem; color: #b22222; margin-top: 8px;">O pagamento deverá ser realizado no ato da retirada/recebimento.</div>
-        <button class="btn-add" style="margin-top:20px" onclick="finalizar()">FINALIZAR</button>
+        <div class="opcao-pagamento" onclick="selPgto('Cartão', this)">Cartão (Débito/Crédito)</div>
+        <div class="opcao-pagamento" onclick="selPgto('Dinheiro', this)">Dinheiro</div>
+        <div id="obs-geral-pgto" style="display:none; font-size: 0.8rem; color: var(--red); margin-top: 10px; text-align: center;"><b>O pagamento é feito na retirada/entrega.</b></div>
+        <button class="btn-add" style="margin-top:20px" onclick="finalizar()">FINALIZAR PEDIDO</button>
+        <button class="btn-voltar" onclick="voltarParaDados()">VOLTAR PARA DADOS</button>
     </div>
-    <div class="versao-tag">v.17.5</div>
 </div>
 
 <div id="modalSucesso" class="modal-pedido">
-    <div style="text-align: center; padding: 10px;">
-        <i class="fas fa-check-circle" style="color: #25d366; font-size: 3rem; margin-bottom: 15px;"></i>
-        <h3 style="color: var(--p-green); margin-bottom: 10px;">Finalizado!</h3>
-        <p>Você será direcionado para o envio pelo WhatsApp em instantes...</p>
-        <button class="btn-whatsapp" onclick="enviarWhatsApp()"><i class="fab fa-whatsapp"></i> REENVIAR PELO WHATSAPP</button>
-        <button class="btn-add" style="background: var(--a-brown); margin-top: 15px;" onclick="novoPedido()">FAZER NOVO PEDIDO</button>
+    <div id="status-final" style="text-align: center;">
+        <i class="fas fa-check-circle" style="color: #25d366; font-size: 3rem;"></i>
+        <h3 style="margin: 15px 0;">Pedido Confirmado!</h3>
+        <button class="btn-whatsapp" id="btnEnvZap" onclick="iniciarEnvioWhatsApp()">ENVIAR WHATSAPP</button>
+    </div>
+    <div id="aviso-redirecionando" style="display:none; text-align:center;">
+        <h3 style="color:var(--p-green)">Seu pedido foi salvo!</h3>
+        <p style="margin: 10px 0;">Você será automaticamente direcionado para enviar o pedido por whatsapp...</p>
+        <div style="margin: 20px auto; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #25d366; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+    </div>
+    <div id="novo-pedido-area" style="display:none; text-align:center;">
+        <p style="font-size:0.9rem; color:#666">Deseja pedir mais alguma coisa?</p>
+        <button class="btn-novo-pedido" onclick="reiniciarLoja()">FAZER NOVO PEDIDO</button>
     </div>
 </div>
+
+<style> @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } </style>
 
 <script src="cardapio.js"></script>
 <script>
@@ -161,8 +158,7 @@ let memory = { nome: "", tel: "", entrega: "Retirada", endereco: "" };
 
 function render() {
     const { secoes, opcionaisGerais: opsG, opcionaisPanini: opsP } = dadosIniciais;
-    document.getElementById('render-cli').innerHTML = secoes.map((s, si) => {
-        return `
+    document.getElementById('render-cli').innerHTML = secoes.map((s, si) => `
         <button class="collapsible" onclick="toggleC(this)">${s.nome.toUpperCase()} <span>+</span></button>
         <div class="collapsible-content">
             ${s.itens.map((i, ii) => {
@@ -180,18 +176,39 @@ function render() {
                             <div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val main-qty"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div>
                         </div>
                     </div>
-                    ${iOps.length ? `<div class="frame-opcionais"><span class="titulo-frame">OPCIONAIS</span><div class="divisor-opcional"></div>${iOps.map(o => `
-                        <div class="linha-controle" style="margin-bottom:8px">
-                            <span style="font-size:0.85rem">${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span>
-                            <div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val op-qty" data-n="${o[0]}" data-p="${o[1]}"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div>
-                        </div>`).join('')}</div>` : ''}
+                    ${iOps.length ? `
+                    <div class="frame-opcionais">
+                        <div class="header-opcionais" onclick="toggleOps('${id}')"><span class="titulo-frame">OPCIONAIS</span><span id="seta-${id}">▼</span></div>
+                        <div id="lista-ops-${id}" class="lista-opcionais-interna">
+                            <div class="divisor-opcional"></div>
+                            ${iOps.map(o => `
+                                <div class="linha-controle" style="margin-bottom:8px">
+                                    <span style="font-size:0.85rem">${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span>
+                                    <div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val op-qty" data-n="${o[0]}" data-p="${o[1]}"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div>
+                                </div>`).join('')}
+                        </div>
+                    </div>` : ''}
                     <div class="subtotal-item" id="sub-${id}">Subtotal: R$ 0,00</div>
-                    <button class="btn-add" onclick="add('${i[0]}', ${i[2]}, '${id}')">ADICIONAR À CESTA</button>
+                    <button class="btn-add" onclick="add('${i[0]}', ${i[2]}, '${id}')">ADICIONAR</button>
                 </div>`}).join('')}
-        </div>`}).join('');
+        </div>`).join('');
+    carregarDadosSalvos();
 }
 
-function toggleC(b) { const c = b.nextElementSibling; c.style.display = c.style.display === 'block' ? 'none' : 'block'; b.querySelector('span').innerText = c.style.display === 'block' ? '-' : '+'; }
+function carregarDadosSalvos() {
+    const salvo = localStorage.getItem('paoDoCisoDados');
+    if(salvo) {
+        const d = JSON.parse(salvo);
+        document.getElementById('nomeCli').value = d.nome || "";
+        document.getElementById('telCli').value = d.tel || "";
+        document.getElementById('tipoEntrega').value = d.entrega || "Retirada";
+        document.getElementById('endCli').value = d.endereco || "";
+        toggleEndereco();
+    }
+}
+
+function toggleC(b) { const c = b.nextElementSibling; c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
+function toggleOps(id) { const l = document.getElementById(`lista-ops-${id}`); const s = document.getElementById(`seta-${id}`); l.style.display = l.style.display === 'block' ? 'none' : 'block'; s.innerText = l.style.display === 'block' ? '▲' : '▼'; }
 
 function mudar(d, id, base) {
     const box = event.target.parentNode;
@@ -207,11 +224,11 @@ function mudar(d, id, base) {
 function add(nome, preco, id) {
     const card = document.getElementById(`card-${id}`);
     const q = +card.querySelector('.main-qty').value;
-    let ex = []; let pE = 0;
+    let ex = [], pE = 0;
     card.querySelectorAll('.op-qty').forEach(o => { if(+o.value > 0){ ex.push({n: o.dataset.n, q: o.value}); pE += (+o.value * +o.dataset.p); }});
-    if (q <= 0 && pE <= 0) return alert("Selecione um item!");
+    if (q <= 0 && pE <= 0) return alert("Selecione a quantidade!");
     const sub = q > 0 ? q * (preco + pE) : pE;
-    carrinho.push({ nomeFormatado: q > 0 ? `${q}x ${nome}` : `Opcionais de ${nome}`, sub, ex });
+    carrinho.push({ nomeFormatado: q > 0 ? `${q}x ${nome}` : `Adicionais de ${nome}`, sub, ex });
     totalGeral += sub;
     atualizarCesta();
     card.querySelector('.main-qty').value = 0;
@@ -220,19 +237,21 @@ function add(nome, preco, id) {
 }
 
 function atualizarCesta() {
-    const container = document.getElementById('cesta-rodape');
-    container.style.display = carrinho.length ? 'flex' : 'none';
+    document.getElementById('cesta-rodape').style.display = carrinho.length ? 'flex' : 'none';
     document.getElementById('total-txt').innerText = `R$ ${totalGeral.toFixed(2)}`;
-    document.getElementById('cesta-lista').innerHTML = carrinho.map((i, idx) => {
-        const txtOps = i.ex.map(e => `${e.q}x ${e.n}`).join(', ');
-        return `<div class="cesta-item-linha"><div class="cesta-info"><b>${i.nomeFormatado}</b>${txtOps ? `<br><small>${txtOps}</small>` : ''}<div>R$ ${i.sub.toFixed(2)}</div></div><button class="btn-remover-vermelho" onclick="remover(${idx})">Remover</button></div>`}).join('');
+    document.getElementById('cesta-lista').innerHTML = carrinho.map((i, idx) => `
+        <div class="cesta-item-linha">
+            <div style="font-size:0.85rem"><b>${i.nomeFormatado}</b><br>R$ ${i.sub.toFixed(2)}</div>
+            <button class="btn-remover-vermelho" onclick="remover(${idx})">Remover</button>
+        </div>`).join('');
 }
 
 function remover(idx) {
     totalGeral -= carrinho[idx].sub;
     carrinho.splice(idx, 1);
     atualizarCesta();
-    if(carrinho.length === 0) fecharModais(); else if(document.getElementById('modalRevisao').style.display === 'block') abrirRevisao();
+    if(document.getElementById('modalRevisao').style.display === 'block') abrirRevisao();
+    if(!carrinho.length) fecharModais();
 }
 
 function abrirRevisao() {
@@ -240,97 +259,92 @@ function abrirRevisao() {
     document.getElementById('modalRevisao').style.display = 'block';
     document.getElementById('revisao-total-txt').innerText = `TOTAL: R$ ${totalGeral.toFixed(2)}`;
     document.getElementById('lista-revisao-completa').innerHTML = carrinho.map((i, idx) => `
-        <div style="background:#f9f9f9; padding:12px; border-radius:8px; margin-bottom:10px; border:1px solid #ddd; display:flex; justify-content:space-between; align-items:center;">
-            <div style="text-align:left"><b>${i.nomeFormatado}</b><div>R$ ${i.sub.toFixed(2)}</div></div>
+        <div class="cesta-item-linha" style="margin-bottom:8px">
+            <div><b>${i.nomeFormatado}</b> - R$ ${i.sub.toFixed(2)}</div>
             <button class="btn-remover-vermelho" onclick="remover(${idx})">Remover</button>
         </div>`).join('');
 }
 
-function abrirDados() {
-    document.getElementById('modalRevisao').style.display = 'none';
-    document.getElementById('modalDados').style.display = 'block';
-    document.getElementById('etapa-dados').style.display = 'block';
-    document.getElementById('etapa-pagamento').style.display = 'none';
-    document.getElementById('nomeCli').value = memory.nome;
-    document.getElementById('telCli').value = memory.tel;
-    document.getElementById('tipoEntrega').value = memory.entrega;
-    document.getElementById('endCli').value = memory.endereco;
-    toggleEndereco();
-}
-
+function abrirDados() { document.getElementById('modalRevisao').style.display = 'none'; document.getElementById('modalDados').style.display = 'block'; }
+function voltarParaRevisao() { document.getElementById('modalDados').style.display = 'none'; document.getElementById('modalRevisao').style.display = 'block'; }
+function voltarParaDados() { document.getElementById('etapa-pagamento').style.display = 'none'; document.getElementById('etapa-dados').style.display = 'block'; }
 function toggleEndereco() { document.getElementById('campo-endereco').style.display = document.getElementById('tipoEntrega').value === 'Entrega' ? 'block' : 'none'; }
 
 function irParaPagamento() {
     const n = document.getElementById('nomeCli').value.trim();
-    const t = document.getElementById('telCli').value.replace(/\D/g, '');
+    const tRaw = document.getElementById('telCli').value.trim();
+    const t = tRaw.replace(/\D/g, '');
     const e = document.getElementById('tipoEntrega').value;
     const end = document.getElementById('endCli').value.trim();
-    if(!n || t.length < 10) return alert("Preencha Nome e WhatsApp corretamente.");
-    if(e === 'Entrega' && !end) return alert("Informe o endereço.");
+
+    if(!n) return alert("Informe seu nome!");
+    if(tRaw !== t) return alert("O WhatsApp deve conter apenas números!");
+    if(t.length < 10 || t.length > 11) return alert("Informe um WhatsApp válido (10 ou 11 dígitos)!");
+    if(e === 'Entrega' && !end) return alert("Informe o endereço!");
+
     memory = { nome: n, tel: t, entrega: e, endereco: end };
+    localStorage.setItem('paoDoCisoDados', JSON.stringify(memory));
     document.getElementById('etapa-dados').style.display = 'none';
     document.getElementById('etapa-pagamento').style.display = 'block';
 }
 
 function selPgto(t, el) {
     pgtoSel = t;
-    document.querySelectorAll('.opcao-pagamento').forEach(o => {
-        o.style.borderColor = "#ddd";
-        o.style.background = "white";
-    });
-    el.style.borderColor = "var(--p-green)";
-    el.style.background = "#f0f7f0";
+    document.querySelectorAll('.opcao-pagamento').forEach(o => o.classList.remove('selecionada'));
+    el.classList.add('selecionada');
     document.getElementById('pix-detalhes-frame').style.display = t === 'Pix' ? 'block' : 'none';
     document.getElementById('obs-geral-pgto').style.display = t !== 'Pix' ? 'block' : 'none';
 }
 
-function copiarChave() {
-    const chave = "paodociso@gmail.com";
-    navigator.clipboard.writeText(chave).then(() => {
-        const aviso = document.getElementById('avisoCopiado');
-        aviso.style.visibility = 'visible';
-        setTimeout(() => { aviso.style.visibility = 'hidden'; }, 2000);
-    }).catch(() => { alert("Chave copiada: " + chave); });
-}
-
-function salvarNaPlanilha() {
-    const urlPlanilha = "https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec";
-    const itensTexto = carrinho.map(i => {
-        let det = i.nomeFormatado;
-        if(i.ex.length) det += " (" + i.ex.map(e => `${e.q}x ${e.n}`).join(', ') + ")";
-        return det;
-    }).join(" | ");
-    const dados = { nome: memory.nome, telefone: memory.tel, tipoEntrega: memory.entrega, endereco: memory.endereco || "N/A", itens: itensTexto, total: totalGeral.toFixed(2) };
-    fetch(urlPlanilha, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) });
-}
-
 function finalizar() {
-    if(!pgtoSel) return alert("Selecione o pagamento.");
+    if(!pgtoSel) return alert("Selecione o pagamento!");
     salvarNaPlanilha();
     document.getElementById('modalDados').style.display = 'none';
     document.getElementById('modalSucesso').style.display = 'block';
-    setTimeout(() => { enviarWhatsApp(); }, 3000);
+    // Reset visual do modal de sucesso caso tenha sido usado antes
+    document.getElementById('status-final').style.display = 'block';
+    document.getElementById('aviso-redirecionando').style.display = 'none';
+    document.getElementById('novo-pedido-area').style.display = 'none';
+}
+
+function salvarNaPlanilha() {
+    const url = "https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec";
+    const itens = carrinho.map(i => i.nomeFormatado).join(" | ");
+    const dados = { nome: memory.nome, telefone: memory.tel, tipoEntrega: memory.entrega, endereco: memory.endereco || "N/A", itens: itens, total: totalGeral.toFixed(2), pagamento: pgtoSel };
+    fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) });
+}
+
+function iniciarEnvioWhatsApp() {
+    document.getElementById('status-final').style.display = 'none';
+    document.getElementById('aviso-redirecionando').style.display = 'block';
+
+    setTimeout(() => {
+        enviarWhatsApp();
+        document.getElementById('aviso-redirecionando').style.display = 'none';
+        document.getElementById('novo-pedido-area').style.display = 'block';
+    }, 4000);
 }
 
 function enviarWhatsApp() {
-    let msg = `*NOVO PEDIDO - PÃO DO CISO*\n\n`;
-    msg += `*Cliente:* ${memory.nome}\n*WhatsApp:* ${memory.tel}\n*Tipo:* ${memory.entrega}\n`;
-    if(memory.entrega === 'Entrega') msg += `*Endereço:* ${memory.endereco}\n`;
-    msg += `*Pagamento:* ${pgtoSel}\n\n*ITENS:*\n`;
-    carrinho.forEach(i => {
-        msg += `- ${i.nomeFormatado} (R$ ${i.sub.toFixed(2)})\n`;
-        i.ex.forEach(e => msg += `  └ ${e.q}x ${e.n}\n`);
-    });
-    msg += `\n*TOTAL: R$ ${totalGeral.toFixed(2)}*`;
+    let msg = `*PÃO DO CISO - PEDIDO*\n\nCliente: ${memory.nome}\nPagamento: ${pgtoSel}\nEntrega: ${memory.entrega}\n`;
+    if(memory.endereco) msg += `Endereço: ${memory.endereco}\n`;
+    msg += `\n*ITENS:*\n`;
+    carrinho.forEach(i => msg += `- ${i.nomeFormatado}\n`);
+    msg += `\n*Total: R$ ${totalGeral.toFixed(2)}*`;
     window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(msg)}`);
 }
 
-function novoPedido() {
+function reiniciarLoja() {
     carrinho = []; totalGeral = 0; pgtoSel = "";
-    atualizarCesta(); fecharModais();
-    document.querySelector('.main-scroll').scrollTop = 0;
+    atualizarCesta();
+    fecharModais();
+    document.getElementById('etapa-pagamento').style.display = 'none';
+    document.getElementById('etapa-dados').style.display = 'block';
+    document.querySelectorAll('.main-qty, .op-qty').forEach(i => i.value = 0);
+    document.querySelectorAll('.subtotal-item').forEach(i => i.innerText = "Subtotal: R$ 0,00");
 }
 
+function copiarChave() { navigator.clipboard.writeText("paodociso@gmail.com").then(() => alert("Chave PIX copiada!")); }
 function fecharModais() { document.querySelectorAll('.modal-pedido, .modal-overlay').forEach(m => m.style.display = 'none'); }
 
 window.onload = render;
