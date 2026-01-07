@@ -168,17 +168,131 @@ const dadosIniciais = {
   "opcionaisBebidas": [
     [
       "Taça de vidro",
-      "50.00"
+      "40.00"
     ],
     [
       "Taça de cristal",
-      "80.00"
+      "60.00"
     ]
   ],
   "opcionaisAntipasti": [
     [
       "Potinho de vidro",
       "5.00"
+    ]
+  ],
+  "opcionaisTábuas": [
+    [
+      "Alichella",
+      "10.00"
+    ],
+    [
+      "Sardella",
+      "10.00"
+    ],
+    [
+      "Melanzane sott'olio",
+      "10.00"
+    ],
+    [
+      "Manteiga",
+      "3.00"
+    ],
+    [
+      "Manteiga temperada com alho e parmesão",
+      "3.00"
+    ],
+    [
+      "Confit de alho",
+      "4.00"
+    ],
+    [
+      "Confit de alho e tomates cereja",
+      "4.00"
+    ],
+    [
+      "Picles de cebola",
+      "3.00"
+    ],
+    [
+      "Bresaola",
+      "15.00"
+    ],
+    [
+      "Lombo piripiri",
+      "15.00"
+    ],
+    [
+      "Mortadela",
+      "10.00"
+    ],
+    [
+      "Pastrame",
+      "15.00"
+    ],
+    [
+      "Presunto cru",
+      "15.00"
+    ],
+    [
+      "Salame",
+      "11.00"
+    ],
+    [
+      "Chancliche",
+      "7.00"
+    ],
+    [
+      "Chancliche apimentado",
+      "7.00"
+    ],
+    [
+      "Muçarela",
+      "5.00"
+    ],
+    [
+      "Provolone",
+      "8.00"
+    ],
+    [
+      "Queijo Prato",
+      "7.00"
+    ],
+    [
+      "Tomate",
+      "3.00"
+    ],
+    [
+      "Azeite",
+      "3.00"
+    ],
+    [
+      "Pesto tradicional (manjericão)",
+      "4.00"
+    ],
+    [
+      "Pesto de azeitona",
+      "4.00"
+    ],
+    [
+      "Maionese",
+      "3.00"
+    ],
+    [
+      "Maionese temperada",
+      "3.00"
+    ],
+    [
+      "Pastinha de goronzola",
+      "4.00"
+    ],
+    [
+      "Pastinha de parmesão",
+      "4.00"
+    ],
+    [
+      "Pastinha de pimentão vermelho",
+      "4.00"
     ]
   ],
   //SECOES
@@ -375,14 +489,34 @@ const dadosIniciais = {
           "100.00",
           "https://www.seara.com.br/wp-content/uploads/2025/09/tabua-de-frios-portal-minha-receita-2.jpg",
           [
-            "Alichella (100g)",
-            "Sardella (100g)",
-            "Melanzane Sott'olio (100g)",
-            "Manteiga temperada (100g)",
-            "Confit de alho (100g)",
-            "Confit de alho e tomates cereja (100g)",
-            "Picles de cebola (100g)",
-            "Potinho de vidro"
+            "Alichella",
+            "Sardella",
+            "Melanzane sott'olio",
+            "Manteiga",
+            "Manteiga temperada com alho e parmesão",
+            "Confit de alho",
+            "Confit de alho e tomates cereja",
+            "Picles de cebola",
+            "Bresaola",
+            "Lombo piripiri",
+            "Mortadela",
+            "Pastrame",
+            "Presunto cru",
+            "Salame",
+            "Chancliche",
+            "Chancliche apimentado",
+            "Muçarela",
+            "Provolone",
+            "Queijo Prato",
+            "Tomate",
+            "Azeite",
+            "Pesto tradicional (manjericão)",
+            "Pesto de azeitona",
+            "Maionese",
+            "Maionese temperada",
+            "Pastinha de goronzola",
+            "Pastinha de parmesão",
+            "Pastinha de pimentão vermelho"
           ],
           "ativo"
         ]
@@ -392,20 +526,20 @@ const dadosIniciais = {
       "nome": "Bebidas",
       "itens": [
         [
-          "Vinho Bola",
-          "Vinho selecionado.",
-          "100.00",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREQGOGeHIwTnPRNFEkMPRCEnkLNF1brDq2zw&s",
+          "Vinho Casillero del Diabo",
+          "Vinho tinto",
+          "85.00",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYaHOkBDckYwSbN7zRWW8jBaTbpAspAhL7Yw&s",
           [
-            "Taça de cristal",
-            "Taça de vidro"
+            "Taça de vidro",
+            "Taça de cristal"
           ]
         ],
         [
-          "Vinho J. P. Chenet",
-          "Vinho branco",
-          "115.00",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6X19526-TtkTTnEBkT67QDXMYecLSsGDtlg&s",
+          "Vinho Gato Negro",
+          "Vinho tindo",
+          "70.00",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu2fnk2nSTof_uQEhdkvXZph42MlGq_jjLKQ&s",
           [
             "Taça de vidro",
             "Taça de cristal"
