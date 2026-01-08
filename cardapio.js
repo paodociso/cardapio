@@ -524,7 +524,7 @@ const dadosIniciais = {
       "itens": [
         [
           "Vinho Casillero del Diabo",
-          "Vinho tinto",
+          "Apresenta um perfil estruturado, com taninos presentes e notas de frutas escuras. Originário de vinhedos tradicionais do Chile, resulta em um vinho de caráter definido. É uma opção para quem aprecia um tinto clássico e equilibrado.",
           "85.00",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYaHOkBDckYwSbN7zRWW8jBaTbpAspAhL7Yw&s",
           [
@@ -534,7 +534,7 @@ const dadosIniciais = {
         ],
         [
           "Vinho Gato Negro",
-          "Vinho tindo",
+          "Oferece um estilo acessível, com corpo médio e caráter frutado. Sua produção é voltada para a consistência e fácil harmonização. É uma escolha adequada para o consumo despretensioso no dia a dia.",
           "70.00",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu2fnk2nSTof_uQEhdkvXZph42MlGq_jjLKQ&s",
           [
