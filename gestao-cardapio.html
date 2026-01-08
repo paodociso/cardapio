@@ -10,54 +10,66 @@
         .container { max-width: 1100px; margin: 0 auto; }
         header { background: var(--p-green); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
         
-        .nav-abas { display: flex; gap: 5px; margin-bottom: 20px; border-bottom: 2px solid #ddd; }
+        .nav-aba-container { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #ddd; margin-bottom: 20px; }
+        .nav-abas { display: flex; gap: 5px; }
         .aba { padding: 12px 25px; cursor: pointer; border-radius: 8px 8px 0 0; font-weight: bold; background: #ddd; color: #666; }
         .aba.ativa { background: var(--a-brown); color: white; }
         .aba-content { display: none; }
         .aba-content.ativa { display: block; }
 
         button { padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; background: var(--a-brown); color: white; font-size: 10px; text-transform: uppercase; }
-        .btn-verde { background: #28a745; }
+        .btn-verde, .btn-azul { background: var(--a-brown); }
         .btn-vermelho { background: #dc3545; }
-        .btn-azul { background: #007bff; }
         .btn-cinza { background: #6c757d; }
+        .btn-duplicar { background: #28a745; } 
 
         .secao-container { background: white; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #ddd; overflow: hidden; }
-        .secao-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #f8f9fa; cursor: pointer; }
-        .drag-handle-secao { cursor: grab; margin-right: 15px; color: #888; font-size: 20px; padding: 5px; }
-        .secao-titulo { flex: 1; font-weight: bold; color: var(--p-green); font-size: 15px; }
-        .secao-corpo { display: block; padding: 0 10px; background: #fff; border-top: 1px solid #eee; min-height: 50px; }
+        .secao-header { display: flex; justify-content: space-between; align-items: center; padding: 0; background: #f8f9fa; cursor: pointer; }
+        .secao-corpo { display: block; padding: 0; background: #fff; border-top: 1px solid #eee; min-height: 50px; }
         .secao-corpo.fechado { display: none; }
 
-        .item-detalhado { display: flex; gap: 15px; padding: 15px; border-bottom: 1px solid #eee; align-items: flex-start; background: white; cursor: grab; position: relative; }
-        .drag-handle-item { color: #ccc; font-size: 18px; align-self: center; cursor: grab; padding-right: 5px; }
+        .drag-handle-secao, .drag-handle-item, .drag-handle-opcional { 
+            width: 60px;
+            cursor: grab; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            align-self: stretch;
+        }
+        .drag-handle-secao { background: #e9ecef; border-right: 2px solid #ddd; color: #555; font-size: 20px; min-height: 60px; }
+        .drag-handle-item { background: #f1f3f5; border-right: 1px solid #dee2e6; color: #888; font-size: 22px; }
+        .drag-handle-opcional { background: #f1f3f5; border-right: 1px solid #dee2e6; color: #888; font-size: 18px; }
+        
+        .drag-handle-secao:hover, .drag-handle-item:hover, .drag-handle-opcional:hover { background: #dee2e6; color: #000; }
+
+        .item-detalhado, .opcional-linha { display: flex; border-bottom: 1px solid #eee; align-items: stretch; background: white; position: relative; }
+        .item-conteudo, .opcional-conteudo { display: flex; padding: 15px; gap: 15px; flex: 1; align-items: flex-start; }
+        
+        .acoes-item { display: flex; flex-direction: column; gap: 5px; justify-content: center; padding-right: 15px; }
+        
+        .opcional-conteudo { padding: 10px 15px; align-items: center; justify-content: space-between; flex: 1; }
+        
         .img-preview { width: 85px; height: 85px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #eee; border: 1px solid #ddd; }
         .item-info { flex: 1; }
         .item-info strong { font-size: 16px; color: var(--p-green); display: block; margin-bottom: 4px; }
         .item-info p { margin: 4px 0; font-size: 13px; color: #666; }
-        .item-info b { color: var(--a-brown); font-size: 14px; }
+        .item-info b, .opcional-conteudo b { color: var(--a-brown); font-size: 14px; }
         
-        .acoes-item { display: flex; gap: 5px; align-self: center; }
-
-        .badges-opcionais { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-        .badge { background: #f1f3f5; padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #666; border: 1px solid #ddd; }
+        .opc-secao-header { background: #f8f9fa; margin-top: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; font-weight: bold; font-size: 13px; border: 1px solid #eee; border-left: 5px solid var(--a-brown); overflow: hidden; }
+        .opc-lista-container { padding: 0; display: block; border: 1px solid #eee; border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; min-height: 20px; }
+        .opc-lista-container.fechado { display: none; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
         .modal-card { background: white; width: 95%; max-width: 650px; padding: 25px; border-radius: 15px; max-height: 90vh; overflow-y: auto; }
-
         .campo-grupo { margin-bottom: 15px; }
         .campo-grupo label { display: block; font-weight: bold; font-size: 12px; margin-bottom: 5px; color: var(--p-green); }
-        .campo-grupo input, .campo-grupo textarea, .campo-grupo select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        
+        .campo-grupo input, .campo-grupo textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         .lista-selecao-opcionais { border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-height: 200px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 8px; background: #fafafa; }
         .balao-opcional { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid #ccc; background: #fff; font-size: 11px; transition: all 0.2s; user-select: none; }
         .balao-opcional.selecionado { background: var(--a-brown); color: white; border-color: var(--a-brown); }
-
-        .opc-secao-header { background: #f8f9fa; padding: 12px 15px; margin-top: 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; font-size: 13px; border: 1px solid #eee; border-left: 5px solid var(--a-brown); }
-        .opc-lista-container { padding: 5px 0 15px 0; display: block; }
-        .opc-lista-container.fechado { display: none; }
-
         .codigo-viewer { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 12px; font-family: 'Consolas', monospace; white-space: pre-wrap; font-size: 13px; border: 1px solid #333; overflow-x: auto; line-height: 1.5; }
+        .badge { background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-right: 4px; color: #666; }
     </style>
 </head>
 <body>
@@ -68,46 +80,20 @@
         <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
         <input type="hidden" id="item-indice-secao">
         <input type="hidden" id="item-indice-item">
-        
-        <div class="campo-grupo">
-            <label>SEÇÃO DE DESTINO</label>
-            <input type="text" id="campo-secao-nome" readonly style="background: #f0f0f0; font-weight: bold; color: #555;">
-        </div>
-
-        <div class="campo-grupo">
-            <label>NOME DO ITEM</label>
-            <input type="text" id="campo-nome-item" placeholder="Ex: Panini de Frango">
-        </div>
-
-        <div class="campo-grupo">
-            <label>DESCRIÇÃO</label>
-            <textarea id="campo-descricao-item" rows="2" placeholder="Detalhes do produto..."></textarea>
-        </div>
-
+        <div class="campo-grupo"><label>SEÇÃO DE DESTINO</label><input type="text" id="campo-secao-nome" readonly style="background: #f0f0f0; font-weight: bold; color: #555;"></div>
+        <div class="campo-grupo"><label>NOME DO ITEM</label><input type="text" id="campo-nome-item"></div>
+        <div class="campo-grupo"><label>DESCRIÇÃO</label><textarea id="campo-descricao-item" rows="2"></textarea></div>
         <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px;">
-            <div class="campo-grupo">
-                <label>VALOR (R$)</label>
-                <input type="number" id="campo-valor-item" step="0.01" placeholder="0.00">
-            </div>
-            <div class="campo-grupo">
-                <label>IMAGEM (URL) 
-                   <button onclick="buscarImagemHQ()" class="btn-azul" style="float: right; font-size: 8px; padding: 3px 6px; margin-top: -3px;">BUSCAR IMAGEM</button>
-                </label>
-                <input type="text" id="campo-imagem-item" placeholder="https://link-da-foto.jpg">
-            </div>
+            <div class="campo-grupo"><label>VALOR (R$)</label><input type="number" id="campo-valor-item" step="0.01"></div>
+            <div class="campo-grupo"><label>IMAGEM (URL) <button onclick="buscarImagemHQ()" class="btn-cinza" style="float: right; font-size: 8px;">BUSCAR</button></label><input type="text" id="campo-imagem-item"></div>
         </div>
-
         <div class="campo-grupo">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                <label id="label-opcionais-dinamico" style="margin-bottom: 0;">OPCIONAIS DISPONÍVEIS</label>
-                <button onclick="alternarTodosOpcionais()" class="btn-azul" style="font-size: 8px; padding: 4px 8px;">Inverter Seleção</button>
-            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;"><label id="label-opcionais-dinamico">OPCIONAIS DISPONÍVEIS</label><button onclick="alternarTodosOpcionais()" class="btn-cinza" style="font-size: 8px;">Inverter Seleção</button></div>
             <div id="lista-opcionais-disponiveis" class="lista-selecao-opcionais"></div>
         </div>
-
         <div style="margin-top: 20px; text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
             <button onclick="document.getElementById('modal-item').style.display='none'" class="btn-cinza">Cancelar</button>
-            <button onclick="salvarDadosDoItem()" class="btn-verde" id="botao-salvar-item">Salvar Item</button>
+            <button onclick="salvarDadosDoItem()" class="btn-verde">Salvar Item</button>
         </div>
     </div>
 </div>
@@ -117,42 +103,52 @@
         <h2 style="color: var(--p-green);">Status do Banco de Dados</h2>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
         <p><span id="status-texto" style="font-weight: bold; font-size: 1.2em;">A verificar...</span></p>
-        <p><strong>Caminho Completo da Origem:</strong></p>
-        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #ddd; word-break: break-all; font-family: monospace; font-size: 11px; color: #555;" id="modal-caminho-js"></div>
-        <br>
-        <button onclick="document.getElementById('modal-status-inicial').style.display='none'" class="btn-verde" style="padding: 12px 30px; font-size: 12px;">ACESSAR PAINEL</button>
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #ddd; word-break: break-all; font-family: monospace; font-size: 11px; color: #555;" id="modal-caminho-js"></div><br>
+        <button onclick="document.getElementById('modal-status-inicial').style.display='none'" class="btn-verde" style="padding: 12px 30px;">ACESSAR PAINEL</button>
     </div>
 </div>
 
 <div class="container">
     <header>
         <h1>Painel de Controle v11.3</h1>
-        <p>Gestão Pão do Ciso: Auto-seleção de novos opcionais</p>
-        <p id="caminho-js-banner" style="font-size: 11px; opacity: 0.7; margin-top: 10px; word-break: break-all; font-family: monospace;"></p>
+        <p id="caminho-js-banner" style="font-size: 13px; opacity: 1;"></p>
     </header>
 
-    <div class="nav-abas">
-        <div id="aba-itens" class="aba ativa" onclick="mudarAba('itens')">PRODUTOS</div>
-        <div id="aba-secoes" class="aba" onclick="mudarAba('secoes')">SEÇÕES</div>
-        <div id="aba-opcionais" class="aba" onclick="mudarAba('opcionais')">BANCO DE OPCIONAIS</div>
-        <div id="aba-codigo" class="aba" onclick="mudarAba('codigo')">VER CÓDIGO</div>
-        <div style="flex:1; text-align: right; padding-top: 5px; display: flex; gap: 8px; justify-content: flex-end;">
-            <button onclick="baixar()" class="btn-verde">BAIXAR ARQUIVO</button>
+    <div class="nav-aba-container">
+        <div class="nav-abas">
+            <div id="aba-itens" class="aba ativa" onclick="mudarAba('itens')">PRODUTOS</div>
+            <div id="aba-secoes" class="aba" onclick="mudarAba('secoes')">SEÇÕES</div>
+            <div id="aba-opcionais" class="aba" onclick="mudarAba('opcionais')">OPCIONAIS</div>
+            <div id="aba-codigo" class="aba" onclick="mudarAba('codigo')">VER CÓDIGO</div>
+        </div>
+        <div style="padding-bottom: 10px;">
+            <button id="btn-baixar-main" onclick="baixar()" class="btn-verde">BAIXAR cardapio.js</button>
         </div>
     </div>
 
     <div id="view-itens" class="aba-content ativa">
+        <div style="display:flex; justify-content: flex-end; margin-bottom: 10px;">
+            <button onclick="toggleMaster('render-lista-secoes')" class="btn-cinza" style="font-size: 9px;">EXPANDIR/RETRAIR</button>
+        </div>
         <div id="render-lista-secoes"></div>
     </div>
 
     <div id="view-secoes" class="aba-content">
         <div style="background:#fff; padding:25px; border-radius:12px; border:1px solid #ddd;">
             <h3>Gerir Categorias</h3>
-            <div style="display:flex; gap:10px;">
+            <div style="display:flex; gap:10px; margin-bottom: 20px;">
                 <input type="text" id="nova-secao-nome" placeholder="Ex: Panini, Pães..." style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
                 <button onclick="adicionarSecao()" class="btn-verde">Adicionar</button>
             </div>
-            <div id="render-secoes-gestao" style="margin-top:20px;"></div>
+            
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h4 style="margin:0;">Categorias Cadastradas</h4>
+                <div style="display:flex; gap:5px;">
+                    <button onclick="toggleAccordions('secoes-gestao-container', false)" class="btn-cinza" style="font-size: 9px;">Recolher Todas</button>
+                    <button onclick="toggleAccordions('secoes-gestao-container', true)" class="btn-cinza" style="font-size: 9px;">Expandir Todas</button>
+                </div>
+            </div>
+            <div id="secoes-gestao-container"></div>
         </div>
     </div>
 
@@ -170,8 +166,7 @@
                 <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <h3 style="margin:0;">Listagem de Opcionais</h3>
                     <div style="display:flex; gap:5px;">
-                        <button onclick="toggleTodosOpcionaisBanco(false)" class="btn-cinza" style="font-size: 9px;">Recolher Todos</button>
-                        <button onclick="toggleTodosOpcionaisBanco(true)" class="btn-cinza" style="font-size: 9px;">Expandir Todos</button>
+                        <button onclick="toggleMaster('render-opcionais-lista')" class="btn-cinza" style="font-size: 9px;">EXPANDIR/RETRAIR</button>
                     </div>
                 </div>
                 <div id="render-opcionais-lista"></div>
@@ -181,10 +176,6 @@
 
     <div id="view-codigo" class="aba-content">
         <div style="background:#fff; padding:25px; border-radius:12px; border:1px solid #ddd;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="margin:0;">Conteúdo do cardapio.js</h3>
-                <button onclick="baixar()" class="btn-verde">Baixar Arquivo</button>
-            </div>
             <div id="bloco-codigo-interno" class="codigo-viewer"></div>
         </div>
     </div>
@@ -193,263 +184,316 @@
 <script id="script-cardapio" src="cardapio.js"></script>
 
 <script>
-    let db = typeof dadosIniciais !== 'undefined' ? dadosIniciais : null;
+let db = typeof dadosIniciais !== 'undefined' ? dadosIniciais : { secoes: [] };
 
-    function buscarImagemHQ() {
-        const nomeItem = document.getElementById('campo-nome-item').value;
-        if (!nomeItem) { alert("Digite o nome do item primeiro."); return; }
-        const query = encodeURIComponent(nomeItem + " food photography high resolution");
-        window.open(`https://www.google.com/search?q=${query}&tbm=isch&tbs=isz:l`, '_blank');
-    }
+function mudarAba(id) {
+    document.querySelectorAll('.aba-content, .aba').forEach(el => el.classList.remove('ativa'));
+    document.getElementById('view-' + id).classList.add('ativa');
+    document.getElementById('aba-' + id).classList.add('ativa');
+    if(id === 'itens') renderizarTudo();
+    if(id === 'secoes') renderizarSecoesGestao();
+    if(id === 'opcionais') { atualizarDropdownDestino(); renderizarOpcionaisLista(); }
+    if(id === 'codigo') { document.getElementById('bloco-codigo-interno').innerText = construirSaidaJS(); }
+}
 
-    function mudarAba(id) {
-        document.querySelectorAll('.aba-content').forEach(c => c.classList.remove('ativa'));
-        document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
-        document.getElementById('view-' + id).classList.add('ativa');
-        document.getElementById('aba-' + id).classList.add('ativa');
-        if(id === 'itens') renderizarTudo();
-        if(id === 'secoes') renderizarSecoesGestao();
-        if(id === 'opcionais') { atualizarDropdownDestino(); renderizarOpcionaisLista(); }
-        if(id === 'codigo') { document.getElementById('bloco-codigo-interno').innerText = construirSaidaJS(); }
-    }
+function toggleAccordions(containerId, expandir) {
+    const container = document.getElementById(containerId);
+    const corpos = container.querySelectorAll('.secao-corpo, .opc-lista-container');
+    corpos.forEach(c => expandir ? c.classList.remove('fechado') : c.classList.add('fechado'));
+}
 
-    function toggleTodosOpcionaisBanco(expandir) {
-        document.querySelectorAll('.opc-lista-container').forEach(c => expandir ? c.classList.remove('fechado') : c.classList.add('fechado'));
-    }
+function toggleMaster(containerId) {
+    const container = document.getElementById(containerId);
+    const corpos = container.querySelectorAll('.secao-corpo, .opc-lista-container');
+    const algumAberto = Array.from(corpos).some(c => !c.classList.contains('fechado'));
+    corpos.forEach(c => algumAberto ? c.classList.add('fechado') : c.classList.remove('fechado'));
+}
 
-    function renderizarOpcionaisLista() {
-        const container = document.getElementById('render-opcionais-lista');
-        let html = "";
-        for (let chave in db) {
-            if (chave.startsWith('opcionais') && Array.isArray(db[chave]) && db[chave].length > 0) {
-                const titulo = chave.replace('opcionais', '').toUpperCase();
-                html += `
-                <div class="opc-grupo-wrapper">
-                    <div class="opc-secao-header" onclick="this.nextElementSibling.classList.toggle('fechado')">
-                        <span>${titulo} (${db[chave].length})</span>
-                        <span class="icon-seta">↕</span>
-                    </div>
-                    <div class="opc-lista-container">
-                        ${db[chave].map((opcional, indice) => `
-                            <div style="display:flex; justify-content:space-between; background:#fff; padding:10px; border-bottom:1px solid #eee; font-size:12px; align-items:center;">
-                                <span>${opcional[0]} - <b>R$ ${opcional[1]}</b></span>
-                                <button class="btn-vermelho" style="padding:4px 8px; font-size:8px;" onclick="excluirOpcional('${chave}', ${indice})">REMOVER</button>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>`;
-            }
-        }
-        container.innerHTML = html || "<p style='color:#999; padding:20px;'>Nenhum opcional cadastrado.</p>";
-    }
-
-    function carregarBaloesOpcionais(nomeSecao, listaSalvaNoItem = null) {
-        const container = document.getElementById('lista-opcionais-disponiveis');
-        const label = document.getElementById('label-opcionais-dinamico');
-        container.innerHTML = "";
-        const chaveBanco = "opcionais" + nomeSecao;
-        label.innerText = `OPCIONAIS DISPONÍVEIS PARA: ${nomeSecao.toUpperCase()}`;
-        if (!db[chaveBanco] || db[chaveBanco].length === 0) {
-            container.innerHTML = `<p style="font-size:11px; color:#999; padding:10px;">Nenhum opcional cadastrado para a seção "${nomeSecao}".</p>`;
-            return;
-        }
-        db[chaveBanco].forEach(opcional => {
-            const nomeOpcional = opcional[0];
-            let selecionado = (listaSalvaNoItem === null || listaSalvaNoItem.includes(nomeOpcional)) ? "selecionado" : "";
-            container.innerHTML += `<div class="balao-opcional ${selecionado}" onclick="this.classList.toggle('selecionado')">${nomeOpcional}</div>`;
-        });
-    }
-
-    function renderizarTudo() {
-        if(!db) return;
-        const container = document.getElementById('render-lista-secoes');
-        container.innerHTML = "";
-        db.secoes.forEach((secao, indiceSecao) => {
-            const div = document.createElement('div');
-            div.className = 'secao-container';
-            div.innerHTML = `
-                <div class="secao-header" onclick="this.nextElementSibling.classList.toggle('fechado')">
-                    <span class="drag-handle-secao">☰</span>
-                    <span class="secao-titulo">${secao.nome.toUpperCase()} (${secao.itens.length})</span>
-                    <button class="btn-verde" style="margin-right: 15px;" onclick="event.stopPropagation(); abrirModalParaNovoItem(${indiceSecao})">NOVO ITEM</button>
-                    <span>↕</span>
+function renderizarSecoesGestao() {
+    const container = document.getElementById('secoes-gestao-container');
+    container.innerHTML = db.secoes.map((secao, indice) => `
+        <div class="secao-container">
+            <div class="secao-header" onclick="this.nextElementSibling.classList.toggle('fechado')">
+                <span style="font-weight:bold; color:var(--p-green); padding: 12px 20px;">${secao.nome.toUpperCase()}</span>
+                <span style="padding-right: 20px;">Clique para gerir ↕</span>
+            </div>
+            <div class="secao-corpo fechado" style="padding:15px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span>Contém <strong>${secao.itens.length}</strong> produtos.</span>
+                    <button class="btn-vermelho" onclick="excluirSecao(${indice})">EXCLUIR CATEGORIA</button>
                 </div>
-                <div class="secao-corpo" data-sidx="${indiceSecao}"></div>
-            `;
-            const corpo = div.querySelector('.secao-corpo');
-            secao.itens.forEach((item, indiceItem) => {
-                const badges = item[4] ? item[4].map(opcional => `<span class="badge">${opcional}</span>`).join('') : '';
-                corpo.innerHTML += `
-                    <div class="item-detalhado">
-                        <span class="drag-handle-item">↕</span>
-                        <img src="${item[3] || 'https://via.placeholder.com/85'}" class="img-preview" onerror="this.src='https://via.placeholder.com/85'">
-                        <div class="item-info">
-                            <strong>${item[0]}</strong>
-                            <p>${item[1] || 'Sem descrição.'}</p>
-                            <b>R$ ${item[2]}</b>
-                            <div class="badges-opcionais">${badges}</div>
+            </div>
+        </div>`).join('');
+}
+
+function renderizarOpcionaisLista() {
+    const container = document.getElementById('render-opcionais-lista');
+    const estados = Array.from(container.querySelectorAll('.opc-lista-container')).map(c => c.classList.contains('fechado'));
+    container.innerHTML = "";
+    let i = 0;
+    let chavesOpcionais = Object.keys(db).filter(k => k.startsWith('opcionais') && Array.isArray(db[k]) && db[k].length > 0);
+
+    chavesOpcionais.forEach((chave) => {
+        const titulo = chave.replace('opcionais', '').toUpperCase();
+        const fechado = estados[i] === false ? '' : 'fechado';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'opc-grupo-wrapper';
+        wrapper.style.marginBottom = '10px';
+        wrapper.setAttribute('data-chave', chave);
+        
+        wrapper.innerHTML = `
+            <div class="opc-secao-header">
+                <div class="drag-handle-secao">☰</div>
+                <div style="flex:1; display:flex; justify-content:space-between; padding: 12px 15px;" onclick="this.parentElement.nextElementSibling.classList.toggle('fechado')">
+                    <span>${titulo} (${db[chave].length})</span>
+                    <span class="icon-seta">↕</span>
+                </div>
+            </div>
+            <div class="opc-lista-container ${fechado}" id="sort-opc-${chave}">
+                ${db[chave].map((opcional, indice) => `
+                    <div class="opcional-linha" data-idx="${indice}">
+                        <div class="drag-handle-opcional">⋮</div>
+                        <div class="opcional-conteudo">
+                            <span>${opcional[0]} - <b>R$ ${opcional[1]}</b></span>
+                            <button class="btn-vermelho" style="padding:4px 8px; font-size:8px;" onclick="excluirOpcional('${chave}', ${indice})">REMOVER</button>
                         </div>
-                        <div class="acoes-item">
-                            <button class="btn-cinza" onclick="event.stopPropagation(); abrirModalParaEditarItem(${indiceSecao},${indiceItem})">EDITAR</button>
-                            <button class="btn-azul" onclick="event.stopPropagation(); duplicarItem(${indiceSecao},${indiceItem})">DUPLICAR</button>
-                            <button class="btn-vermelho" onclick="event.stopPropagation(); excluirItem(${indiceSecao},${indiceItem})">REMOVER</button>
+                    </div>
+                `).join('')}
+            </div>`;
+        container.appendChild(wrapper);
+
+        new Sortable(document.getElementById(`sort-opc-${chave}`), {
+            animation: 150,
+            handle: '.drag-handle-opcional',
+            onEnd: (evt) => {
+                const lista = db[chave];
+                const item = lista.splice(evt.oldIndex, 1)[0];
+                lista.splice(evt.newIndex, 0, item);
+            }
+        });
+        i++;
+    });
+
+    new Sortable(container, {
+        animation: 150,
+        handle: '.drag-handle-secao',
+        onEnd: (evt) => {
+            const keys = Object.keys(db);
+            const otherKeys = keys.filter(k => !k.startsWith('opcionais'));
+            const opcKeys = keys.filter(k => k.startsWith('opcionais'));
+            const movedKey = opcKeys.splice(evt.oldIndex, 1)[0];
+            opcKeys.splice(evt.newIndex, 0, movedKey);
+            const newDb = {};
+            otherKeys.forEach(k => newDb[k] = db[k]);
+            opcKeys.forEach(k => newDb[k] = db[k]);
+            db = newDb;
+        }
+    });
+
+    if(container.innerHTML === "") container.innerHTML = "<p style='color:#999; padding:20px;'>Nenhum opcional cadastrado.</p>";
+}
+
+function renderizarTudo(manterEstado = false) {
+    const container = document.getElementById('render-lista-secoes');
+    const corposAtuais = container.querySelectorAll('.opc-lista-container');
+    const estados = Array.from(corposAtuais).map(c => c.classList.contains('fechado'));
+    
+    container.innerHTML = "";
+    db.secoes.forEach((secao, indiceSecao) => {
+        const titulo = secao.nome.toUpperCase();
+        const fechado = manterEstado ? (estados[indiceSecao] !== false ? 'fechado' : '') : 'fechado';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'opc-grupo-wrapper';
+        wrapper.style.marginBottom = '10px';
+        wrapper.setAttribute('data-chave', indiceSecao);
+        
+        wrapper.innerHTML = `
+            <div class="opc-secao-header">
+                <div class="drag-handle-secao">☰</div>
+                <div style="flex:1; display:flex; justify-content:space-between; padding: 12px 15px;" onclick="this.parentElement.nextElementSibling.classList.toggle('fechado')">
+                    <span>${titulo} (${secao.itens.length})</span>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span>↕</span>
+                        <button class="btn-azul" onclick="event.stopPropagation(); abrirModalParaNovoItem(${indiceSecao})" style="padding: 8px 14px; font-size: 10px; background-color: #007bff;">NOVO ITEM</button>
+                    </div>
+                </div>
+            </div>
+            <div class="opc-lista-container ${fechado}" id="sort-secao-${indiceSecao}">
+                ${secao.itens.map((item, indiceItem) => {
+                    const badges = item[4] ? item[4].map(opc => `<span class="badge">${opc}</span>`).join('') : '';
+                    return `
+                    <div class="item-detalhado" data-idx="${indiceItem}">
+                        <div class="drag-handle-item">⋮</div>
+                        <div class="item-conteudo">
+                            <img src="${item[3] || 'https://via.placeholder.com/85'}" class="img-preview">
+                            <div class="item-info">
+                                <strong>${item[0]}</strong>
+                                <p>${item[1] || ''}</p>
+                                <b>R$ ${item[2]}</b>
+                                <div class="badges-opcionais">${badges}</div>
+                            </div>
+                            <div class="acoes-item">
+                                <button class="btn-cinza" onclick="abrirModalParaEditarItem(${indiceSecao},${indiceItem})">EDITAR</button>
+                                <button class="btn-duplicar" onclick="duplicarItem(${indiceSecao},${indiceItem})">DUPLICAR</button>
+                                <button class="btn-vermelho" onclick="excluirItem(${indiceSecao},${indiceItem})">EXCLUIR</button>
+                            </div>
                         </div>
                     </div>`;
-            });
-            container.appendChild(div);
-            new Sortable(corpo, {
-                group: 'produtos-compartilhados',
-                animation: 150,
-                handle: '.drag-handle-item',
-                onEnd: (evento) => {
-                    const secaoOrigem = evento.from.dataset.sidx;
-                    const secaoDestino = evento.to.dataset.sidx;
-                    const itemMovido = db.secoes[secaoOrigem].itens.splice(evento.oldIndex, 1)[0];
-                    const nomeNovaSecao = db.secoes[secaoDestino].nome;
-                    const chaveNova = "opcionais" + nomeNovaSecao;
-                    itemMovido[4] = db[chaveNova] ? db[chaveNova].map(o => o[0]) : [];
-                    db.secoes[secaoDestino].itens.splice(evento.newIndex, 0, itemMovido);
-                    renderizarTudo();
+                }).join('')}
+            </div>`;
+        container.appendChild(wrapper);
+
+        new Sortable(document.getElementById(`sort-secao-${indiceSecao}`), {
+            animation: 150,
+            handle: '.drag-handle-item',
+            group: 'produtos',
+            onEnd: (evt) => {
+                const deSecaoIdx = indiceSecao;
+                let paraSecaoIdx = indiceSecao;
+                
+                if (evt.to !== evt.from) {
+                    const paraWrapper = evt.to.closest('.opc-grupo-wrapper');
+                    paraSecaoIdx = parseInt(paraWrapper.getAttribute('data-chave'));
                 }
-            });
+                
+                const item = db.secoes[deSecaoIdx].itens.splice(evt.oldIndex, 1)[0];
+                db.secoes[paraSecaoIdx].itens.splice(evt.newIndex, 0, item);
+                renderizarTudo(true);
+            }
         });
-        new Sortable(container, { animation: 150, handle: '.drag-handle-secao', onEnd: (evento) => {
-            const secaoMovida = db.secoes.splice(evento.oldIndex, 1)[0];
-            db.secoes.splice(evento.newIndex, 0, secaoMovida);
-            renderizarTudo();
-        }});
+    });
+
+    new Sortable(container, {
+        animation: 150,
+        handle: '.drag-handle-secao',
+        onEnd: (evt) => {
+            const secao = db.secoes.splice(evt.oldIndex, 1)[0];
+            db.secoes.splice(evt.newIndex, 0, secao);
+            renderizarTudo(true);
+        }
+    });
+
+    if(container.innerHTML === "") container.innerHTML = "<p style='color:#999; padding:20px;'>Nenhuma seção cadastrada.</p>";
+}
+
+function duplicarItem(sIdx, iIdx) {
+    const itemOriginal = db.secoes[sIdx].itens[iIdx];
+    const itemCopia = JSON.parse(JSON.stringify(itemOriginal));
+    itemCopia[0] = itemCopia[0] + " (Cópia)";
+    db.secoes[sIdx].itens.splice(iIdx + 1, 0, itemCopia);
+    renderizarTudo(true);
+}
+
+function adicionarSecao() {
+    const nome = document.getElementById('nova-secao-nome').value;
+    if(nome) { db.secoes.push({nome: nome, itens: []}); document.getElementById('nova-secao-nome').value = ""; renderizarSecoesGestao(); }
+}
+
+function excluirSecao(indice) {
+    if(confirm("Isso apagará a categoria e todos os produtos nela. Continuar?")) {
+        db.secoes.splice(indice, 1);
+        renderizarSecoesGestao();
     }
+}
 
-    function alternarTodosOpcionais() { document.querySelectorAll('.balao-opcional').forEach(b => b.classList.toggle('selecionado')); }
-
-    function abrirModalParaNovoItem(indiceSecao) {
-        const nomeSecao = db.secoes[indiceSecao].nome;
-        document.getElementById('titulo-modal-item').innerText = "Novo Item";
-        document.getElementById('item-indice-secao').value = indiceSecao;
-        document.getElementById('campo-secao-nome').value = nomeSecao.toUpperCase();
-        document.getElementById('item-indice-item').value = "-1";
-        document.getElementById('campo-nome-item').value = "";
-        document.getElementById('campo-descricao-item').value = "";
-        document.getElementById('campo-valor-item').value = "";
-        document.getElementById('campo-imagem-item').value = "";
-        carregarBaloesOpcionais(nomeSecao);
-        document.getElementById('modal-item').style.display = 'flex';
+function adicionarOpcional() {
+    const nome = document.getElementById('opc-nome').value;
+    const preco = document.getElementById('opc-preco').value;
+    const destino = document.getElementById('opc-destino').value;
+    if(nome && preco) {
+        if(!db[destino]) db[destino] = [];
+        db[destino].push([nome, parseFloat(preco).toFixed(2)]);
+        document.getElementById('opc-nome').value = ""; document.getElementById('opc-preco').value = "";
+        renderizarOpcionaisLista();
     }
+}
 
-    function abrirModalParaEditarItem(indiceSecao, indiceItem) {
-        const secao = db.secoes[indiceSecao];
-        const item = secao.itens[indiceItem];
-        document.getElementById('titulo-modal-item').innerText = "Editar Item";
-        document.getElementById('item-indice-secao').value = indiceSecao;
-        document.getElementById('campo-secao-nome').value = secao.nome.toUpperCase();
-        document.getElementById('item-indice-item').value = indiceItem;
-        document.getElementById('campo-nome-item').value = item[0];
-        document.getElementById('campo-descricao-item').value = item[1];
-        document.getElementById('campo-valor-item').value = item[2];
-        document.getElementById('campo-imagem-item').value = item[3];
-        carregarBaloesOpcionais(secao.nome, item[4]);
-        document.getElementById('modal-item').style.display = 'flex';
-    }
+function excluirOpcional(chave, indice) { if(confirm("Remover opcional?")) { db[chave].splice(indice, 1); renderizarOpcionaisLista(); } }
+function excluirItem(sIdx, iIdx) { if(confirm("Remover item?")) { db.secoes[sIdx].itens.splice(iIdx, 1); renderizarTudo(true); } }
 
-    function salvarDadosDoItem() {
-        const indiceSecao = document.getElementById('item-indice-secao').value;
-        const indiceItem = document.getElementById('item-indice-item').value;
-        const nome = document.getElementById('campo-nome-item').value;
-        const opcionaisSelecionados = Array.from(document.querySelectorAll('.balao-opcional.selecionado')).map(b => b.innerText.trim());
-        if(!nome) { alert("Nome obrigatório!"); return; }
-        const dadosItem = [nome, document.getElementById('campo-descricao-item').value, parseFloat(document.getElementById('campo-valor-item').value || 0).toFixed(2), document.getElementById('campo-imagem-item').value, opcionaisSelecionados];
-        indiceItem === "-1" ? db.secoes[indiceSecao].itens.push(dadosItem) : db.secoes[indiceSecao].itens[indiceItem] = dadosItem;
-        document.getElementById('modal-item').style.display = 'none';
+function atualizarDropdownDestino() {
+    document.getElementById('opc-destino').innerHTML = db.secoes.map(s => `<option value="opcionais${s.nome}">${s.nome}</option>`).join('') || "<option>Crie uma seção</option>";
+}
+
+function buscarImagemHQ() {
+    const nome = document.getElementById('campo-nome-item').value;
+    if(nome) window.open(`https://www.google.com/search?q=${encodeURIComponent(nome + " food photography")}&tbm=isch`, '_blank');
+}
+
+function abrirModalParaNovoItem(sIdx) {
+    document.getElementById('item-indice-secao').value = sIdx;
+    document.getElementById('item-indice-item').value = "-1";
+    document.getElementById('campo-secao-nome').value = db.secoes[sIdx].nome;
+    document.getElementById('campo-nome-item').value = "";
+    document.getElementById('campo-descricao-item').value = "";
+    document.getElementById('campo-valor-item').value = "";
+    document.getElementById('campo-imagem-item').value = "";
+    document.getElementById('modal-item').style.display = 'flex';
+    carregarBaloesOpcionais(db.secoes[sIdx].nome);
+}
+
+function abrirModalParaEditarItem(sIdx, iIdx) {
+    const item = db.secoes[sIdx].itens[iIdx];
+    document.getElementById('item-indice-secao').value = sIdx;
+    document.getElementById('item-indice-item').value = iIdx;
+    document.getElementById('campo-secao-nome').value = db.secoes[sIdx].nome;
+    document.getElementById('campo-nome-item').value = item[0];
+    document.getElementById('campo-descricao-item').value = item[1];
+    document.getElementById('campo-valor-item').value = item[2];
+    document.getElementById('campo-imagem-item').value = item[3];
+    document.getElementById('modal-item').style.display = 'flex';
+    carregarBaloesOpcionais(db.secoes[sIdx].nome, item[4]);
+}
+
+function carregarBaloesOpcionais(nomeSecao, selecionados = null) {
+    const container = document.getElementById('lista-opcionais-disponiveis');
+    container.innerHTML = "";
+    const lista = db["opcionais" + nomeSecao] || [];
+    lista.forEach(opc => {
+        const isSel = (selecionados === null || selecionados.includes(opc[0])) ? "selecionado" : "";
+        container.innerHTML += `<div class="balao-opcional ${isSel}" onclick="this.classList.toggle('selecionado')">${opc[0]}</div>`;
+    });
+}
+
+function salvarDadosDoItem() {
+    const sIdx = document.getElementById('item-indice-secao').value;
+    const iIdx = document.getElementById('item-indice-item').value;
+    const opcs = Array.from(document.querySelectorAll('.balao-opcional.selecionado')).map(b => b.innerText);
+    const item = [
+        document.getElementById('campo-nome-item').value,
+        document.getElementById('campo-descricao-item').value,
+        parseFloat(document.getElementById('campo-valor-item').value || 0).toFixed(2),
+        document.getElementById('campo-imagem-item').value,
+        opcs
+    ];
+    if(iIdx === "-1") db.secoes[sIdx].itens.push(item); else db.secoes[sIdx].itens[iIdx] = item;
+    document.getElementById('modal-item').style.display = 'none';
+    renderizarTudo(true);
+}
+
+function construirSaidaJS() {
+    const opc = {}; for(let k in db) if(k.startsWith('opcionais')) opc[k] = db[k];
+    return `const dadosIniciais = ${JSON.stringify({...opc, secoes: db.secoes}, null, 2)};`;
+}
+
+function baixar() {
+    const blob = new Blob([construirSaidaJS()], {type: 'text/javascript'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = "cardapio.js";
+    a.click();
+}
+
+window.onload = () => {
+    const scriptSrc = document.getElementById('script-cardapio').src;
+    document.getElementById('caminho-js-banner').innerText = scriptSrc;
+    document.getElementById('modal-caminho-js').innerText = scriptSrc;
+
+    if(db.secoes.length > 0) {
+        document.getElementById('status-texto').innerText = "✓ Banco Carregado!";
         renderizarTudo();
     }
-
-    function atualizarDropdownDestino() {
-        let html = "";
-        if(db.secoes) db.secoes.forEach(secao => html += `<option value="opcionais${secao.nome}">${secao.nome}</option>`);
-        document.getElementById('opc-destino').innerHTML = html || "<option>Crie uma seção primeiro</option>";
-    }
-
-    // --- MUDANÇA SOLICITADA: AUTO-SELEÇÃO EM TODOS OS ITENS ---
-    function adicionarOpcional() {
-        const nome = document.getElementById('opc-nome').value;
-        const preco = document.getElementById('opc-preco').value;
-        const destino = document.getElementById('opc-destino').value; // Ex: opcionaisPães
-        const nomeSecaoDestino = destino.replace("opcionais", "");
-
-        if(nome && preco) {
-            if(!db[destino]) db[destino] = [];
-            db[destino].push([nome, parseFloat(preco).toFixed(2)]);
-
-            // Percorre todos os produtos da seção correspondente para injetar o novo opcional na lista de ativos deles
-            db.secoes.forEach(secao => {
-                if (secao.nome === nomeSecaoDestino) {
-                    secao.itens.forEach(item => {
-                        if (!item[4]) item[4] = []; // Cria a lista de opcionais se não existir
-                        if (!item[4].includes(nome)) {
-                            item[4].push(nome); // Adiciona o novo opcional automaticamente como selecionado
-                        }
-                    });
-                }
-            });
-
-            document.getElementById('opc-nome').value = ""; document.getElementById('opc-preco').value = "";
-            renderizarOpcionaisLista();
-            alert(`Opcional "${nome}" adicionado e selecionado automaticamente em todos os itens da seção ${nomeSecaoDestino}.`);
-        }
-    }
-
-    function excluirOpcional(chave, indice) { if(confirm("Excluir?")) { db[chave].splice(indice, 1); renderizarOpcionaisLista(); } }
-    function adicionarSecao() { 
-        const nome = document.getElementById('nova-secao-nome').value;
-        if(nome) { db.secoes.push({nome: nome, itens: []}); document.getElementById('nova-secao-nome').value = ""; renderizarSecoesGestao(); }
-    }
-    function renderizarSecoesGestao() {
-        document.getElementById('render-secoes-gestao').innerHTML = db.secoes.map((secao, indice) => `
-            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee; background:#fff; margin-bottom:5px; border-radius:8px;">
-                <strong>${secao.nome}</strong>
-                <button class="btn-vermelho" onclick="db.secoes.splice(${indice},1); renderizarSecoesGestao();">REMOVER</button>
-            </div>`).join('');
-    }
-    function excluirItem(indiceSecao, indiceItem) { if(confirm("Excluir?")) { db.secoes[indiceSecao].itens.splice(indiceItem, 1); renderizarTudo(); } }
-    function duplicarItem(indiceSecao, indiceItem) {
-        const itemCopiado = JSON.parse(JSON.stringify(db.secoes[indiceSecao].itens[indiceItem]));
-        itemCopiado[0] += " (Cópia)";
-        db.secoes[indiceSecao].itens.splice(indiceItem + 1, 0, itemCopiado);
-        renderizarTudo();
-    }
-
-    function construirSaidaJS() {
-        const opcionaisObjeto = {};
-        for (let chave in db) { if (chave.startsWith('opcionais')) opcionaisObjeto[chave] = db[chave]; }
-        let saida = "// cardapio.js\nconst dadosIniciais = {\n  //OPCIONAIS\n";
-        const strOpc = JSON.stringify(opcionaisObjeto, null, 2);
-        saida += "  " + strOpc.substring(1, strOpc.length - 1).trim() + ",\n  //SECOES\n";
-        const strSec = JSON.stringify({secoes: db.secoes}, null, 2);
-        saida += "  " + strSec.substring(1, strSec.length - 1).trim() + "\n};";
-        return saida;
-    }
-
-    function baixar() {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(new Blob([construirSaidaJS()], {type: 'text/javascript'}));
-        link.download = "cardapio.js";
-        link.click();
-    }
-
-    window.onload = () => {
-        const caminho = document.getElementById('script-cardapio').src;
-        document.getElementById('caminho-js-banner').innerText = "Origem: " + caminho;
-        document.getElementById('modal-caminho-js').innerText = caminho;
-        if (db) {
-            document.getElementById('status-texto').innerText = "✓ Banco Carregado!";
-            document.getElementById('status-texto').style.color = "#28a745";
-            renderizarTudo();
-        } else {
-            document.getElementById('status-texto').innerText = "✗ Erro ao carregar cardapio.js";
-            document.getElementById('status-texto').style.color = "#dc3545";
-            db = { secoes: [] };
-        }
-    };
+};
 </script>
 </body>
 </html>
