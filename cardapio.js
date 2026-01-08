@@ -169,8 +169,8 @@ const dadosIniciais = {
       "40.00"
     ],
     [
-      "Taça de cristal",
-      "60.00"
+      "Taça champangne",
+      "30.00"
     ]
   ],
   "opcionaisAntipasti": [
@@ -444,10 +444,10 @@ const dadosIniciais = {
             "Sardella",
             "Melanzane sott'olio",
             "Manteiga",
-            "Manteiga temperada com alho e parmesão",
-            "Confit de alho",
-            "Confit de alho e tomates cereja",
-            "Picles de cebola",
+            //"Manteiga temperada com alho e parmesão",
+            //"Confit de alho",
+            //"Confit de alho e tomates cereja",
+            //"Picles de cebola",
             "Bresaola",
             "Lombo piripiri",
             "Mortadela",
@@ -465,13 +465,13 @@ const dadosIniciais = {
             "Rúcula",
             "Tomate",
             "Azeite",
-            "Pesto tradicional (manjericão)",
+            //"Pesto tradicional (manjericão)",
             "Pesto de azeitona",
             "Maionese",
             "Maionese temperada",
-            "Pastinha de goronzola",
-            "Pastinha de parmesão",
-            "Pastinha de pimentão vermelho"
+            //"Pastinha de goronzola",
+            //"Pastinha de parmesão",
+            //"Pastinha de pimentão vermelho"
           ],
           "ativo"
         ]
@@ -525,21 +525,21 @@ const dadosIniciais = {
         [
           "Vinho Casillero del Diabo",
           "Apresenta um perfil estruturado, com taninos presentes e notas de frutas escuras. Originário de vinhedos tradicionais do Chile, resulta em um vinho de caráter definido. É uma opção para quem aprecia um tinto clássico e equilibrado.",
-          "85.00",
+          "65.00",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYaHOkBDckYwSbN7zRWW8jBaTbpAspAhL7Yw&s",
           [
             "Taça de vidro",
-            "Taça de cristal"
+            "Taça champangne"
           ]
         ],
         [
           "Vinho Gato Negro",
           "Oferece um estilo acessível, com corpo médio e caráter frutado. Sua produção é voltada para a consistência e fácil harmonização. É uma escolha adequada para o consumo despretensioso no dia a dia.",
-          "70.00",
+          "65.00",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu2fnk2nSTof_uQEhdkvXZph42MlGq_jjLKQ&s",
           [
             "Taça de vidro",
-            "Taça de cristal"
+            "Taça champangne"
           ]
         ],
         [
@@ -549,7 +549,7 @@ const dadosIniciais = {
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl1vG1vVosO5TGSI8FdvkFkrp0WjzJTIGF6A&s",
           [
             "Taça de vidro",
-            "Taça de cristal"
+            "Taça champangne"
           ]
         ]
       ]
