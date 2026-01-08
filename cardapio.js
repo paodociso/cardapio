@@ -1,6 +1,4 @@
-// cardapio.js
 const dadosIniciais = {
-  //OPCIONAIS
   "opcionaisPães": [
     [
       "Alichella (100g)",
@@ -295,7 +293,6 @@ const dadosIniciais = {
       "4.00"
     ]
   ],
-  //SECOES
   "secoes": [
     {
       "nome": "Pães",
@@ -540,6 +537,16 @@ const dadosIniciais = {
           "Vinho tindo",
           "70.00",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu2fnk2nSTof_uQEhdkvXZph42MlGq_jjLKQ&s",
+          [
+            "Taça de vidro",
+            "Taça de cristal"
+          ]
+        ],
+        [
+          "Espumante Veuve D`Argent Blanc De Blancs Demi-Sec",
+          "Com aroma de frutas frescas como abacaxi e pera, com nuances de fermento, esse espumante possui um paladar leve, frutado, com delicada doçura. Elaborado na França, com o método Charmat, esse exemplar é jovem, moderno e fácil de beber.",
+          "85.00",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl1vG1vVosO5TGSI8FdvkFkrp0WjzJTIGF6A&s",
           [
             "Taça de vidro",
             "Taça de cristal"
