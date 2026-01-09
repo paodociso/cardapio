@@ -20,7 +20,6 @@
         header h1 { font-size: 1.4rem; margin: 0; line-height: 1.2; }
         .sub-link { color: #fdf5e6; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; margin-top: 3px; }
 
-        /* Estilos Novos: Banner Fornada */
         .banner-fornada {
             background: linear-gradient(135deg, var(--nav) 0%, #eaddca 100%);
             margin: 10px 15px 5px 15px;
@@ -31,6 +30,7 @@
             text-align: center;
             flex-shrink: 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            cursor: pointer;
         }
         .info-fornada h2 { font-size: 0.95rem; text-transform: uppercase; margin: 0; letter-spacing: 0.5px; color: var(--text); font-weight: 900; }
         .info-fornada p { font-size: 0.85rem; color: var(--a-brown); margin-top: 2px; font-weight: bold; }
@@ -67,10 +67,10 @@
         .qty-val { width: 34px; border: none; text-align: center; font-weight: bold; font-size: 0.95rem; color: var(--text); }
 
         .subtotal-item { text-align: right; font-weight: bold; color: var(--p-green); margin: 10px 0; padding-top: 8px; border-top: 1px solid #eee; }
-        .btn-add { background: var(--p-green); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; }
         
         .area-botao-prosseguir { padding: 12px 15px 15px 15px; }
-        .btn-prosseguir { 
+        
+        .btn-prosseguir, .btn-adicionado { 
             background: var(--p-green); 
             color: white; 
             border: none; 
@@ -87,10 +87,30 @@
             box-shadow: 0 4px 15px rgba(45, 58, 39, 0.4);
             letter-spacing: 1px;
             transition: transform 0.2s;
+            text-decoration: none;
+            font-family: inherit;
         }
-        .btn-prosseguir:active { transform: scale(0.98); }
+        .btn-adicionado {
+            opacity: 0.95;
+            text-decoration: none; /* Sublinhado removido */
+        }
+        .btn-prosseguir:active, .btn-adicionado:active { transform: scale(0.98); }
 
-        .btn-voltar { background: var(--grey); color: #333; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 10px; }
+        .btn-voltar { 
+            background: var(--grey); 
+            color: #333; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 50px; 
+            font-weight: 900; 
+            cursor: pointer; 
+            width: 100%; 
+            text-transform: uppercase; 
+            margin-top: 10px; 
+            letter-spacing: 1px;
+            transition: transform 0.2s;
+        }
+        .btn-voltar:active { transform: scale(0.98); }
 
         #cesta-rodape { background: var(--nav); border-top: 3px solid var(--a-brown); display: none; flex-direction: column; flex-shrink: 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
         .barra-total { background: var(--a-brown); color: white; padding: 10px 15px; display: flex; justify-content: space-between; font-weight: bold; }
@@ -99,7 +119,9 @@
         .btn-remover-vermelho { background: var(--red); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; }
 
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; }
-        .modal-pedido { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; padding: 20px; max-height: 85vh; overflow-y: auto; }
+        .modal-pedido { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; padding: 20px; max-height: 85vh; overflow-y: auto; text-align: left; }
+        
+        #modalFornada { text-align: center; }
 
         #modalImg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; }
         #modalImg img { width: 75vw; height: 75vw; max-width: 450px; max-height: 450px; object-fit: cover; border-radius: 12px; border: 5px solid var(--w); box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
@@ -107,7 +129,6 @@
         .opcao-pagamento { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold; position: relative; background: white; transition: 0.2s; }
         .opcao-pagamento.selecionada { border-color: var(--p-green); background: #f0f7f0; }
         .selo-rec { position: absolute; top: -10px; right: 10px; background: var(--p-green); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; }
-
         .msg-pagamento-local { display: none; margin-top: 8px; color: var(--red); font-size: 0.8rem; font-weight: normal; background: #fff5f5; padding: 8px; border-radius: 4px; border: 1px solid #ffebeb; text-align: center; }
 
         .pix-info-frame { display: none; margin-top: 10px; padding: 15px; background: #fff; border: 1px dashed var(--p-green); border-radius: 8px; text-align: center; }
@@ -121,13 +142,11 @@
         .aviso-comprovante-moderno b { color: var(--a-brown); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
 
         input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
-        .btn-whatsapp { background: #25d366; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; }
-        .btn-novo-pedido { background: var(--a-brown); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 10px; }
         
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
+<body onload="render()">
 
 <header>
     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png" class="logo-img">
@@ -138,7 +157,7 @@
     </div>
 </header>
 
-<div class="banner-fornada">
+<div class="banner-fornada" onclick="abrirModalFornada()">
     <div class="info-fornada">
       <h2 id="txt-data-fornada">PRÓXIMA FORNADA: --/--</h2>
       <p id="txt-limite-pedido">Pedidos até --/--</p>
@@ -164,11 +183,17 @@
     <img id="imgExpandida" src="">
 </div>
 
+<div id="modalFornada" class="modal-pedido">
+    <h3 style="margin-bottom:15px; border-bottom: 2px solid var(--nav); padding-bottom: 10px;">Informações da Fornada</h3>
+    <div id="conteudoFornada" style="font-size: 0.95rem; line-height: 1.6; color: var(--text);"></div>
+    <button class="btn-voltar" onclick="fecharModais()">FECHAR</button>
+</div>
+
 <div id="modalRevisao" class="modal-pedido">
     <h3 style="margin-bottom:15px; border-bottom: 2px solid var(--nav); padding-bottom: 10px;">Minha Cesta</h3>
     <div id="lista-revisao-completa"></div>
     <div style="font-weight:bold; margin-top:15px; text-align:right;" id="revisao-total-txt"></div>
-    <button class="btn-add" style="margin-top:20px; border-radius:50px" onclick="abrirDados()">PROSSEGUIR PARA O PAGAMENTO</button>
+    <button class="btn-prosseguir" style="margin-top:20px;" onclick="abrirDados()">PROSSEGUIR</button>
     <button class="btn-voltar" onclick="fecharModais()">VOLTAR AO CARDÁPIO</button>
 </div>
 
@@ -184,13 +209,12 @@
         <div id="campo-endereco" style="display:none">
             <input type="text" id="endCli" placeholder="Endereço Completo *">
         </div>
-        <button class="btn-add" style="margin-top:15px; border-radius:50px" onclick="irParaPagamento()">ESCOLHER PAGAMENTO</button>
+        <button class="btn-prosseguir" style="margin-top:15px;" onclick="irParaPagamento()">PROSSEGUIR PARA PAGAMENTO</button>
         <button class="btn-voltar" onclick="voltarParaRevisao()">VOLTAR PARA CESTA</button>
     </div>
 
     <div id="etapa-pagamento" style="display:none">
         <h3 style="margin-bottom:10px">Forma de Pagamento</h3>
-        
         <div class="opcao-pagamento" onclick="selPgto('Pix', this)">
             PIX <span class="selo-rec">RECOMENDADO</span>
             <div id="pix-detalhes-frame" class="pix-info-frame">
@@ -200,54 +224,36 @@
                 <div class="qr-container"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdMMy5OknVHvs1RNFM3tik8FXT0lwM1JmYjJmtnZJrFb46pcwkOdTMCsRA5wx3whHPeXFm_8Ql6iZCFGmoKLrQiM0lCuVDc5YFLGEwhNplENrWlYhKFGG1ONARuy8VgZR0ROpGK9MT123ng1aL69gz-rmRXGejVZqeUqDwKf81nmxOZ5RqTqJV_Lqw3g/s1000/qrcode-paodociso.png"></div>
                 <div style="font-size:0.8rem; margin-top:5px; color:var(--text)">CHAVE PIX (E-MAIL):</div>
                 <div class="btn-copiar-pix" onclick="copiarChave()"><b>paodociso@gmail.com</b> <i class="far fa-copy"></i></div>
-                
                 <div class="aviso-comprovante-moderno">
                     <i class="fas fa-info-circle"></i>
-                    <div>
-                        <b>Importante:</b><br>
-                        Envie o comprovante por WhatsApp imediatamente após a compra.
-                    </div>
+                    <div><b>Importante:</b><br>Envie o comprovante por WhatsApp imediatamente após a compra.</div>
                 </div>
             </div>
         </div>
-
         <div class="opcao-pagamento" onclick="selPgto('Cartão', this)">
             Cartão (Débito/Crédito)
             <div id="msg-cartao" class="msg-pagamento-local"><i class="fas fa-info-circle"></i> O pagamento é feito na retirada/entrega.</div>
         </div>
-
         <div class="opcao-pagamento" onclick="selPgto('Dinheiro', this)">
             Dinheiro
             <div id="msg-dinheiro" class="msg-pagamento-local"><i class="fas fa-info-circle"></i> O pagamento é feito na retirada/entrega.</div>
         </div>
-
-        <button class="btn-add" style="margin-top:20px; border-radius:50px" onclick="finalizar()">FINALIZAR PEDIDO</button>
+        <button class="btn-prosseguir" style="margin-top:20px;" onclick="finalizar()">FINALIZAR PEDIDO</button>
         <button class="btn-voltar" onclick="voltarParaDados()">VOLTAR PARA DADOS</button>
     </div>
 </div>
 
-<div id="modalSucesso" class="modal-pedido">
-    <div id="status-final" style="text-align: center;">
-        <i class="fas fa-check-circle" style="color: var(--a-brown); font-size: 3rem;"></i>
-        <h3 style="margin: 15px 0;">Sem erros no pedido!</h3>
-        <button class="btn-whatsapp" id="btnEnvZap" style="background: var(--a-brown);" onclick="iniciarEnvioWhatsApp()">ENVIAR WHATSAPP</button>
-    </div>
-    <div id="aviso-redirecionando" style="display:none; text-align:center;">
-        <h3 style="color: var(--a-brown)">Seu pedido foi salvo!</h3>
-        <p style="margin: 10px 0;">Você será automaticamente direcionado para enviar o pedido por whatsapp...</p>
-        <div style="margin: 20px auto; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--a-brown); border-radius: 50%; animation: spin 1s linear infinite;"></div>
-    </div>
-    <div id="novo-pedido-area" style="display:none; text-align:center;">
-        <p style="font-size:0.9rem; color:#666">Deseja pedir mais alguma coisa?</p>
-        <button class="btn-novo-pedido" onclick="reiniciarLoja()">FAZER NOVO PEDIDO</button>
-    </div>
+<div id="modalSucesso" class="modal-pedido" style="text-align:center; z-index: 1001;">
+    <div style="color: var(--p-green); font-size: 3rem; margin-bottom: 15px;"><i class="fas fa-check-circle"></i></div>
+    <h3 style="margin-bottom:10px">Seu pedido foi registrado com sucesso.</h3>
+    <p style="font-size: 0.95rem; color: var(--text); line-height: 1.5;">Você será automaticamente encaminhado para enviar o pedido pelo whatsapp</p>
+    <div style="margin-top: 20px;"><i class="fas fa-spinner fa-spin" style="color: var(--a-brown);"></i></div>
 </div>
 
 <script src="cardapio.js"></script>
 <script>
 let carrinho = [], totalGeral = 0, pgtoSel = "";
 let memory = { nome: "", tel: "", entrega: "Retirada", endereco: "" };
-
 const DATA_PROXIMA_FORNADA = "2025-01-14"; 
 
 function atualizarBannerFornada() {
@@ -259,58 +265,32 @@ function atualizarBannerFornada() {
     document.getElementById('txt-limite-pedido').innerText = `Pedidos até ${formatar(dataP)}`;
 }
 
+function abrirModalFornada() {
+    const dataF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
+    const dataP = new Date(dataF);
+    dataP.setDate(dataP.getDate() - 3);
+    const formatar = (d) => d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'});
+    const conteudo = `<p>📅 <b>DATA DA FORNADA:</b> <br><span style="color: var(--p-green); font-weight: 900; font-size: 1.2rem;">${formatar(dataF)}</span></p><br><p>⚠️ <b>PEDIDOS ATÉ:</b> <br><span style="color: var(--red); font-weight: 900; font-size: 1.2rem;">${formatar(dataP)}</span></p><hr style="margin: 15px 0; border: 0; border-top: 1px solid var(--nav);"><p style="font-size: 0.85rem; background: var(--highlight); padding: 12px; border-radius: 8px; color: var(--text);"><b>Nota:</b> Os pães são produzidos artesanalmente. Garanta seu pedido dentro do prazo para assegurar a disponibilidade.</p>`;
+    document.getElementById('conteudoFornada').innerHTML = conteudo;
+    document.getElementById('modalOverlay').style.display = 'block';
+    document.getElementById('modalFornada').style.display = 'block';
+}
+
 function render() {
     atualizarBannerFornada();
+    abrirModalFornada(); // RECOLOCADO: Abre o modal ao carregar a página
     const { secoes } = dadosIniciais;
     document.getElementById('render-cli').innerHTML = secoes.map((s, si) => {
         const chaveOpcionais = "opcionais" + s.nome;
         const bancoDeOpcionaisDaSecao = dadosIniciais[chaveOpcionais] || [];
-        return `
-        <button class="collapsible" onclick="toggleC(this)">${s.nome.toUpperCase()} <span>+</span></button>
-        <div class="collapsible-content">
-            ${s.itens.map((i, ii) => {
-                const id = `it-${si}-${ii}`;
-                const iOps = (i[4] || []).map(nomeOpcional => bancoDeOpcionaisDaSecao.find(x => x[0].trim() === nomeOpcional.trim())).filter(Boolean);
-                return `
-                <div class="card" id="card-${id}">
-                    <div class="prod-header">
-                        <img src="${i[3]}" class="img-thumb" onclick="ampliarImg('${i[3]}')" onerror="this.src='https://via.placeholder.com/80'">
-                        <div class="prod-info">
-                            <b>${i[0]}</b>
-                            <p>${i[1]}</p>
-                            <span class="preco-topo">R$ ${(+i[2]).toFixed(2)}</span>
-                            <div class="controles-topo">
-                                <div class="qty-box">
-                                    <button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button>
-                                    <input type="text" value="0" readonly class="qty-val main-qty">
-                                    <button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    ${iOps.length ? `
-                    <div class="frame-opcionais">
-                        <div class="header-opcionais" onclick="toggleOps('${id}')">
-                            <span class="titulo-frame">OPCIONAIS</span>
-                            <span id="seta-${id}">▼</span>
-                        </div>
-                        <div id="lista-ops-${id}" class="lista-opcionais-interna">
-                            <div class="divisor-opcional"></div>
-                            ${iOps.map(o => `
-                                <div class="linha-controle" style="margin-bottom:8px">
-                                    <span style="font-size:0.85rem">${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span>
-                                    <div class="qty-box">
-                                        <button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button>
-                                        <input type="text" value="0" readonly class="qty-val op-qty" data-n="${o[0]}" data-p="${o[1]}">
-                                        <button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button>
-                                    </div>
-                                </div>`).join('')}
-                        </div>
-                    </div>` : ''}
-                    <div class="subtotal-item" id="sub-${id}">Subtotal: R$ 0,00</div>
-                    <button class="btn-add" onclick="add('${i[0]}', ${i[2]}, '${id}')">ADICIONAR</button>
-                </div>`}).join('')}
-        </div>`
+        return `<button class="collapsible" onclick="toggleC(this)">${s.nome.toUpperCase()} <span>+</span></button><div class="collapsible-content">${s.itens.map((i, ii) => {
+            const id = `it-${si}-${ii}`;
+            const iOps = (i[4] || []).map(nomeOpcional => bancoDeOpcionaisDaSecao.find(x => x[0].trim() === nomeOpcional.trim())).filter(Boolean);
+            return `<div class="card" id="card-${id}" data-item-nome="${i[0]}" data-item-preco="${i[2]}"><div class="prod-header"><img src="${i[3]}" class="img-thumb" onclick="ampliarImg('${i[3]}')" onerror="this.src='https://via.placeholder.com/80'"><div class="prod-info"><b>${i[0]}</b><p>${i[1]}</p><span class="preco-topo">R$ ${(+i[2]).toFixed(2)}</span><div class="controles-topo"><div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val main-qty" id="main-qty-${id}"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div></div></div></div>${iOps.length ? `<div class="frame-opcionais"><div class="header-opcionais" onclick="toggleOps('${id}')"><span class="titulo-frame">OPCIONAIS</span><span id="seta-${id}">▼</span></div><div id="lista-ops-${id}" class="lista-opcionais-interna"><div class="divisor-opcional"></div>${iOps.map(o => `<div class="linha-controle" style="margin-bottom:8px"><span style="font-size:0.85rem">${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span><div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val op-qty" data-n="${o[0]}" data-p="${o[1]}"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div></div>`).join('')}</div></div>` : ''}<div class="subtotal-item" id="sub-${id}">Subtotal: R$ 0,00</div><div id="btn-status-${id}" style="margin-top: 10px;">
+            <button class="btn-adicionado" style="display:none;" onclick="abrirRevisao()">
+                ADICIONADO À CESTA
+            </button>
+            </div></div>`}).join('')}</div>`
     }).join('');
     carregarDadosSalvos();
 }
@@ -318,43 +298,67 @@ function render() {
 function ampliarImg(src) { document.getElementById('imgExpandida').src = src; document.getElementById('modalOverlay').style.display = 'block'; document.getElementById('modalImg').style.display = 'block'; }
 function carregarDadosSalvos() { const salvo = localStorage.getItem('paoDoCisoDados'); if(salvo) { const d = JSON.parse(salvo); document.getElementById('nomeCli').value = d.nome || ""; document.getElementById('telCli').value = d.tel || ""; document.getElementById('tipoEntrega').value = d.entrega || "Retirada"; document.getElementById('endCli').value = d.endereco || ""; toggleEndereco(); } }
 function toggleC(b) { const c = b.nextElementSibling; c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
-function toggleOps(id) { const l = document.getElementById(`lista-ops-${id}`); const s = document.getElementById(`seta-${id}`); l.style.display = l.style.display === 'block' ? 'none' : 'block'; s.innerText = l.style.display === 'block' ? '▲' : '▼'; }
+function toggleOps(id) { const l = document.getElementById(`lista-ops-${id}`); const s = document.getElementById(`seta-${id}`); if(!l) return; l.style.display = l.style.display === 'block' ? 'none' : 'block'; s.innerText = l.style.display === 'block' ? '▲' : '▼'; }
 
 function mudar(d, id, base) {
     const box = event.target.parentNode;
     const inp = box.querySelector('input');
-    inp.value = Math.max(0, +inp.value + d);
     const card = document.getElementById(`card-${id}`);
-    const qP = +card.querySelector('.main-qty').value;
-    let tO = 0; card.querySelectorAll('.op-qty').forEach(o => tO += (+o.value * +o.dataset.p));
-    let sub = qP > 0 ? qP * (base + tO) : tO;
+    const qMain = card.querySelector('.main-qty');
+    if (inp.classList.contains('op-qty') && +qMain.value <= 0 && d > 0) { alert("Aumente a quantidade do produto primeiro!"); return; }
+    inp.value = Math.max(0, +inp.value + d);
+    const listaOps = document.getElementById(`lista-ops-${id}`);
+    const seta = document.getElementById(`seta-${id}`);
+    if (listaOps && inp.classList.contains('main-qty')) { if (+inp.value > 0) { listaOps.style.display = 'block'; if(seta) seta.innerText = '▲'; } }
+    if (inp.classList.contains('main-qty') && +inp.value === 0) { card.querySelectorAll('.op-qty').forEach(o => o.value = 0); }
+    const qP = +qMain.value;
+    let tO = 0; 
+    card.querySelectorAll('.op-qty').forEach(o => tO += (+o.value * +o.dataset.p));
+    let sub = qP > 0 ? (qP * base) + tO : tO;
     document.getElementById(`sub-${id}`).innerText = `Subtotal: R$ ${sub.toFixed(2)}`;
+    const statusDiv = document.getElementById(`btn-status-${id}`);
+    if (statusDiv) { statusDiv.querySelector('.btn-adicionado').style.display = (+qMain.value > 0) ? 'flex' : 'none'; }
+    autoSincronizar(id);
 }
 
-function add(nome, preco, id) {
+function autoSincronizar(id) {
     const card = document.getElementById(`card-${id}`);
+    const nome = card.dataset.itemNome;
+    const preco = +card.dataset.itemPreco;
     const q = +card.querySelector('.main-qty').value;
     let ex = [], pE = 0;
-    card.querySelectorAll('.op-qty').forEach(o => { if(+o.value > 0){ ex.push({n: o.dataset.n, q: o.value}); pE += (+o.value * +o.dataset.p); }});
-    if (q <= 0 && pE <= 0) return alert("Selecione a quantidade!");
-    const sub = q > 0 ? q * (preco + pE) : pE;
-    carrinho.push({ nome, q, sub, ex });
-    totalGeral += sub;
+    card.querySelectorAll('.op-qty').forEach(o => { if(+o.value > 0){ ex.push({n: o.dataset.n, q: o.value}); pE += (+o.value * +o.dataset.p); } });
+    const subTotalItem = q > 0 ? (q * preco) + pE : pE;
+    carrinho = carrinho.filter(i => i.idRef !== id);
+    if (q > 0 || pE > 0) { carrinho.push({ nome, q, sub: subTotalItem, ex, idRef: id }); }
+    totalGeral = carrinho.reduce((acc, i) => acc + i.sub, 0);
     atualizarCesta();
-    card.querySelector('.main-qty').value = 0;
-    card.querySelectorAll('.op-qty').forEach(o => o.value = 0);
-    document.getElementById(`sub-${id}`).innerText = `Subtotal: R$ 0,00`;
 }
 
 function atualizarCesta() {
-    document.getElementById('cesta-rodape').style.display = carrinho.length ? 'flex' : 'none';
+    const footer = document.getElementById('cesta-rodape');
+    footer.style.display = carrinho.length ? 'flex' : 'none';
     document.getElementById('total-txt').innerText = `R$ ${totalGeral.toFixed(2)}`;
     document.getElementById('cesta-lista').innerHTML = carrinho.map((i, idx) => {
         let txtEx = i.ex.length ? `<div style="font-size:0.7rem; color:#666">Opcionais: ${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}</div>` : '';
-        return `<div class="cesta-item-linha"><div style="font-size:0.85rem"><b>${i.q > 0 ? i.q + 'x ' : ''}${i.nome}</b>${txtEx}R$ ${i.sub.toFixed(2)}</div><button class="btn-remover-vermelho" onclick="remover(${idx})">Remover</button></div>`}).join('');
+        return `<div class="cesta-item-linha"><div style="font-size:0.85rem"><b>${i.q > 0 ? i.q + 'x ' : ''}${i.nome}</b>${txtEx}R$ ${i.sub.toFixed(2)}</div><button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button></div>`}).join('');
 }
 
-function remover(idx) { totalGeral -= carrinho[idx].sub; carrinho.splice(idx, 1); atualizarCesta(); if(document.getElementById('modalRevisao').style.display === 'block') abrirRevisao(); if(!carrinho.length) fecharModais(); }
+function removerCarrinho(idx, idRef) {
+    const card = document.getElementById(`card-${idRef}`);
+    if(card) {
+        card.querySelector('.main-qty').value = 0;
+        card.querySelectorAll('.op-qty').forEach(o => o.value = 0);
+        document.getElementById(`sub-${idRef}`).innerText = `Subtotal: R$ 0,00`;
+        const statusDiv = document.getElementById(`btn-status-${idRef}`);
+        if(statusDiv) statusDiv.querySelector('.btn-adicionado').style.display = 'none';
+    }
+    carrinho.splice(idx, 1);
+    totalGeral = carrinho.reduce((acc, i) => acc + i.sub, 0);
+    atualizarCesta();
+    if(document.getElementById('modalRevisao').style.display === 'block') abrirRevisao();
+    if(!carrinho.length) fecharModais();
+}
 
 function abrirRevisao() {
     document.getElementById('modalOverlay').style.display = 'block';
@@ -362,7 +366,7 @@ function abrirRevisao() {
     document.getElementById('revisao-total-txt').innerText = `TOTAL: R$ ${totalGeral.toFixed(2)}`;
     document.getElementById('lista-revisao-completa').innerHTML = carrinho.map((i, idx) => {
         let txtEx = i.ex.length ? `<div style="padding-left:10px; margin-top:4px;">${i.ex.map(o => `<div style="font-size:0.75rem; color:#666; border-left: 2px solid var(--nav); padding-left:5px;">${o.q}x ${o.n}</div>`).join('')}</div>` : '';
-        return `<div class="cesta-item-linha" style="margin-bottom:8px; align-items: flex-start;"><div style="flex:1"><div style="font-size:0.9rem"><b>${i.q > 0 ? i.q + 'x ' : ''}${i.nome}</b> - R$ ${i.sub.toFixed(2)}</div>${txtEx}</div><button class="btn-remover-vermelho" onclick="remover(${idx})">Remover</button></div>`}).join('');
+        return `<div class="cesta-item-linha" style="margin-bottom:8px; align-items: flex-start;"><div style="flex:1"><div style="font-size:0.9rem"><b>${i.q > 0 ? i.q + 'x ' : ''}${i.nome}</b> - R$ ${i.sub.toFixed(2)}</div>${txtEx}</div><button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button></div>`}).join('');
 }
 
 function abrirDados() { document.getElementById('modalRevisao').style.display = 'none'; document.getElementById('modalDados').style.display = 'block'; }
@@ -403,9 +407,10 @@ function finalizar() {
     salvarNaPlanilha();
     document.getElementById('modalDados').style.display = 'none';
     document.getElementById('modalSucesso').style.display = 'block';
-    document.getElementById('status-final').style.display = 'block';
-    document.getElementById('aviso-redirecionando').style.display = 'none';
-    document.getElementById('novo-pedido-area').style.display = 'none';
+    document.getElementById('modalOverlay').style.display = 'block';
+    setTimeout(() => {
+        window.location.href = `https://wa.me/5511982391781?text=${encodeURIComponent(gerarMensagemZap())}`;
+    }, 4000);
 }
 
 function salvarNaPlanilha() {
@@ -415,25 +420,17 @@ function salvarNaPlanilha() {
     fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) });
 }
 
-function iniciarEnvioWhatsApp() {
-    document.getElementById('status-final').style.display = 'none';
-    document.getElementById('aviso-redirecionando').style.display = 'block';
-    setTimeout(() => { enviarWhatsApp(); document.getElementById('aviso-redirecionando').style.display = 'none'; document.getElementById('novo-pedido-area').style.display = 'block'; }, 4000);
-}
-
-function enviarWhatsApp() {
+function gerarMensagemZap() {
     let msg = `*PÃO DO CISO - PEDIDO*\n\nCliente: ${memory.nome}\nPagamento: ${pgtoSel}\nEntrega: ${memory.entrega}\n`;
     if(memory.endereco) msg += `Endereço: ${memory.endereco}\n`;
     msg += `\n*ITENS:*\n`;
-    carrinho.forEach(i => { let base = i.q > 0 ? `${i.q}x ${i.nome}` : `Adicionais de ${i.nome}`; let extras = i.ex.length ? `\n   └ Opcionais: ${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}` : ''; msg += `- ${base}${extras}\n`; });
+    carrinho.forEach(i => { let base = i.q > 0 ? `${i.q}x ${i.nome}` : `Adicionais de ${i.nome}`; let extras = i.ex.length ? `\n    └ Opcionais: ${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}` : ''; msg += `- ${base}${extras}\n`; });
     msg += `\n*Total: R$ ${totalGeral.toFixed(2)}*`;
-    window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(msg)}`);
+    return msg;
 }
 
-function reiniciarLoja() { carrinho = []; totalGeral = 0; pgtoSel = ""; atualizarCesta(); fecharModais(); document.getElementById('etapa-pagamento').style.display = 'none'; document.getElementById('etapa-dados').style.display = 'block'; document.querySelectorAll('.main-qty, .op-qty').forEach(i => i.value = 0); document.querySelectorAll('.subtotal-item').forEach(i => i.innerText = "Subtotal: R$ 0,00"); }
 function copiarChave() { event.stopPropagation(); navigator.clipboard.writeText("paodociso@gmail.com").then(() => alert("Chave PIX copiada!")); }
 function fecharModais() { document.querySelectorAll('.modal-pedido, .modal-overlay, #modalImg').forEach(m => m.style.display = 'none'); }
-window.onload = render;
 </script>
 </body>
 </html>
