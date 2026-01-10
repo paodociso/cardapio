@@ -187,7 +187,31 @@
         .menu-opcionais.aberto .lista-opcionais { display: block; }
         
         /* ALINHAMENTO DAS LINHAS DE QUANTIDADE */
-        .linha-quantidade { display: flex; justify-content: space-between; align-items: center; padding: 10px; }
+        .linha-quantidade { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px; 
+    gap: 8px;
+    flex-wrap: wrap; /* Faz o contador descer se o nome for muito grande, evitando deformar */
+}
+
+/* Garante que o texto tenha espaço e os botões não encolham */
+.linha-quantidade span, .linha-quantidade b {
+    flex: 1;
+    min-width: 140px; 
+}
+
+.qty-box { 
+    display: flex; 
+    align-items: center; 
+    border: 1.5px solid var(--p-green); 
+    border-radius: 6px; 
+    height: 32px; 
+    background: white; 
+    width: 95px; 
+    flex-shrink: 0; /* Impede que o botão seja esmagado no celular */
+}
     </style>
 </head>
 <body onload="render()">
