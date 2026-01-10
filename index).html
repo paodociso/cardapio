@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pão do Ciso</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { 
+            --banner: #2e2610; --p-green: #2d3a27; --a-brown: #7d4f39; 
+            --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; 
+            --red: #b22222; --highlight: #f9f0e0; --grey: #e0e0e0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); font-family: 'Calibri', sans-serif; color: var(--text); }
+
+        /* --- CABEÇALHO (HEADER) --- */
+        header { 
+            background: var(--banner); 
+            color: #fdf5e6; 
+            padding: 15px 20px; 
+            border-bottom: 4px solid var(--a-brown); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 15px; 
+            flex-shrink: 0; 
+            position: static;
+        }
+        .logo-img { 
+            width: 70px; 
+            height: 70px; 
+            border-radius: 50%; 
+            border: 2px solid var(--a-brown); 
+            object-fit: cover; 
+            background: white; 
+            flex-shrink: 0;
+        }
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .header-info h1 {
+            font-size: 1.4rem;
+            margin: 0;
+            line-height: 1.2;
+            color: #fdf5e6;
+        }
+        .sub-link {
+            color: #fdf5e6;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 3px;
+        }
+
+        /* --- BANNER DA FORNADA --- */
+        .banner-fornada { 
+            background: linear-gradient(135deg, var(--nav) 0%, #eaddca 100%); 
+            margin: 10px 15px 5px 15px; 
+            padding: 12px; 
+            border-radius: 12px; 
+            border-left: 5px solid var(--a-brown); 
+            border-right: 5px solid var(--a-brown);
+            text-align: center; 
+            cursor: pointer; 
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .banner-fornada h2 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 0.5px;
+            color: var(--text);
+            font-weight: 900;
+        }
+        .banner-fornada p {
+            font-size: 0.85rem;
+            color: var(--a-brown);
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        /* RESTANTE DO LAYOUT */
+        .main-scroll { flex: 1; overflow-y: auto; padding: 10px; }
+        .container-grid { max-width: 1200px; margin: auto; }
+        
+        /* GRID DE PRODUTOS */
+        .secao-titulo { font-weight: 900; font-size: 1.1rem; margin: 25px 5px 15px; color: var(--a-brown); border-bottom: 2px solid var(--nav); padding-bottom: 5px; text-transform: uppercase; }
+        .grid-produtos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        
+        /* --- AJUSTE PARA PC (TELAS LARGAS) --- */
+        @media (min-width: 1024px) {
+            .grid-produtos { grid-template-columns: repeat(5, 1fr); gap: 20px; }
+            .container-grid { padding: 20px; }
+        }
+
+        .card-quadrado { background: var(--w); border-radius: 12px; overflow: hidden; border: 1px solid #eaddca; display: flex; flex-direction: column; cursor: pointer; position: relative; }
+        .img-grid { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+        .info-grid { padding: 10px; }
+        .nome-grid { font-size: 0.9rem; font-weight: 900; line-height: 1.1; height: 2.2em; overflow: hidden; }
+        .preco-grid { color: var(--p-green); font-weight: 900; margin-top: 5px; }
+        .badge-qty { position: absolute; top: 8px; right: 8px; background: var(--p-green); color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; border: 1px solid white; }
+
+        /* SISTEMA DE MODAIS */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; cursor: default; }
+        .modal-pedido { 
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; 
+            padding: 20px; max-height: 85vh; overflow-y: auto; text-align: left; 
+        }
+        .modal-pedido h3 { margin-bottom: 15px; border-bottom: 2px solid var(--nav); padding-bottom: 10px; font-weight: 900; }
+        
+        /* ÍCONE DE FECHAR MODAL - DESTAQUE ALTO */
+        .fechar-modal-x {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 1.1rem;
+            color: var(--text);
+            background: #fff;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1020; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--grey);
+            transition: 0.2s;
+        }
+        .fechar-modal-x:hover {
+            background: var(--highlight);
+            transform: scale(1.1);
+        }
+
+        /* SISTEMA DE BOTÕES */
+        .btn-prosseguir { 
+            background: var(--p-green); color: white; border: none; padding: 16px; border-radius: 50px; 
+            width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            letter-spacing: 1px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(45, 58, 39, 0.4);
+        }
+        .btn-prosseguir:active { transform: scale(0.98); }
+        .btn-voltar { 
+            background: var(--grey); color: #333; border: none; padding: 16px; border-radius: 50px; 
+            width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; 
+            display: block; letter-spacing: 1px; transition: transform 0.2s; margin-top: 10px; text-align: center;
+        }
+        .btn-remover-vermelho { 
+            background: var(--red); color: white; border: none; padding: 8px 12px; border-radius: 6px; 
+            font-size: 0.75rem; cursor: pointer; font-weight: bold; text-transform: uppercase;
+        }
+
+        /* OUTROS ESTILOS */
+        .cesta-item-linha { background: white; padding: 10px; border-radius: 6px; border: 1px solid #c4b49c; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+        .extra-item { padding-left: 10px; margin-top: 4px; font-size: 0.75rem; color: #666; border-left: 2px solid var(--nav); }
+        .opcao-entrega, .opcao-pagamento { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; font-weight: bold; position: relative; background: white; transition: 0.2s; text-align: center; }
+        .opcao-entrega.selecionada, .opcao-pagamento.selecionada { border-color: var(--p-green); background: #f0f7f0; }
+        .entrega-info-frame, .pagamento-info-frame { display: none; margin-top: 10px; padding: 15px; background: #fff; border: 1px dashed var(--p-green); border-radius: 8px; text-align: center; }
+        .aviso-taxa-entrega, .aviso-comprovante { display: flex; gap: 10px; align-items: flex-start; background: #faf7f2; padding: 12px; border-radius: 4px 8px 8px 4px; border-left: 4px solid var(--a-brown); margin-top: 12px; text-align: left; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
+        #modalImg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; cursor: pointer; }
+        #modalImg img { width: 75vw; height: 75vw; max-width: 450px; max-height: 450px; object-fit: cover; border-radius: 12px; border: 5px solid var(--w); box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
+        .qr-container { width: 140px; height: 140px; margin: 10px auto; background: #fff; border: 1px solid #ddd; padding: 5px; }
+        .btn-copiar-pix { background: #f9f0e0; border: 1px solid var(--nav); padding: 10px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin: 10px 0; }
+        .selo-rec { position: absolute; top: -10px; right: 10px; background: var(--p-green); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; }
+        #cesta-rodape { background: var(--nav); border-top: 3px solid var(--a-brown); display: none; padding: 12px; flex-shrink: 0; text-align: center; }
+        .qty-box { display: flex; align-items: center; border: 1.5px solid var(--p-green); border-radius: 6px; height: 32px; background: white; width: 95px; }
+        .btn-q { background: var(--p-green); border: none; width: 30px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
+        .qty-val { flex: 1; border: none; text-align: center; font-weight: bold; font-size: 0.9rem; pointer-events: none; }
+        
+        /* ESTILOS ESPECÍFICOS DO MENU DE OPCIONAIS */
+        .menu-opcionais { border: 1px solid var(--nav); border-radius: 8px; margin: 5px 0 15px; background: #fffcf7; overflow: hidden; }
+        .titulo-opcionais { padding: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 0.85rem; color: var(--a-brown); text-transform: uppercase; background: #f9f0e0; }
+        .titulo-opcionais::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 0.7rem; transition: 0.3s; }
+        .menu-opcionais.aberto .titulo-opcionais::after { transform: rotate(180deg); }
+        .divisor-opcionais { height: 2px; background: var(--nav); margin: 0 10px; display: none; }
+        .menu-opcionais.aberto .divisor-opcionais { display: block; }
+        .lista-opcionais { padding: 10px; display: none; }
+        .menu-opcionais.aberto .lista-opcionais { display: block; }
+        
+        /* ALINHAMENTO DAS LINHAS DE QUANTIDADE */
+        .linha-quantidade { display: flex; justify-content: space-between; align-items: center; padding: 10px; }
+    </style>
+</head>
+<body onload="render()">
+
+<header>
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png" class="logo-img" alt="Logo Pão do Ciso">
+    <div class="header-info">
+        <h1>Pão do Ciso</h1>
+        <a href="https://instagram.com/paodociso" target="_blank" class="sub-link">
+            <i class="fab fa-instagram"></i> @paodociso
+        </a>
+        <a href="https://wa.me/5511982391781" target="_blank" class="sub-link">
+            <i class="fab fa-whatsapp"></i> (11) 98239-1781
+        </a>
+    </div>
+</header>
+
+<div class="banner-fornada" onclick="abrirModalFornada()">
+    <h2 id="txt-data-fornada">PRÓXIMA FORNADA: 16/01</h2>
+    <p id="txt-limite-pedido">Pedidos até 13/01</p>
+</div>
+
+<div class="main-scroll">
+    <div class="container-grid" id="render-cli"></div>
+</div>
+
+<div id="modalFornada" class="modal-pedido" style="text-align: center;">
+    <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
+    <h3>Informações da Fornada</h3>
+    <div id="conteudoFornada" style="font-size: 0.95rem; line-height: 1.6; color: var(--text);"></div>
+    <div style="margin-top: 15px; padding: 10px; background: #faf7f2; border-radius: 8px; border: 1px solid var(--nav); font-size: 0.85rem; color: #666;">
+        <i class="fas fa-info-circle"></i> Produção artesanal e limitada. Os pães são assados no dia da entrega para garantir o frescor.
+    </div>
+    <button class="btn-voltar" onclick="fecharModais()">FECHAR</button>
+</div>
+
+<div id="modalProduto" class="modal-pedido">
+    <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
+    <div id="conteudo-produto-modal"></div>
+    <div style="margin-top: 20px;">
+        <button id="btn-modal-prosseguir" class="btn-prosseguir" onclick="abrirRevisao()" style="display: none;">PROSSEGUIR PARA A CESTA DE COMPRAS ></button>
+        <button class="btn-voltar" onclick="fecharModais()">< CONTINUAR COMPRANDO</button>
+    </div>
+</div>
+
+<div id="modalRevisao" class="modal-pedido">
+    <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
+    <h3>Minha Cesta</h3>
+    <div id="lista-revisao-completa"></div>
+    <div style="margin-top:20px;">
+        <p style="font-weight: bold; font-size: 0.85rem; margin-bottom: 5px;">COMO DESEJA RECEBER?</p>
+        <div class="opcao-entrega" onclick="selEntrega('Retirada', this)">
+            Vou retirar no local
+            <div class="entrega-info-frame">
+                <div class="aviso-taxa-entrega">
+                    <i class="fas fa-walking"></i>
+                    <div style="font-weight: normal;"><b>Retirada:</b><br>Gratuito</div>
+                </div>
+            </div>
+        </div>
+        <div class="opcao-entrega" onclick="selEntrega('Entrega', this)">
+            Entrega em domicílio
+            <div class="entrega-info-frame">
+                <div class="aviso-taxa-entrega">
+                    <i class="fas fa-truck"></i>
+                    <div style="font-weight: normal;"><b>Taxa de entrega:</b><br>R$ 10,00 adicionados ao total.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="font-weight:bold; margin-top:15px; text-align:right;" id="revisao-total-txt"></div>
+    <button class="btn-prosseguir" style="margin-top:20px;" onclick="abrirDados()">PROSSEGUIR ></button>
+    <button class="btn-voltar" onclick="fecharModais()">< VOLTAR AO CARDÁPIO</button>
+</div>
+
+<div id="modalDados" class="modal-pedido">
+    <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
+    <div id="etapa-dados">
+        <h3>Seus Dados</h3>
+        <input type="text" id="nomeCli" placeholder="Nome Completo *">
+        <input type="tel" id="telCli" placeholder="WhatsApp (DDD + Número) *" maxlength="11" oninput="validarApenasNumeros(this)">
+        <input type="text" id="endCliDados" placeholder="Informe seu endereço completo *" style="display:none;">
+        <button class="btn-prosseguir" style="margin-top:15px;" onclick="irParaPagamento()">PROSSEGUIR PARA PAGAMENTO ></button>
+        <button class="btn-voltar" onclick="voltarParaRevisao()">< VOLTAR PARA CESTA</button>
+    </div>
+    <div id="etapa-pagamento" style="display:none">
+        <h3>Forma de Pagamento</h3>
+        
+        <div class="opcao-pagamento" onclick="selPgto('Pix', this)">
+            <span class="selo-rec">RECOMENDADO</span>PIX
+            <div class="pagamento-info-frame">
+                <div style="background:var(--highlight); padding:8px; border-radius:4px; font-weight:900; color:var(--p-green); margin-bottom:10px;">VALOR: <span id="pix-valor-txt"></span></div>
+                <div class="qr-container"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdMMy5OknVHvs1RNFM3tik8FXT0lwM1JmYjJmtnZJrFb46pcwkOdTMCsRA5wx3whHPeXFm_8Ql6iZCFGmoKLrQiM0lCuVDc5YFLGEwhNplENrWlYhKFGG1ONARuy8VgZR0ROpGK9MT123ng1aL69gz-rmRXGejVZqeUqDwKf81nmxOZ5RqTqJV_Lqw3g/s1000/qrcode-paodociso.png" style="width:100%"></div>
+                
+                <div style="font-weight: normal; margin-top: 10px; font-size: 0.9rem;">Chave PIX:</div>
+                <div class="btn-copiar-pix" onclick="copiarChave()">
+                    <b>paodociso@gmail.com</b> <i class="far fa-copy"></i>
+                </div>
+
+                <div class="aviso-comprovante">
+                    <i class="fas fa-info-circle"></i>
+                    <div style="font-size:0.82rem; font-weight: normal;"><b>Importante:</b><br>Envie o comprovante por WhatsApp.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="opcao-pagamento" onclick="selPgto('Cartão', this)">Cartão (Crédito/ Débito)
+            <div class="pagamento-info-frame">
+                <div class="aviso-comprovante">
+                    <i class="fas fa-info-circle"></i>
+                    <div style="font-size:0.82rem; font-weight: normal;">Você poderá receber por WhatsApp um link para pagamento ou pagar por aproximação no ato da entrega.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="opcao-pagamento" onclick="selPgto('Dinheiro', this)">Dinheiro
+            <div class="pagamento-info-frame">
+                <div class="aviso-comprovante">
+                    <i class="fas fa-info-circle"></i>
+                    <div style="font-size:0.82rem; font-weight: normal;">Pagamento em espécie no ato da entrega.</div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn-prosseguir" style="margin-top:20px;" onclick="finalizar()">FINALIZAR PEDIDO ></button>
+        <button class="btn-voltar" onclick="voltarParaDados()">< VOLTAR PARA DADOS</button>
+    </div>
+</div>
+
+<div id="modalSucesso" class="modal-pedido" style="text-align:center; z-index:1001;">
+    <div style="color: var(--p-green); font-size: 3rem; margin-bottom: 15px;">
+        <i class="fas fa-spinner fa-spin"></i>
+    </div>
+    <h3>Pedido Registrado!</h3>
+    <p>Você será automaticamente direcionado para o envio do pedido pelo whatsapp, aguarde...</p>
+</div>
+
+<div id="modalPosEnvio" class="modal-pedido" style="text-align:center;">
+    <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
+    <h3>O que deseja fazer agora?</h3>
+    <p style="margin-bottom: 20px; font-size: 0.9rem;">Se a janela do WhatsApp não abriu ou você precisa enviar novamente:</p>
+    <button class="btn-prosseguir" onclick="reenviarWhats()" style="background: var(--p-green); margin-bottom: 10px;">
+        <i class="fab fa-whatsapp"></i> REENVIAR PARA WHATSAPP >
+    </button>
+    <button class="btn-prosseguir" onclick="novoPedido()">
+        FAZER NOVO PEDIDO >
+    </button>
+    <button class="btn-voltar" onclick="fecharModais()">
+        ENCERRAR
+    </button>
+</div>
+
+<div id="modalImg" onclick="fecharModais()"><img id="imgExpandida" src=""></div>
+<div id="modalOverlay" class="modal-overlay" onclick="fecharModais()"></div>
+<div id="cesta-rodape">
+    <button class="btn-prosseguir" onclick="abrirRevisao()">CONFERIR MEU PEDIDO (<span id="total-txt">R$ 0,00</span>)</button>
+</div>
+
+<script src="cardapio.js"></script>
+<script>
+let carrinho = [], totalItens = 0, totalGeral = 0, pgtoSel = "", taxaEntrega = 0;
+let memory = { nome: "", tel: "", entrega: "", endereco: "" };
+let ultimaMsg = ""; 
+const DATA_PROXIMA_FORNADA = "2025-01-16";
+
+function render() {
+    const saved = localStorage.getItem('paodociso_dados');
+    if(saved) {
+        const d = JSON.parse(saved);
+        document.getElementById('nomeCli').value = d.nome || "";
+        document.getElementById('telCli').value = d.tel || "";
+    }
+    const { secoes } = dadosIniciais;
+    let html = secoes.map((s, si) => `
+        <div class="secao-titulo">${s.nome}</div>
+        <div class="grid-produtos">
+            ${s.itens.map((i, ii) => {
+                const id = `it-${si}-${ii}`;
+                return `
+                <div class="card-quadrado" onclick="abrirDetalhes('${si}', '${ii}')">
+                    <div id="badge-${id}" class="badge-qty" style="display:none">0</div>
+                    <img src="${i[3]}" class="img-grid" onerror="this.src='https://via.placeholder.com/200'">
+                    <div class="info-grid"><div class="nome-grid">${i[0]}</div><div class="preco-grid">R$ ${(+i[2]).toFixed(2)}</div></div>
+                </div>`;
+            }).join('')}
+        </div>`).join('');
+    document.getElementById('render-cli').innerHTML = html;
+    abrirModalFornada();
+}
+
+function abrirModalFornada() {
+    const dataF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
+    const dataP = new Date(dataF); dataP.setDate(dataP.getDate() - 3);
+    const formatar = (d) => d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'});
+    document.getElementById('conteudoFornada').innerHTML = `<p>📅 <b>DATA DA FORNADA:</b> <br><span style="color: var(--p-green); font-weight: 900; font-size: 1.2rem;">${formatar(dataF)}</span></p><br><p>⚠️ <b>PEDIDOS ATÉ:</b> <br><span style="color: var(--red); font-weight: 900; font-size: 1.2rem;">${formatar(dataP)}</span></p>`;
+    document.getElementById('modalOverlay').style.display = 'block';
+    document.getElementById('modalFornada').style.display = 'block';
+}
+
+function abrirDetalhes(si, ii) {
+    const item = dadosIniciais.secoes[si].itens[ii];
+    const id = `it-${si}-${ii}`;
+    const chaveOpcionais = "opcionais" + dadosIniciais.secoes[si].nome;
+    const bancoOps = dadosIniciais[chaveOpcionais] || [];
+    
+    const iOps = (item[4] || []).map(nomeProcurado => {
+        const nomeBusca = nomeProcurado.trim().toLowerCase();
+        const nomeBuscaLimpo = nomeBusca.replace(/\s*\([^)]*\)/g, '').trim();
+        
+        return bancoOps.find(o => {
+            const opcionalLimpo = o[0].trim().toLowerCase().replace(/\s*\([^)]*\)/g, '').trim();
+            return opcionalLimpo === nomeBuscaLimpo;
+        });
+    }).filter(Boolean);
+
+    const itemNoCesto = carrinho.find(c => c.idRef === id);
+
+    let html = `
+        <img src="${item[3]}" style="width:100%; border-radius:10px; margin-bottom:15px; aspect-ratio:1/1; object-fit:cover;" onclick="ampliarImg('${item[3]}')">
+        <h2 style="font-size:1.2rem">${item[0]}</h2>
+        <div style="color:var(--p-green); font-weight:900; font-size:1.2rem; margin-bottom:10px">R$ ${(+item[2]).toFixed(2)}</div>
+        <p style="font-size:0.85rem; color:#666; margin-bottom:15px">${item[1]}</p>
+        
+        <div style="border-top:1px solid #eee; margin-top:15px">
+            <div class="linha-quantidade">
+                <b style="font-size:0.85rem">QUANTIDADE:</b>
+                <div class="qty-box">
+                    <button class="btn-q" onclick="mudarGrid(-1,'${id}',${item[2]},'${item[0].replace(/'/g, "\\'")}',${si},${ii})">-</button>
+                    <input type="text" value="${itemNoCesto ? itemNoCesto.q : 0}" class="qty-val" id="modal-qty-${id}">
+                    <button class="btn-q" onclick="mudarGrid(1,'${id}',${item[2]},'${item[0].replace(/'/g, "\\'")}',${si},${ii})">+</button>
+                </div>
+            </div>
+        </div>
+
+        ${iOps.length ? `
+        <div class="menu-opcionais" id="menu-opc-${id}">
+            <div class="titulo-opcionais" onclick="toggleOpcionais('${id}')">OPCIONAIS</div>
+            <div class="divisor-opcionais"></div>
+            <div class="lista-opcionais">
+                ${iOps.map(o => {
+                    const qOp = itemNoCesto ? (itemNoCesto.ex.find(e => e.n === o[0])?.q || 0) : 0;
+                    return `<div class="linha-quantidade" style="padding: 4px 0; margin-bottom:5px">
+                                <span style="font-size:0.85rem">${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span>
+                                <div class="qty-box">
+                                    <button class="btn-q" onclick="mudarGrid(-1,'${id}',${item[2]},'${item[0].replace(/'/g, "\\'")}',${si},${ii},'${o[0].replace(/'/g, "\\'")}',${o[1]})">-</button>
+                                    <input type="text" value="${qOp}" class="qty-val op-modal-qty" data-n="${o[0]}" data-p="${o[1]}">
+                                    <button class="btn-q" onclick="mudarGrid(1,'${id}',${item[2]},'${item[0].replace(/'/g, "\\'")}',${si},${ii},'${o[0].replace(/'/g, "\\'")}',${o[1]})">+</button>
+                                </div>
+                            </div>`;
+                }).join('')}
+            </div>
+        </div>` : ''}
+        <div id="sub-modal-${id}" style="text-align:right; font-weight:900; color:var(--p-green); font-size:1.1rem; margin-top:10px">Subtotal: R$ ${(itemNoCesto ? itemNoCesto.sub : 0).toFixed(2)}</div>`;
+    
+    document.getElementById('conteudo-produto-modal').innerHTML = html;
+    const btnProsseguir = document.getElementById('btn-modal-prosseguir');
+    if(btnProsseguir) btnProsseguir.style.display = carrinho.length > 0 ? "flex" : "none";
+    document.getElementById('modalOverlay').style.display = 'block';
+    document.getElementById('modalProduto').style.display = 'block';
+}
+
+function toggleOpcionais(id) {
+    const menu = document.getElementById(`menu-opc-${id}`);
+    if(menu) menu.classList.toggle('aberto');
+}
+
+function mudarGrid(d, id, precoBase, nome, si, ii, opNome = null, opPreco = 0) {
+    const qInput = document.getElementById(`modal-qty-${id}`);
+    const badge = document.getElementById(`badge-${id}`);
+    const menuOpc = document.getElementById(`menu-opc-${id}`);
+    
+    if (opNome) {
+        if (+qInput.value <= 0 && d > 0) return;
+        document.querySelectorAll('.op-modal-qty').forEach(inp => { if(inp.dataset.n === opNome) inp.value = Math.max(0, +inp.value + d); });
+    } else {
+        const valorAnterior = +qInput.value;
+        qInput.value = Math.max(0, +qInput.value + d);
+        
+        if (valorAnterior === 0 && +qInput.value === 1 && menuOpc) {
+            menuOpc.classList.add('aberto');
+        }
+        
+        if (+qInput.value === 0) {
+            document.querySelectorAll('.op-modal-qty').forEach(o => o.value = 0);
+            if(menuOpc) menuOpc.classList.remove('aberto');
+        }
+    }
+    const qMain = +qInput.value;
+    let extras = [], pE = 0;
+    document.querySelectorAll('.op-modal-qty').forEach(o => { if(+o.value > 0) { extras.push({n: o.dataset.n, q: +o.value}); pE += (+o.value * +o.dataset.p); }});
+    const sub = qMain > 0 ? (qMain * precoBase) + pE : 0;
+    carrinho = carrinho.filter(c => c.idRef !== id);
+    if (qMain > 0) carrinho.push({ nome, q: qMain, sub, ex: extras, idRef: id });
+    if(document.getElementById(`sub-modal-${id}`)) document.getElementById(`sub-modal-${id}`).innerText = `Subtotal: R$ ${sub.toFixed(2)}`;
+    badge.innerText = qMain; badge.style.display = qMain > 0 ? 'block' : 'none';
+    const btnProsseguir = document.getElementById('btn-modal-prosseguir');
+    if(btnProsseguir) btnProsseguir.style.display = carrinho.length > 0 ? "flex" : "none";
+    totalItens = carrinho.reduce((acc, i) => acc + i.sub, 0);
+    atualizarPrecoRevisao();
+    document.getElementById('cesta-rodape').style.display = carrinho.length ? 'block' : 'none';
+}
+
+function fecharModais() { document.querySelectorAll('.modal-pedido, .modal-overlay, #modalImg').forEach(m => m.style.display = 'none'); }
+function ampliarImg(src) { document.getElementById('imgExpandida').src = src; document.getElementById('modalOverlay').style.display = 'block'; document.getElementById('modalImg').style.display = 'block'; }
+
+function abrirRevisao() { 
+    fecharModais(); 
+    document.getElementById('modalOverlay').style.display = 'block'; 
+    document.getElementById('modalRevisao').style.display = 'block'; 
+    
+    let htmlItens = carrinho.map((i, idx) => `
+        <div class="cesta-item-linha">
+            <div style="flex:1">
+                <div style="font-size:0.9rem"><b>${i.q}x ${i.nome}</b> - R$ ${i.sub.toFixed(2)}</div>
+                ${i.ex.map(o => `<div class="extra-item">${o.q}x ${o.n}</div>`).join('')}
+            </div>
+            <button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button>
+        </div>`
+    ).join(''); 
+
+    if (memory.entrega === 'Entrega') {
+        htmlItens += `
+            <div class="cesta-item-linha" style="background: #faf7f2; border: 1px dashed var(--a-brown); margin-top: 10px;">
+                <div style="flex:1">
+                    <div style="font-size:0.9rem; color: var(--a-brown); font-weight: normal;">Taxa de Entrega - R$ 10,00</div>
+                </div>
+            </div>`;
+    }
+
+    document.getElementById('lista-revisao-completa').innerHTML = htmlItens || "<p style='text-align:center'>Cesta vazia</p>"; 
+    atualizarPrecoRevisao(); 
+}
+
+function removerCarrinho(idx, idRef) { carrinho.splice(idx, 1); const badge = document.getElementById(`badge-${idRef}`); if(badge) { badge.innerText = 0; badge.style.display = 'none'; } totalItens = carrinho.reduce((acc, i) => acc + i.sub, 0); abrirRevisao(); if(carrinho.length === 0) { fecharModais(); document.getElementById('cesta-rodape').style.display = 'none'; } }
+
+function selEntrega(t, el) { 
+    taxaEntrega = (t === 'Entrega') ? 10 : 0; 
+    memory.entrega = t; 
+    document.querySelectorAll('.opcao-entrega').forEach(o => o.classList.remove('selecionada')); 
+    el.classList.add('selecionada'); 
+    document.querySelectorAll('.entrega-info-frame').forEach(f => f.style.display = 'none'); 
+    el.querySelector('.entrega-info-frame').style.display = 'block'; 
+    document.getElementById('endCliDados').style.display = (t === 'Entrega') ? 'block' : 'none'; 
+    abrirRevisao(); 
+}
+
+function atualizarPrecoRevisao() { totalGeral = totalItens + taxaEntrega; document.getElementById('revisao-total-txt').innerText = `TOTAL: R$ ${totalGeral.toFixed(2)}`; document.getElementById('total-txt').innerText = `R$ ${totalGeral.toFixed(2)}`; document.getElementById('pix-valor-txt').innerText = `R$ ${totalGeral.toFixed(2)}`; }
+function abrirDados() { if(!memory.entrega) return alert("Selecione como deseja receber!"); document.getElementById('modalRevisao').style.display = 'none'; document.getElementById('modalDados').style.display = 'block'; }
+function voltarParaRevisao() { document.getElementById('modalDados').style.display = 'none'; document.getElementById('modalRevisao').style.display = 'block'; }
+
+function validarApenasNumeros(input) {
+    if (/[^\d]/.test(input.value)) {
+        alert("Informe um número, conforme os exemplos:\n1140331234 ou 11911112222");
+        input.value = input.value.replace(/\D/g, '');
+    }
+}
+
+function irParaPagamento() { 
+    const n = document.getElementById('nomeCli').value.trim();
+    const t = document.getElementById('telCli').value.trim();
+    const e = document.getElementById('endCliDados').value.trim();
+
+    if(!n) return alert("Erro: O campo 'Nome Completo' é obrigatório.");
+    if(!t) return alert("Erro: O campo 'WhatsApp' é obrigatório.");
+    
+    if(t.length < 10 || t.length > 11) {
+        return alert("Telefone inválido!\nInsira apenas números com o DDD (ex: 11988887777).\nO número deve ter entre 10 e 11 dígitos.");
+    }
+
+    if(memory.entrega === 'Entrega' && !e) {
+        return alert("Erro: Para entregas em domicílio, o endereço completo é obrigatório.");
+    }
+
+    memory.nome = n; 
+    memory.tel = t; 
+    if(memory.entrega === 'Entrega') memory.endereco = e; 
+    
+    localStorage.setItem('paodociso_dados', JSON.stringify({nome: n, tel: t})); 
+    document.getElementById('etapa-dados').style.display = 'none'; 
+    document.getElementById('etapa-pagamento').style.display = 'block'; 
+}
+
+function voltarParaDados() { document.getElementById('etapa-pagamento').style.display = 'none'; document.getElementById('etapa-dados').style.display = 'block'; }
+function selPgto(t, el) { pgtoSel = t; document.querySelectorAll('.opcao-pagamento').forEach(o => o.classList.remove('selecionada')); el.classList.add('selecionada'); document.querySelectorAll('.pagamento-info-frame').forEach(f => f.style.display = 'none'); const f = el.querySelector('.pagamento-info-frame'); if(f) f.style.display = 'block'; }
+function copiarChave() { navigator.clipboard.writeText("paodociso@gmail.com"); alert("Chave PIX copiada!"); }
+
+function enviarParaPlanilha() {
+    const url = "https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec";
+    
+    const itensString = carrinho.map(i => { 
+        let base = `${i.q}x ${i.nome}`; 
+        let extras = i.ex.length ? ` [${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}]` : ''; 
+        return base + extras; 
+    }).join(" | ");
+
+    const form = new FormData();
+    form.append('nome', memory.nome);
+    form.append('telefone', memory.tel);
+    form.append('tipoEntrega', memory.entrega);
+    form.append('endereco', memory.endereco || "N/A");
+    form.append('itens', itensString);
+    form.append('total', totalGeral.toFixed(2));
+    form.append('pagamento', pgtoSel);
+
+    // Nota técnica: fetch mode: 'no-cors' envia o dado mesmo que o navegador aponte erro de segurança
+    fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify({
+        nome: memory.nome,
+        telefone: memory.tel,
+        tipoEntrega: memory.entrega,
+        endereco: memory.endereco || "N/A",
+        itens: itensString,
+        total: totalGeral.toFixed(2),
+        pagamento: pgtoSel
+    })});
+}
+
+function finalizar() { 
+    if(!pgtoSel) return alert("Selecione o pagamento!"); 
+    document.getElementById('modalDados').style.display = 'none'; 
+    document.getElementById('modalSucesso').style.display = 'block'; 
+    
+    enviarParaPlanilha();
+    
+    // Formatação moderna dos itens para o WhatsApp
+// Montagem dos itens (negrito apenas no item principal)
+    let itensTxt = carrinho.map(i => {
+        let txt = `*${i.q}x ${i.nome}*`;
+        if(i.ex.length) {
+            // Opcionais listados abaixo sem negrito
+            txt += i.ex.map(o => `\n   └ ${o.q}x ${o.n}`).join('');
+        }
+        return txt;
+    }).join('\n\n'); 
+    
+    // Remodelação da mensagem conforme solicitado
+    ultimaMsg = `NOVO PEDIDO - PAO DO CISO
+━━━━━━━━━━━━━━━━━━━━
+CLIENTE
+Nome: *${memory.nome}*
+Telefone: *${memory.tel}*
+━━━━━━━━━━━━━━━━━━━━
+ENTREGA
+Tipo: ${memory.entrega}
+${memory.endereco ? `Endereço: *${memory.endereco}*` : ""}
+━━━━━━━━━━━━━━━━━━━━
+ITENS DO PEDIDO
+${itensTxt}
+
+${taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00` : ""}
+━━━━━━━━━━━━━━━━━━━━
+PAGAMENTO
+Forma: ${pgtoSel}
+TOTAL: *R$ ${totalGeral.toFixed(2)}*
+━━━━━━━━━━━━━━━━━━━━
+_Pedido gerado via cardápio digital._`;    
+    setTimeout(() => { 
+        window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(ultimaMsg)}`, '_blank'); 
+        document.getElementById('modalSucesso').style.display = 'none';
+        document.getElementById('modalPosEnvio').style.display = 'block';
+    }, 4000); 
+}
+
+function reenviarWhats() {
+    window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(ultimaMsg)}`, '_blank');
+}
+
+function novoPedido() {
+    carrinho = [];
+    totalItens = 0;
+    totalGeral = 0;
+    pgtoSel = "";
+    taxaEntrega = 0;
+    memory.entrega = "";
+    document.querySelectorAll('.badge-qty').forEach(b => { b.innerText = 0; b.style.display = 'none'; });
+    document.querySelectorAll('.opcao-entrega, .opcao-pagamento').forEach(o => o.classList.remove('selecionada'));
+    document.getElementById('cesta-rodape').style.display = 'none';
+    fecharModais();
+}
+</script>
+</body>
+</html>
