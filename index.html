@@ -38,7 +38,9 @@
         .main-scroll { flex: 1; overflow-y: auto; padding: 15px; }
         .container { max-width: 600px; margin: auto; }
 
-        .collapsible { background: var(--nav); color: var(--text); cursor: pointer; padding: 12px; width: 100%; border: none; text-align: left; font-weight: bold; border-radius: 8px; margin-top: 10px; display: flex; justify-content: space-between; }
+        /* ALTERAÇÃO SOLICITADA: Tamanho da fonte aumentado */
+        .collapsible { background: var(--nav); color: var(--text); cursor: pointer; padding: 12px; width: 100%; border: none; text-align: left; font-weight: 900; font-size: 1.1rem; border-radius: 8px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+        
         .collapsible-content { display: none; }
 
         .card { background: var(--w); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #eaddca; }
@@ -92,7 +94,8 @@
         }
         .btn-adicionado {
             opacity: 0.95;
-            text-decoration: none; /* Sublinhado removido */
+            text-decoration: none;
+            padding: 10px; font-size: 0.8rem;
         }
         .btn-prosseguir:active, .btn-adicionado:active { transform: scale(0.98); }
 
@@ -114,7 +117,9 @@
 
         #cesta-rodape { background: var(--nav); border-top: 3px solid var(--a-brown); display: none; flex-direction: column; flex-shrink: 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
         .barra-total { background: var(--a-brown); color: white; padding: 10px 15px; display: flex; justify-content: space-between; font-weight: bold; }
-        .cesta-scroll { display: flex; flex-direction: column; max-height: 140px; overflow-y: auto; padding: 10px; gap: 8px; }
+        
+        #cesta-lista { display: none; } 
+
         .cesta-item-linha { background: white; padding: 10px; border-radius: 6px; border: 1px solid #c4b49c; display: flex; justify-content: space-between; align-items: center; }
         .btn-remover-vermelho { background: var(--red); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; }
 
@@ -126,20 +131,19 @@
         #modalImg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; }
         #modalImg img { width: 75vw; height: 75vw; max-width: 450px; max-height: 450px; object-fit: cover; border-radius: 12px; border: 5px solid var(--w); box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
 
-        .opcao-pagamento { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold; position: relative; background: white; transition: 0.2s; }
-        .opcao-pagamento.selecionada { border-color: var(--p-green); background: #f0f7f0; }
+        .opcao-pagamento, .opcao-entrega { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; text-align: center; font-weight: bold; position: relative; background: white; transition: 0.2s; }
+        .opcao-pagamento.selecionada, .opcao-entrega.selecionada { border-color: var(--p-green); background: #f0f7f0; }
         .selo-rec { position: absolute; top: -10px; right: 10px; background: var(--p-green); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; }
-        .msg-pagamento-local { display: none; margin-top: 8px; color: var(--red); font-size: 0.8rem; font-weight: normal; background: #fff5f5; padding: 8px; border-radius: 4px; border: 1px solid #ffebeb; text-align: center; }
 
-        .pix-info-frame { display: none; margin-top: 10px; padding: 15px; background: #fff; border: 1px dashed var(--p-green); border-radius: 8px; text-align: center; }
+        .pix-info-frame, .entrega-info-frame, .pagamento-info-frame { display: none; margin-top: 10px; padding: 15px; background: #fff; border: 1px dashed var(--p-green); border-radius: 8px; text-align: center; }
         .qr-container { width: 140px; height: 140px; margin: 10px auto; background: #fff; border: 1px solid #ddd; padding: 5px; }
         .qr-container img { width: 100%; height: 100%; object-fit: contain; }
         .btn-copiar-pix { background: #f9f0e0; border: 1px solid var(--nav); padding: 10px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; width: 100%; }
         
-        .aviso-comprovante-moderno { margin-top: 12px; background: #faf7f2; border-left: 4px solid var(--a-brown); padding: 12px; border-radius: 4px 8px 8px 4px; text-align: left; display: flex; gap: 10px; align-items: flex-start; }
-        .aviso-comprovante-moderno i { color: var(--a-brown); font-size: 1.1rem; margin-top: 2px; }
-        .aviso-comprovante-moderno div { font-size: 0.82rem; line-height: 1.4; color: var(--text); }
-        .aviso-comprovante-moderno b { color: var(--a-brown); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+        .aviso-comprovante-moderno, .aviso-taxa-entrega { margin-top: 12px; background: #faf7f2; border-left: 4px solid var(--a-brown); padding: 12px; border-radius: 4px 8px 8px 4px; text-align: left; display: flex; gap: 10px; align-items: flex-start; }
+        .aviso-comprovante-moderno i, .aviso-taxa-entrega i { color: var(--a-brown); font-size: 1.1rem; margin-top: 2px; }
+        .aviso-comprovante-moderno div, .aviso-taxa-entrega div { font-size: 0.82rem; line-height: 1.4; color: var(--text); }
+        .aviso-comprovante-moderno b, .aviso-taxa-entrega b { color: var(--a-brown); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
 
         input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
         
@@ -168,8 +172,7 @@
 
 <div id="cesta-rodape">
     <div class="barra-total"><span>TOTAL:</span><span id="total-txt">R$ 0,00</span></div>
-    <div class="cesta-scroll" id="cesta-lista"></div>
-    <div class="area-botao-prosseguir">
+    <div class="cesta-scroll" id="cesta-lista"></div> <div class="area-botao-prosseguir">
         <button class="btn-prosseguir" onclick="abrirRevisao()">
             <span>CONFERIR PEDIDO</span>
             <i class="fas fa-chevron-right"></i>
@@ -192,9 +195,32 @@
 <div id="modalRevisao" class="modal-pedido">
     <h3 style="margin-bottom:15px; border-bottom: 2px solid var(--nav); padding-bottom: 10px;">Minha Cesta</h3>
     <div id="lista-revisao-completa"></div>
+    
+    <div style="margin-top:20px;">
+        <p style="font-weight: bold; font-size: 0.85rem; margin-bottom: 5px;">COMO DESEJA RECEBER?</p>
+        <div class="opcao-entrega" onclick="selEntrega('Retirada', this)">
+            Vou retirar no local
+            <div id="aviso-retirada-cesta" class="entrega-info-frame">
+                <div class="aviso-taxa-entrega">
+                    <i class="fas fa-walking"></i>
+                    <div><b>Retirada:</b><br>Gratuito</div>
+                </div>
+            </div>
+        </div>
+        <div class="opcao-entrega" onclick="selEntrega('Entrega', this)">
+            Entrega em domicílio
+            <div id="aviso-entrega-cesta" class="entrega-info-frame">
+                <div class="aviso-taxa-entrega">
+                    <i class="fas fa-truck"></i>
+                    <div><b>Taxa de entrega:</b><br>R$ 10,00 adicionados ao total.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div style="font-weight:bold; margin-top:15px; text-align:right;" id="revisao-total-txt"></div>
-    <button class="btn-prosseguir" style="margin-top:20px;" onclick="abrirDados()">PROSSEGUIR</button>
-    <button class="btn-voltar" onclick="fecharModais()">VOLTAR AO CARDÁPIO</button>
+    <button class="btn-prosseguir" style="margin-top:20px;" onclick="abrirDados()">PROSSEGUIR ></button>
+    <button class="btn-voltar" onclick="fecharModais()">< VOLTAR AO CARDÁPIO</button>
 </div>
 
 <div id="modalDados" class="modal-pedido">
@@ -202,22 +228,18 @@
         <h3 style="margin-bottom:10px">Seus Dados</h3>
         <input type="text" id="nomeCli" placeholder="Nome Completo *">
         <input type="tel" id="telCli" placeholder="WhatsApp (Somente Números) *" maxlength="11">
-        <select id="tipoEntrega" onchange="toggleEndereco()">
-            <option value="Retirada">Vou retirar no local</option>
-            <option value="Entrega">Entrega em domicílio</option>
-        </select>
-        <div id="campo-endereco" style="display:none">
-            <input type="text" id="endCli" placeholder="Endereço Completo *">
-        </div>
-        <button class="btn-prosseguir" style="margin-top:15px;" onclick="irParaPagamento()">PROSSEGUIR PARA PAGAMENTO</button>
-        <button class="btn-voltar" onclick="voltarParaRevisao()">VOLTAR PARA CESTA</button>
+        <input type="text" id="endCliDados" placeholder="Informe seu endereço completo *" style="display:none;">
+        
+        <button class="btn-prosseguir" style="margin-top:15px;" onclick="irParaPagamento()">PROSSEGUIR PARA PAGAMENTO ></button>
+        <button class="btn-voltar" onclick="voltarParaRevisao()">< VOLTAR PARA CESTA</button>
     </div>
 
     <div id="etapa-pagamento" style="display:none">
         <h3 style="margin-bottom:10px">Forma de Pagamento</h3>
+        
         <div class="opcao-pagamento" onclick="selPgto('Pix', this)">
             PIX <span class="selo-rec">RECOMENDADO</span>
-            <div id="pix-detalhes-frame" class="pix-info-frame">
+            <div id="pix-detalhes-frame" class="pagamento-info-frame">
                 <div style="background:var(--highlight); padding:8px; border-radius:4px; font-weight:900; color:var(--p-green); margin-bottom:10px;">
                     VALOR DO PEDIDO: <span id="pix-valor-txt"></span>
                 </div>
@@ -230,16 +252,29 @@
                 </div>
             </div>
         </div>
+
         <div class="opcao-pagamento" onclick="selPgto('Cartão', this)">
             Cartão (Débito/Crédito)
-            <div id="msg-cartao" class="msg-pagamento-local"><i class="fas fa-info-circle"></i> O pagamento é feito na retirada/entrega.</div>
+            <div id="msg-cartao-frame" class="pagamento-info-frame">
+                <div class="aviso-comprovante-moderno" style="border-left-color: var(--p-green); background: #f0f7f0;">
+                    <i class="fas fa-credit-card" style="color: var(--p-green);"></i>
+                    <div><b>Pagamento no Local:</b><br>O pagamento é feito na retirada ou entrega através da nossa maquininha.</div>
+                </div>
+            </div>
         </div>
+
         <div class="opcao-pagamento" onclick="selPgto('Dinheiro', this)">
             Dinheiro
-            <div id="msg-dinheiro" class="msg-pagamento-local"><i class="fas fa-info-circle"></i> O pagamento é feito na retirada/entrega.</div>
+            <div id="msg-dinheiro-frame" class="pagamento-info-frame">
+                <div class="aviso-comprovante-moderno" style="border-left-color: var(--p-green); background: #f0f7f0;">
+                    <i class="fas fa-money-bill-wave" style="color: var(--p-green);"></i>
+                    <div><b>Pagamento no Local:</b><br>O pagamento é feito em espécie no momento da retirada ou entrega.</div>
+                </div>
+            </div>
         </div>
-        <button class="btn-prosseguir" style="margin-top:20px;" onclick="finalizar()">FINALIZAR PEDIDO</button>
-        <button class="btn-voltar" onclick="voltarParaDados()">VOLTAR PARA DADOS</button>
+
+        <button class="btn-prosseguir" style="margin-top:20px;" onclick="finalizar()">FINALIZAR PEDIDO > </button>
+        <button class="btn-voltar" onclick="voltarParaDados()">< VOLTAR PARA DADOS</button>
     </div>
 </div>
 
@@ -252,9 +287,9 @@
 
 <script src="cardapio.js"></script>
 <script>
-let carrinho = [], totalGeral = 0, pgtoSel = "";
+let carrinho = [], totalItens = 0, totalGeral = 0, pgtoSel = "", taxaEntrega = 0;
 let memory = { nome: "", tel: "", entrega: "Retirada", endereco: "" };
-const DATA_PROXIMA_FORNADA = "2025-01-14"; 
+const DATA_PROXIMA_FORNADA = "2025-01-16"; 
 
 function atualizarBannerFornada() {
     const dataF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
@@ -278,7 +313,7 @@ function abrirModalFornada() {
 
 function render() {
     atualizarBannerFornada();
-    abrirModalFornada(); // RECOLOCADO: Abre o modal ao carregar a página
+    abrirModalFornada();
     const { secoes } = dadosIniciais;
     document.getElementById('render-cli').innerHTML = secoes.map((s, si) => {
         const chaveOpcionais = "opcionais" + s.nome;
@@ -288,7 +323,7 @@ function render() {
             const iOps = (i[4] || []).map(nomeOpcional => bancoDeOpcionaisDaSecao.find(x => x[0].trim() === nomeOpcional.trim())).filter(Boolean);
             return `<div class="card" id="card-${id}" data-item-nome="${i[0]}" data-item-preco="${i[2]}"><div class="prod-header"><img src="${i[3]}" class="img-thumb" onclick="ampliarImg('${i[3]}')" onerror="this.src='https://via.placeholder.com/80'"><div class="prod-info"><b>${i[0]}</b><p>${i[1]}</p><span class="preco-topo">R$ ${(+i[2]).toFixed(2)}</span><div class="controles-topo"><div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val main-qty" id="main-qty-${id}"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div></div></div></div>${iOps.length ? `<div class="frame-opcionais"><div class="header-opcionais" onclick="toggleOps('${id}')"><span class="titulo-frame">OPCIONAIS</span><span id="seta-${id}">▼</span></div><div id="lista-ops-${id}" class="lista-opcionais-interna"><div class="divisor-opcional"></div>${iOps.map(o => `<div class="linha-controle" style="margin-bottom:8px"><span style="font-size:0.85rem">${o[0]} (+R$ ${(+o[1]).toFixed(2)})</span><div class="qty-box"><button class="btn-q" onclick="mudar(-1,'${id}',${i[2]})">-</button><input type="text" value="0" readonly class="qty-val op-qty" data-n="${o[0]}" data-p="${o[1]}"><button class="btn-q" onclick="mudar(1,'${id}',${i[2]})">+</button></div></div>`).join('')}</div></div>` : ''}<div class="subtotal-item" id="sub-${id}">Subtotal: R$ 0,00</div><div id="btn-status-${id}" style="margin-top: 10px;">
             <button class="btn-adicionado" style="display:none;" onclick="abrirRevisao()">
-                ADICIONADO À CESTA
+                VER ÍTEM NA CESTA
             </button>
             </div></div>`}).join('')}</div>`
     }).join('');
@@ -296,7 +331,7 @@ function render() {
 }
 
 function ampliarImg(src) { document.getElementById('imgExpandida').src = src; document.getElementById('modalOverlay').style.display = 'block'; document.getElementById('modalImg').style.display = 'block'; }
-function carregarDadosSalvos() { const salvo = localStorage.getItem('paoDoCisoDados'); if(salvo) { const d = JSON.parse(salvo); document.getElementById('nomeCli').value = d.nome || ""; document.getElementById('telCli').value = d.tel || ""; document.getElementById('tipoEntrega').value = d.entrega || "Retirada"; document.getElementById('endCli').value = d.endereco || ""; toggleEndereco(); } }
+function carregarDadosSalvos() { const salvo = localStorage.getItem('paoDoCisoDados'); if(salvo) { const d = JSON.parse(salvo); document.getElementById('nomeCli').value = d.nome || ""; document.getElementById('telCli').value = d.tel || ""; document.getElementById('endCliDados').value = d.endereco || ""; } }
 function toggleC(b) { const c = b.nextElementSibling; c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
 function toggleOps(id) { const l = document.getElementById(`lista-ops-${id}`); const s = document.getElementById(`seta-${id}`); if(!l) return; l.style.display = l.style.display === 'block' ? 'none' : 'block'; s.innerText = l.style.display === 'block' ? '▲' : '▼'; }
 
@@ -331,7 +366,8 @@ function autoSincronizar(id) {
     const subTotalItem = q > 0 ? (q * preco) + pE : pE;
     carrinho = carrinho.filter(i => i.idRef !== id);
     if (q > 0 || pE > 0) { carrinho.push({ nome, q, sub: subTotalItem, ex, idRef: id }); }
-    totalGeral = carrinho.reduce((acc, i) => acc + i.sub, 0);
+    totalItens = carrinho.reduce((acc, i) => acc + i.sub, 0);
+    totalGeral = totalItens + taxaEntrega;
     atualizarCesta();
 }
 
@@ -339,9 +375,6 @@ function atualizarCesta() {
     const footer = document.getElementById('cesta-rodape');
     footer.style.display = carrinho.length ? 'flex' : 'none';
     document.getElementById('total-txt').innerText = `R$ ${totalGeral.toFixed(2)}`;
-    document.getElementById('cesta-lista').innerHTML = carrinho.map((i, idx) => {
-        let txtEx = i.ex.length ? `<div style="font-size:0.7rem; color:#666">Opcionais: ${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}</div>` : '';
-        return `<div class="cesta-item-linha"><div style="font-size:0.85rem"><b>${i.q > 0 ? i.q + 'x ' : ''}${i.nome}</b>${txtEx}R$ ${i.sub.toFixed(2)}</div><button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button></div>`}).join('');
 }
 
 function removerCarrinho(idx, idRef) {
@@ -354,7 +387,8 @@ function removerCarrinho(idx, idRef) {
         if(statusDiv) statusDiv.querySelector('.btn-adicionado').style.display = 'none';
     }
     carrinho.splice(idx, 1);
-    totalGeral = carrinho.reduce((acc, i) => acc + i.sub, 0);
+    totalItens = carrinho.reduce((acc, i) => acc + i.sub, 0);
+    totalGeral = totalItens + taxaEntrega;
     atualizarCesta();
     if(document.getElementById('modalRevisao').style.display === 'block') abrirRevisao();
     if(!carrinho.length) fecharModais();
@@ -363,28 +397,63 @@ function removerCarrinho(idx, idRef) {
 function abrirRevisao() {
     document.getElementById('modalOverlay').style.display = 'block';
     document.getElementById('modalRevisao').style.display = 'block';
-    document.getElementById('revisao-total-txt').innerText = `TOTAL: R$ ${totalGeral.toFixed(2)}`;
-    document.getElementById('lista-revisao-completa').innerHTML = carrinho.map((i, idx) => {
+    atualizarPrecoRevisao();
+    
+    let htmlItens = carrinho.map((i, idx) => {
         let txtEx = i.ex.length ? `<div style="padding-left:10px; margin-top:4px;">${i.ex.map(o => `<div style="font-size:0.75rem; color:#666; border-left: 2px solid var(--nav); padding-left:5px;">${o.q}x ${o.n}</div>`).join('')}</div>` : '';
-        return `<div class="cesta-item-linha" style="margin-bottom:8px; align-items: flex-start;"><div style="flex:1"><div style="font-size:0.9rem"><b>${i.q > 0 ? i.q + 'x ' : ''}${i.nome}</b> - R$ ${i.sub.toFixed(2)}</div>${txtEx}</div><button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button></div>`}).join('');
+        return `<div class="cesta-item-linha" style="margin-bottom:8px; align-items: flex-start;"><div style="flex:1"><div style="font-size:0.9rem"><b>${i.q > 0 ? i.q + 'x ' : ''}${i.nome}</b> - R$ ${i.sub.toFixed(2)}</div>${txtEx}</div><button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button></div>`
+    }).join('');
+
+    if(taxaEntrega > 0) {
+        htmlItens += `<div class="cesta-item-linha" style="margin-bottom:8px; background: #faf7f2; border: 1px dashed var(--a-brown);"><div style="flex:1"><div style="font-size:0.9rem; color: var(--a-brown);"><b>Taxa de Entrega</b> - R$ 10.00</div></div></div>`;
+    }
+    
+    document.getElementById('lista-revisao-completa').innerHTML = htmlItens;
 }
 
-function abrirDados() { document.getElementById('modalRevisao').style.display = 'none'; document.getElementById('modalDados').style.display = 'block'; }
+function selEntrega(t, el) {
+    memory.entrega = t;
+    taxaEntrega = (t === 'Entrega') ? 10 : 0;
+    totalGeral = totalItens + taxaEntrega;
+    
+    document.querySelectorAll('.opcao-entrega').forEach(o => o.classList.remove('selecionada'));
+    el.classList.add('selecionada');
+    
+    document.getElementById('aviso-retirada-cesta').style.display = (t === 'Retirada') ? 'block' : 'none';
+    document.getElementById('aviso-entrega-cesta').style.display = (t === 'Entrega') ? 'block' : 'none';
+    
+    document.getElementById('endCliDados').style.display = (t === 'Entrega') ? 'block' : 'none';
+    
+    abrirRevisao(); 
+    atualizarCesta();
+}
+
+function atualizarPrecoRevisao() {
+    document.getElementById('revisao-total-txt').innerText = `TOTAL: R$ ${totalGeral.toFixed(2)}`;
+}
+
+function abrirDados() { 
+    if(!memory.entrega) return alert("Selecione como deseja receber seu pedido!");
+    document.getElementById('modalRevisao').style.display = 'none'; 
+    document.getElementById('modalDados').style.display = 'block'; 
+}
+
 function voltarParaRevisao() { document.getElementById('modalDados').style.display = 'none'; document.getElementById('modalRevisao').style.display = 'block'; }
 function voltarParaDados() { document.getElementById('etapa-pagamento').style.display = 'none'; document.getElementById('etapa-dados').style.display = 'block'; }
-function toggleEndereco() { document.getElementById('campo-endereco').style.display = document.getElementById('tipoEntrega').value === 'Entrega' ? 'block' : 'none'; }
 
 function irParaPagamento() {
     const n = document.getElementById('nomeCli').value.trim();
     const tRaw = document.getElementById('telCli').value.trim();
     const t = tRaw.replace(/\D/g, '');
-    const e = document.getElementById('tipoEntrega').value;
-    const end = document.getElementById('endCli').value.trim();
+    const end = document.getElementById('endCliDados').value.trim();
+    
     if(!n) return alert("Informe seu nome!");
     if(t.length < 10 || t.length > 11) return alert("Informe um WhatsApp válido!");
-    if(e === 'Entrega' && !end) return alert("Informe o endereço!");
-    memory = { nome: n, tel: t, entrega: e, endereco: end };
+    if(memory.entrega === 'Entrega' && !end) return alert("Informe seu endereço completo!");
+    
+    memory.nome = n; memory.tel = t; memory.endereco = end;
     localStorage.setItem('paoDoCisoDados', JSON.stringify(memory));
+    
     document.getElementById('pix-valor-txt').innerText = `R$ ${totalGeral.toFixed(2)}`;
     document.getElementById('etapa-dados').style.display = 'none';
     document.getElementById('etapa-pagamento').style.display = 'block';
@@ -394,12 +463,12 @@ function selPgto(t, el) {
     pgtoSel = t;
     document.querySelectorAll('.opcao-pagamento').forEach(o => o.classList.remove('selecionada'));
     el.classList.add('selecionada');
-    document.getElementById('pix-detalhes-frame').style.display = 'none';
-    document.getElementById('msg-cartao').style.display = 'none';
-    document.getElementById('msg-dinheiro').style.display = 'none';
+    
+    document.querySelectorAll('.pagamento-info-frame').forEach(f => f.style.display = 'none');
+    
     if(t === 'Pix') document.getElementById('pix-detalhes-frame').style.display = 'block';
-    if(t === 'Cartão') document.getElementById('msg-cartao').style.display = 'block';
-    if(t === 'Dinheiro') document.getElementById('msg-dinheiro').style.display = 'block';
+    if(t === 'Cartão') document.getElementById('msg-cartao-frame').style.display = 'block';
+    if(t === 'Dinheiro') document.getElementById('msg-dinheiro-frame').style.display = 'block';
 }
 
 function finalizar() {
@@ -414,15 +483,17 @@ function finalizar() {
 }
 
 function salvarNaPlanilha() {
+    const planilhaDestino = memory.entrega === 'Entrega' ? 'entrega' : 'retirada';
     const url = "https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec";
     const itens = carrinho.map(i => { let base = i.q > 0 ? `${i.q}x ${i.nome}` : `Adicionais de ${i.nome}`; let extras = i.ex.length ? ` [${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}]` : ''; return base + extras; }).join(" | ");
-    const dados = { nome: memory.nome, telefone: memory.tel, tipoEntrega: memory.entrega, endereco: memory.endereco || "N/A", itens: itens, total: totalGeral.toFixed(2), pagamento: pgtoSel };
+    const dados = { nome: memory.nome, telefone: memory.tel, tipoEntrega: memory.entrega, destinoPlanilha: planilhaDestino, endereco: memory.endereco || "N/A", itens: itens, total: totalGeral.toFixed(2), pagamento: pgtoSel };
     fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) });
 }
 
 function gerarMensagemZap() {
     let msg = `*PÃO DO CISO - PEDIDO*\n\nCliente: ${memory.nome}\nPagamento: ${pgtoSel}\nEntrega: ${memory.entrega}\n`;
     if(memory.endereco) msg += `Endereço: ${memory.endereco}\n`;
+    if(taxaEntrega > 0) msg += `Taxa de Entrega: R$ 10,00\n`;
     msg += `\n*ITENS:*\n`;
     carrinho.forEach(i => { let base = i.q > 0 ? `${i.q}x ${i.nome}` : `Adicionais de ${i.nome}`; let extras = i.ex.length ? `\n    └ Opcionais: ${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}` : ''; msg += `- ${base}${extras}\n`; });
     msg += `\n*Total: R$ ${totalGeral.toFixed(2)}*`;
