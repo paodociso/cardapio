@@ -1,298 +1,96 @@
 const dadosIniciais = {
+  // --- COMPLEMENTOS PARA PÃES - (PORÇÕES DE 100 GRAMAS) ---
   "opcionaisPães": [
-    [
-      "Alichella (100g)",
-      "20.00"
-    ],
-    [
-      "Sardella (100g)",
-      "20.00"
-    ],
-    [
-      "Melanzane Sott'olio (100g)",
-      "20.00"
-    ],
-    [
-      "Manteiga temperada (100g)",
-      "17.00"
-    ],
-    [
-      "Confit de alho (100g)",
-      "20.00"
-    ],
-    [
-      "Confit de alho e tomates cereja (100g)",
-      "20.00"
-    ],
-    [
-      "Picles de cebola (100g)",
-      "15.00"
-    ],
-    [
-      "Potinho de vidro",
-      "5.00"
-    ]
+    ["Alichella (100g)", "20.00"],
+    ["Sardella (100g)", "20.00"],
+    ["Melanzane sottolio (100g)", "20.00"],
+    ["Manteiga temperada (100g)", "17.00"],
+    ["Confit de alho (100g)", "20.00"],
+    ["Confit de alho e tomates cereja (100g)", "20.00"],
+    ["Picles de cebola (100g)", "15.00"],
+    ["Potinho de vidro", "5.00"]
   ],
+
+  // --- COMPLEMENTOS PARA PANINIS (ITENS INDIVIDUAIS) ---
   "opcionaisPanini": [
-    [
-      "Alichella",
-      "3.00"
-    ],
-    [
-      "Sardella",
-      "3.00"
-    ],
-    [
-      "Melanzane sott'olio",
-      "3.00"
-    ],
-    [
-      "Manteiga",
-      "2.00"
-    ],
-    [
-      "Manteiga temperada com alho e parmesão",
-      "3.00"
-    ],
-    [
-      "Confit de alho",
-      "2.00"
-    ],
-    [
-      "Confit de alho e tomates cereja",
-      "3.00"
-    ],
-    [
-      "Picles de cebola",
-      "2.00"
-    ],
-    [
-      "Bresaola",
-      "9.00"
-    ],
-    [
-      "Lombo piripiri",
-      "9.00"
-    ],
-    [
-      "Mortadela",
-      "5.00"
-    ],
-    [
-      "Pastrame",
-      "9.00"
-    ],
-    [
-      "Presunto cru",
-      "9.00"
-    ],
-    [
-      "Salame",
-      "7.00"
-    ],
-    [
-      "Chancliche",
-      "7.00"
-    ],
-    [
-      "Chancliche apimentado",
-      "7.00"
-    ],
-    [
-      "Muçarela",
-      "3.00"
-    ],
-    [
-      "Provolone",
-      "5.00"
-    ],
-    [
-      "Queijo Prato",
-      "5.00"
-    ],
-    [
-      "Alface",
-      "1.00"
-    ],
-    [
-      "Pepino",
-      "1.00"
-    ],
-    [
-      "Pimentão",
-      "1.00"
-    ],
-    [
-      "Rúcula",
-      "1.00"
-    ],
-    [
-      "Tomate",
-      "1.00"
-    ],
-    [
-      "Azeite",
-      "1.00"
-    ],
-    [
-      "Pesto tradicional (manjericão)",
-      "2.00"
-    ],
-    [
-      "Pesto de azeitona",
-      "2.00"
-    ],
-    [
-      "Maionese",
-      "2.00"
-    ],
-    [
-      "Maionese temperada",
-      "2.00"
-    ],
-    [
-      "Pastinha de goronzola",
-      "2.00"
-    ],
-    [
-      "Pastinha de parmesão",
-      "2.00"
-    ],
-    [
-      "Pastinha de pimentão vermelho",
-      "2.00"
-    ]
+    ["Alichella", "3.00"],
+    ["Sardella", "3.00"],
+    ["Melanzane sottolio", "3.00"],
+    ["Manteiga", "2.00"],
+    ["Manteiga temperada com alho e parmesão", "3.00"],
+    ["Confit de alho", "2.00"],
+    ["Confit de alho e tomates cereja", "3.00"],
+    ["Picles de cebola", "2.00"],
+    ["Bresaola", "9.00"],
+    ["Lombo piripiri", "9.00"],
+    ["Mortadela", "5.00"],
+    ["Pastrame", "9.00"],
+    ["Presunto cru", "9.00"],
+    ["Salame", "7.00"],
+    ["Chancliche", "7.00"],
+    ["Chancliche apimentado", "7.00"],
+    ["Muçarela", "3.00"],
+    ["Provolone", "5.00"],
+    ["Queijo Prato", "5.00"],
+    ["Alface", "1.00"],
+    ["Pepino", "1.00"],
+    ["Pimentão", "1.00"],
+    ["Rúcula", "1.00"],
+    ["Tomate", "1.00"],
+    ["Azeite", "1.00"],
+    ["Pesto tradicional (manjericão)", "2.00"],
+    ["Pesto de azeitona", "2.00"],
+    ["Maionese", "2.00"],
+    ["Maionese temperada", "2.00"],
+    ["Pastinha de goronzola", "2.00"],
+    ["Pastinha de parmesão", "2.00"],
+    ["Pastinha de pimentão vermelho", "2.00"]
   ],
+
+  // --- COMPLEMENTOS PARA BEBIDAS ---
   "opcionaisBebidas": [
-    [
-      "Taça de vidro",
-      "40.00"
-    ],
-    [
-      "Taça champangne",
-      "30.00"
-    ]
+    ["Taça de vidro", "40.00"],
+    ["Taça champangne", "30.00"]
   ],
+
+  // --- COMPLEMENTOS PARA ANTIPASTI ---
   "opcionaisAntipasti": [
-    [
-      "Potinho de vidro",
-      "5.00"
-    ]
+    ["Potinho de vidro", "5.00"]
   ],
+
+  // --- COMPLEMENTOS PARA TÁBUAS ---
   "opcionaisTábuas": [
-    [
-      "Alichella",
-      "10.00"
-    ],
-    [
-      "Sardella",
-      "10.00"
-    ],
-    [
-      "Melanzane sott'olio",
-      "10.00"
-    ],
-    [
-      "Manteiga",
-      "3.00"
-    ],
-    [
-      "Manteiga temperada com alho e parmesão",
-      "3.00"
-    ],
-    [
-      "Confit de alho",
-      "4.00"
-    ],
-    [
-      "Confit de alho e tomates cereja",
-      "4.00"
-    ],
-    [
-      "Picles de cebola",
-      "3.00"
-    ],
-    [
-      "Bresaola",
-      "15.00"
-    ],
-    [
-      "Lombo piripiri",
-      "15.00"
-    ],
-    [
-      "Mortadela",
-      "10.00"
-    ],
-    [
-      "Pastrame",
-      "15.00"
-    ],
-    [
-      "Presunto cru",
-      "15.00"
-    ],
-    [
-      "Salame",
-      "11.00"
-    ],
-    [
-      "Chancliche",
-      "7.00"
-    ],
-    [
-      "Chancliche apimentado",
-      "7.00"
-    ],
-    [
-      "Muçarela",
-      "5.00"
-    ],
-    [
-      "Provolone",
-      "8.00"
-    ],
-    [
-      "Queijo Prato",
-      "7.00"
-    ],
-    [
-      "Tomate",
-      "3.00"
-    ],
-    [
-      "Azeite",
-      "3.00"
-    ],
-    [
-      "Pesto tradicional (manjericão)",
-      "4.00"
-    ],
-    [
-      "Pesto de azeitona",
-      "4.00"
-    ],
-    [
-      "Maionese",
-      "3.00"
-    ],
-    [
-      "Maionese temperada",
-      "3.00"
-    ],
-    [
-      "Pastinha de goronzola",
-      "4.00"
-    ],
-    [
-      "Pastinha de parmesão",
-      "4.00"
-    ],
-    [
-      "Pastinha de pimentão vermelho",
-      "4.00"
-    ]
+    ["Alichella", "10.00"],
+    ["Sardella", "10.00"],
+    ["Melanzane sottolio", "10.00"],
+    ["Manteiga", "3.00"],
+    ["Manteiga temperada com alho e parmesão", "3.00"],
+    ["Confit de alho", "4.00"],
+    ["Confit de alho e tomates cereja", "4.00"],
+    ["Picles de cebola", "3.00"],
+    ["Bresaola", "15.00"],
+    ["Lombo piripiri", "15.00"],
+    ["Mortadela", "10.00"],
+    ["Pastrame", "15.00"],
+    ["Presunto cru", "15.00"],
+    ["Salame", "11.00"],
+    ["Chancliche", "7.00"],
+    ["Chancliche apimentado", "7.00"],
+    ["Muçarela", "5.00"],
+    ["Provolone", "8.00"],
+    ["Queijo Prato", "7.00"],
+    ["Tomate", "3.00"],
+    ["Azeite", "3.00"],
+    ["Pesto tradicional (manjericão)", "4.00"],
+    ["Pesto de azeitona", "4.00"],
+    ["Maionese", "3.00"],
+    ["Maionese temperada", "3.00"],
+    ["Pastinha de goronzola", "4.00"],
+    ["Pastinha de parmesão", "4.00"],
+    ["Pastinha de pimentão vermelho", "4.00"]
   ],
+
+  // --- TIPOS DE PRODUTOS ---
   "secoes": [
     {
       "nome": "Pães",
@@ -305,11 +103,11 @@ const dadosIniciais = {
           [
             "Sardella (100g)",
             "Alichella (100g)",
-            "Melanzane Sott'olio (100g)",
-            "Manteiga temperada (100g)",
+            "Melanzane sottolio (100g)",
+            /*"Manteiga temperada (100g)",
             "Picles de cebola (100g)",
             "Confit de alho (100g)",
-            "Confit de alho e tomates cereja (100g)",
+            "Confit de alho e tomates cereja (100g)",*/
             "Potinho de vidro"
           ]
         ],
@@ -321,11 +119,11 @@ const dadosIniciais = {
           [
             "Sardella (100g)",
             "Alichella (100g)",
-            "Melanzane Sott'olio (100g)",
-            "Manteiga temperada (100g)",
+            "Melanzane sottolio (100g)",
+            /*"Manteiga temperada (100g)",
             "Picles de cebola (100g)",
             "Confit de alho (100g)",
-            "Confit de alho e tomates cereja (100g)",
+            "Confit de alho e tomates cereja (100g)",*/
             "Potinho de vidro"
           ]
         ],
@@ -337,15 +135,15 @@ const dadosIniciais = {
           [
             "Sardella (100g)",
             "Alichella (100g)",
-            "Melanzane Sott'olio (100g)",
-            "Manteiga temperada (100g)",
+            "Melanzane sottolio (100g)",
+            /*"Manteiga temperada (100g)",
             "Picles de cebola (100g)",
             "Confit de alho (100g)",
-            "Confit de alho e tomates cereja (100g)",
+            "Confit de alho e tomates cereja (100g)",*/
             "Potinho de vidro"
           ]
         ],
-        [
+        /*[
           "Ciabatta",
           "Este pão rústico combina casca crocante e miolo leve, de sabor profundo. Simples, autêntica e feita para quem valoriza pão de verdade.",
           "15.00",
@@ -353,14 +151,14 @@ const dadosIniciais = {
           [
             "Sardella (100g)",
             "Alichella (100g)",
-            "Melanzane Sott'olio (100g)",
-            "Manteiga temperada (100g)",
+            "Melanzane sottolio (100g)",
+            /*"Manteiga temperada (100g)",
             "Picles de cebola (100g)",
             "Confit de alho (100g)",
             "Confit de alho e tomates cereja (100g)",
             "Potinho de vidro"
           ]
-        ]
+        ]*/
       ]
     },
     {
@@ -376,7 +174,7 @@ const dadosIniciais = {
           ]
         ],
         [
-          "Melanzane Sottolio (porção de 100g)",
+          "Melanzane sottolio (porção de 100g)",
           "Berinjelas curtidas no vinagre e preservada no azeite com ervas e alho.",
           "20.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjygUAEJw4jjQR0fWMII5hc7QX1Ppu22I32LXjNTfcxf7B43coy-6gOXmdPiwCrL_NyWFuPM3HYzifiS_CuiqAD6efRxq9eYdbrr5I8C7x_jyn6I3w-OBplN5w184KYh5ZDnSF6iR6Bl6HQP5kRz8iycmQtRIfbeSR-5WvkfyQ7CFOuQKVLwwNPs5H_nj4/s4032/IMG_20201202_174658.jpg",
@@ -393,7 +191,7 @@ const dadosIniciais = {
             "Potinho de vidro"
           ]
         ],
-        [
+        /*[
           "Manteiga temperada (porção de 100g)",
           "Manteiga batida com ervas finas e alho assado.",
           "17.00",
@@ -401,8 +199,8 @@ const dadosIniciais = {
           [
             "Potinho de vidro"
           ]
-        ],
-        [
+        ],*/
+        /*[
           "Picles de cebola (porção de 100g)",
           "Cebolas em conserva agridoce, que conservam uma agradável crocância.",
           "17.00",
@@ -410,8 +208,8 @@ const dadosIniciais = {
           [
             "Potinho de vidro"
           ]
-        ],
-        [
+        ],*/
+        /*[
           "Confit de alho (porção de 100g)",
           "Dentes de alho cozidos lentamente em azeite até ficarem cremosos.",
           "20.00",
@@ -419,8 +217,8 @@ const dadosIniciais = {
           [
             "Potinho de vidro"
           ]
-        ],
-        [
+        ],*/
+        /*[
           "Confit de alho e tomates cereja (porção de 100g)",
           "Mistura de alho confitado e tomates cereja assados.",
           "20.00",
@@ -428,10 +226,10 @@ const dadosIniciais = {
           [
             "Potinho de vidro"
           ]
-        ]
+        ]*/
       ]
     },
-    {
+    /* {
       "nome": "Panini",
       "itens": [
         [
@@ -442,7 +240,7 @@ const dadosIniciais = {
           [
             "Alichella",
             "Sardella",
-            "Melanzane sott'olio",
+            "Melanzane sottolio",
             "Manteiga",
             //"Manteiga temperada com alho e parmesão",
             //"Confit de alho",
@@ -468,7 +266,7 @@ const dadosIniciais = {
             //"Pesto tradicional (manjericão)",
             "Pesto de azeitona",
             "Maionese",
-            "Maionese temperada",
+            "Maionese temperada"
             //"Pastinha de goronzola",
             //"Pastinha de parmesão",
             //"Pastinha de pimentão vermelho"
@@ -488,7 +286,7 @@ const dadosIniciais = {
           [
             "Alichella",
             "Sardella",
-            "Melanzane sott'olio",
+            "Melanzane sottolio",
             "Manteiga",
             "Manteiga temperada com alho e parmesão",
             "Confit de alho",
@@ -518,7 +316,7 @@ const dadosIniciais = {
           "ativo"
         ]
       ]
-    },
+    }, */ // <-- Fechamento dos blocos Panini e Tábuas corrigido aqui
     {
       "nome": "Bebidas",
       "itens": [
@@ -542,7 +340,7 @@ const dadosIniciais = {
             "Taça champangne"
           ]
         ],
-        [
+        /*[
           "Espumante Veuve D`Argent Blanc De Blancs Demi-Sec",
           "Com aroma de frutas frescas como abacaxi e pera, com nuances de fermento, esse espumante possui um paladar leve, frutado, com delicada doçura. Elaborado na França, com o método Charmat, esse exemplar é jovem, moderno e fácil de beber.",
           "85.00",
@@ -551,7 +349,7 @@ const dadosIniciais = {
             "Taça de vidro",
             "Taça champangne"
           ]
-        ]
+        ]*/
       ]
     }
   ]
