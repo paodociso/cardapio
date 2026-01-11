@@ -512,6 +512,17 @@ function reenviarWhats() { window.open(`https://wa.me/5511982391781?text=${encod
 function voltarParaDados() { el('etapa-pagamento').style.display = 'none'; el('etapa-dados').style.display = 'block'; }
 function voltarParaRevisao() { el('modalDados').style.display = 'none'; el('modalRevisao').style.display = 'block'; }
 function novoPedido() { location.reload(); }
+function encerrarSistema() {
+    localStorage.clear();
+    window.close();
+    // Caso o navegador bloqueie o fechamento automático, avisa o usuário:
+    if (!window.closed) {
+        alert("Dados locais limpos. Por favor, feche esta aba manualmente.");
+    }
+}
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
