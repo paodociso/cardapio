@@ -14,87 +14,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- 1. CONFIGURAÇÕES GERAIS E VARIÁVEIS --- */
         :root { 
             --banner: #2e2610; --p-green: #2d3a27; --a-brown: #7d4f39; 
             --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; 
             --red: #b22222; --highlight: #f9f0e0; --grey: #e0e0e0;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        /* MODIFICAÇÃO: Removido overflow hidden para permitir scroll do header */
         html, body { min-height: 100%; background: var(--bg); font-family: 'Calibri', sans-serif; color: var(--text); }
-        
         input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
-
-        /* --- 2. CABEÇALHO (HEADER) --- */
-        header { 
-            background: var(--banner); color: #fdf5e6; padding: 15px 20px; 
-            border-bottom: 4px solid var(--a-brown); display: flex; align-items: center; 
-            justify-content: center; gap: 15px; flex-shrink: 0; 
-        }
+        header { background: var(--banner); color: #fdf5e6; padding: 15px 20px; border-bottom: 4px solid var(--a-brown); display: flex; align-items: center; justify-content: center; gap: 15px; flex-shrink: 0; }
         .logo-img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--a-brown); object-fit: cover; background: white; flex-shrink: 0; }
         .header-info { display: flex; flex-direction: column; justify-content: center; }
         .header-info h1 { font-size: 1.4rem; margin: 0; line-height: 1.2; color: #fdf5e6; }
         .sub-link { color: #fdf5e6; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; margin-top: 3px; }
-
-        /* --- 3. BANNER INFORMATIVO (DATA FORNADA) --- */
-        .banner-fornada { 
-            background: linear-gradient(135deg, var(--nav) 0%, #eaddca 100%); 
-            margin: 10px 15px 5px 15px; padding: 12px; border-radius: 12px; 
-            border-left: 5px solid var(--a-brown); border-right: 5px solid var(--a-brown);
-            text-align: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+        .banner-fornada { background: linear-gradient(135deg, var(--nav) 0%, #eaddca 100%); margin: 10px 15px 5px 15px; padding: 12px; border-radius: 12px; border-left: 5px solid var(--a-brown); border-right: 5px solid var(--a-brown); text-align: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .banner-fornada h2 { font-size: 0.95rem; text-transform: uppercase; margin: 0; letter-spacing: 0.5px; color: var(--text); font-weight: 900; }
         .banner-fornada p { font-size: 0.85rem; color: var(--a-brown); margin-top: 2px; font-weight: bold; }
-
-        /* --- 4. GRID DE PRODUTOS --- */
-        /* MODIFICAÇÃO: Removido flex:1 e overflow-y:auto */
         .main-scroll { padding: 10px; padding-bottom: 100px; } 
         .container-grid { max-width: 1200px; margin: auto; }
         .secao-titulo { font-weight: 900; font-size: 1.1rem; margin: 25px 5px 15px; color: var(--a-brown); border-bottom: 2px solid var(--nav); padding-bottom: 5px; text-transform: uppercase; }
         .grid-produtos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         @media (min-width: 1024px) { .grid-produtos { grid-template-columns: repeat(5, 1fr); gap: 20px; .container-grid { padding: 20px; } } }
-        
         .card-quadrado { background: var(--w); border-radius: 12px; overflow: hidden; border: 1px solid #eaddca; display: flex; flex-direction: column; cursor: pointer; position: relative; }
         .img-grid { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
         .info-grid { padding: 10px; }
         .nome-grid { font-size: 0.9rem; font-weight: 900; line-height: 1.1; height: 2.2em; overflow: hidden; }
         .preco-grid { color: var(--p-green); font-weight: 900; margin-top: 5px; }
         .badge-qty { position: absolute; top: 8px; right: 8px; background: var(--p-green); color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; border: 1px solid white; }
-
-        /* --- 5. MODAIS (POPUPS) --- */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; cursor: default; }
-        .modal-pedido { 
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; 
-            padding: 20px; max-height: 85vh; overflow-y: auto; text-align: left; 
-        }
+        .modal-pedido { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; padding: 20px; max-height: 85vh; overflow-y: auto; text-align: left; }
         .modal-pedido h3 { margin-bottom: 15px; border-bottom: 2px solid var(--nav); padding-bottom: 10px; font-weight: 900; }
-        .fechar-modal-x {
-            position: absolute; top: 12px; right: 12px; font-size: 1.1rem; color: var(--text); background: #fff;
-            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; cursor: pointer; z-index: 1020; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--grey); transition: 0.2s;
-        }
-        .fechar-modal-x:hover { background: var(--highlight); transform: scale(1.1); }
-
-        /* --- 6. BOTÕES E AÇÕES --- */
-        .btn-prosseguir { 
-            background: var(--p-green); color: white; border: none; padding: 16px; border-radius: 50px; 
-            width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; display: flex; 
-            align-items: center; justify-content: center; gap: 12px; letter-spacing: 1px; 
-            transition: transform 0.2s; box-shadow: 0 4px 15px rgba(45, 58, 39, 0.4);
-        }
-        .btn-prosseguir:active { transform: scale(0.98); }
-        .btn-voltar { 
-            background: var(--grey); color: #333; border: none; padding: 16px; border-radius: 50px; 
-            width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; 
-            display: block; letter-spacing: 1px; transition: transform 0.2s; margin-top: 10px; text-align: center;
-        }
+        .fechar-modal-x { position: absolute; top: 12px; right: 12px; font-size: 1.1rem; color: var(--text); background: #fff; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; z-index: 1020; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); border: 1px solid var(--grey); transition: 0.2s; }
+        .btn-prosseguir { background: var(--p-green); color: white; border: none; padding: 16px; border-radius: 50px; width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; letter-spacing: 1px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(45, 58, 39, 0.4); }
+        .btn-voltar { background: var(--grey); color: #333; border: none; padding: 16px; border-radius: 50px; width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; display: block; letter-spacing: 1px; transition: transform 0.2s; margin-top: 10px; text-align: center; }
         .btn-remover-vermelho { background: var(--red); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold; text-transform: uppercase; }
-
-        /* --- 7. CESTA E PAGAMENTO --- */
         .cesta-item-linha { background: white; padding: 10px; border-radius: 6px; border: 1px solid #c4b49c; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
         .extra-item { padding-left: 10px; margin-top: 4px; font-size: 0.75rem; color: #666; border-left: 2px solid var(--nav); }
         .opcao-entrega, .opcao-pagamento { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; font-weight: bold; position: relative; background: white; transition: 0.2s; text-align: center; }
@@ -104,35 +57,16 @@
         .qr-container { width: 140px; height: 140px; margin: 10px auto; background: #fff; border: 1px solid #ddd; padding: 5px; }
         .btn-copiar-pix { background: #f9f0e0; border: 1px solid var(--nav); padding: 10px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin: 10px 0; }
         .selo-rec { position: absolute; top: -10px; right: 10px; background: var(--p-green); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; }
-        
-        /* --- 8. NOVO RODAPÉ FIXO --- */
-        #cesta-rodape { 
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: var(--a-brown); border-top: 2px solid #5d3a2a; 
-            display: none; padding: 12px 20px; z-index: 900;
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
-        }
-        .rodape-content {
-            max-width: 1200px; margin: auto;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        #cesta-rodape { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--a-brown); border-top: 2px solid #5d3a2a; display: none; padding: 12px 20px; z-index: 900; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); }
+        .rodape-content { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
         .rodape-info { color: white; display: flex; flex-direction: column; }
         .rodape-info .item-count { font-size: 0.8rem; font-weight: normal; opacity: 0.9; }
         .rodape-info .item-total { font-size: 1.1rem; font-weight: 900; }
-        .btn-ver-cesta {
-            background: var(--p-green); color: white; border: 2px solid white;
-            padding: 8px 15px; border-radius: 30px; font-weight: 900;
-            font-size: 0.8rem; cursor: pointer; text-transform: uppercase;
-        }
-        
-        /* --- 9. CONTROLE DE QUANTIDADE --- */
+        .btn-ver-cesta { background: var(--p-green); color: white; border: 2px solid white; padding: 8px 15px; border-radius: 30px; font-weight: 900; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; }
         .linha-quantidade { display: flex; justify-content: space-between; align-items: center; padding: 10px; gap: 8px; flex-wrap: wrap; }
-        .linha-quantidade span, .linha-quantidade b { flex: 1; min-width: 140px; }
         .qty-box { display: flex; align-items: center; border: 1.5px solid var(--p-green); border-radius: 6px; height: 32px; background: white; width: 95px; flex-shrink: 0; }
         .btn-q { background: var(--p-green); border: none; width: 30px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
         .qty-val { flex: 1; border: none; text-align: center; font-weight: bold; font-size: 0.9rem; pointer-events: none; }
-
-        /* --- 10. MENU DE OPCIONAIS (ACCORDION) --- */
         .menu-opcionais { border: 1px solid var(--nav); border-radius: 8px; margin: 5px 0 15px; background: #fffcf7; overflow: hidden; }
         .titulo-opcionais { padding: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 0.85rem; color: var(--a-brown); text-transform: uppercase; background: #f9f0e0; }
         .titulo-opcionais::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 0.7rem; transition: 0.3s; }
@@ -141,8 +75,6 @@
         .menu-opcionais.aberto .divisor-opcionais { display: block; }
         .lista-opcionais { padding: 10px; display: none; }
         .menu-opcionais.aberto .lista-opcionais { display: block; }
-
-        /* --- 11. VISUALIZAÇÃO DE IMAGEM --- */
         #modalImg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; cursor: pointer; }
         #modalImg img { width: 75vw; height: 75vw; max-width: 450px; max-height: 450px; object-fit: cover; border-radius: 12px; border: 5px solid var(--w); box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
     </style>
@@ -160,7 +92,7 @@
 
     <div class="banner-fornada" onclick="abrirModalFornada()">
         <h2 id="txt-data-fornada">PRÓXIMA FORNADA: 16/01</h2>
-        <p id="txt-limite-pedido">Pedidos até 13/01</p>
+        <p id="txt-limite-pedido">Pedidos até 14/01</p>
     </div>
 
     <div class="main-scroll">
@@ -229,7 +161,7 @@
                     <div class="qr-container"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdMMy5OknVHvs1RNFM3tik8FXT0lwM1JmYjJmtnZJrFb46pcwkOdTMCsRA5wx3whHPeXFm_8Ql6iZCFGmoKLrQiM0lCuVDc5YFLGEwhNplENrWlYhKFGG1ONARuy8VgZR0ROpGK9MT123ng1aL69gz-rmRXGejVZqeUqDwKf81nmxOZ5RqTqJV_Lqw3g/s1000/qrcode-paodociso.png" style="width:100%"></div>
                     <div style="font-weight: normal; margin-top: 10px; font-size: 0.9rem;">Chave PIX:</div>
                     <div class="btn-copiar-pix" onclick="copiarChave()"><b>paodociso@gmail.com</b> <i class="far fa-copy"></i></div>
-                    <div class="aviso-comprovante"><i class="fas fa-info-circle"></i><div style="font-size:0.82rem; font-weight: normal;"><b>Importante:</b><br>Envie o comprovante por WhatsApp.</div></div>
+                    <div class="aviso-comprovante"><i class="fas fa-info-circle"></i><div style="font-size:0.82rem; font-weight: normal;"><b>Importante:</b><br>Seu pedido será enviado por Whatsapp. Após enviá-lo, por favor, faça o pagamento e envie o comprovante.</div></div>
                 </div>
             </div>
             <div class="opcao-pagamento" onclick="selPgto('Cartão', this)">Cartão (Crédito/ Débito)
@@ -256,7 +188,6 @@
     <div id="modalPosEnvio" class="modal-pedido" style="text-align:center;">
         <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
         <h3>O que deseja fazer agora?</h3>
-        <p style="margin-bottom: 20px; font-size: 0.9rem;">Se a janela do WhatsApp não abriu ou você precisa enviar novamente:</p>
         <button class="btn-prosseguir" onclick="reenviarWhats()" style="background: var(--p-green); margin-bottom: 10px;"><i class="fab fa-whatsapp"></i> REENVIAR PARA WHATSAPP ></button>
         <button class="btn-prosseguir" onclick="novoPedido()">FAZER NOVO PEDIDO ></button>
         <button class="btn-voltar" onclick="encerrarSistema()">ENCERRAR</button>
@@ -277,7 +208,6 @@
 
 <script src="cardapio.js"></script>
 <script>
-// --- VARIÁVEIS DE ESTADO GLOBAL ---
 let carrinho = [], totalItens = 0, totalGeral = 0, pgtoSel = "", taxaEntrega = 0;
 let memory = { nome: "", tel: "", entrega: "", endereco: "" };
 let ultimaMsg = ""; 
@@ -287,7 +217,6 @@ const el = id => document.getElementById(id);
 const fmtMoeda = val => `R$ ${parseFloat(val).toFixed(2)}`;
 const fecharModais = () => document.querySelectorAll('.modal-pedido, .modal-overlay, #modalImg').forEach(m => m.style.display = 'none');
 
-// --- 1. RENDERIZAÇÃO ---
 function render() {
     const saved = localStorage.getItem('paodociso_dados');
     if(saved) {
@@ -308,10 +237,16 @@ function render() {
                 </div>`).join('')}
         </div>`).join('');
     
+    const dF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
+    const dP = new Date(dF); dP.setDate(dP.getDate() - 2); 
+    const fmtCurto = d => d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'});
+    
+    if(el('txt-data-fornada')) el('txt-data-fornada').innerText = `PRÓXIMA FORNADA: ${fmtCurto(dF)}`;
+    if(el('txt-limite-pedido')) el('txt-limite-pedido').innerText = `Pedidos até ${fmtCurto(dP)}`;
+
     abrirModalFornada();
 }
 
-// --- 2. LÓGICA DE PRODUTOS ---
 function encontrarOpcionaisCompativeis(nomesDesejados, bancoOpcionais) {
     if (!nomesDesejados || !bancoOpcionais) return [];
     return nomesDesejados.map(nomeProcurado => {
@@ -331,7 +266,6 @@ function abrirDetalhes(si, ii) {
         <h2 style="font-size:1.2rem">${item[0]}</h2>
         <div style="color:var(--p-green); font-weight:900; font-size:1.2rem; margin-bottom:10px">${fmtMoeda(item[2])}</div>
         <p style="font-size:0.85rem; color:#666; margin-bottom:15px">${item[1]}</p>
-        
         <div style="border-top:1px solid #eee; margin-top:15px">
             <div class="linha-quantidade">
                 <b style="font-size:0.85rem">QUANTIDADE:</b>
@@ -342,7 +276,6 @@ function abrirDetalhes(si, ii) {
                 </div>
             </div>
         </div>
-
         ${iOps.length ? `
         <div class="menu-opcionais" id="menu-opc-${id}">
             <div class="titulo-opcionais" onclick="this.parentElement.classList.toggle('aberto')">OPCIONAIS</div>
@@ -371,7 +304,6 @@ function abrirDetalhes(si, ii) {
 function mudarGrid(d, id, precoBase, nome, si, ii, opNome = null, opPreco = 0) {
     const qInput = el(`modal-qty-${id}`);
     const menuOpc = el(`menu-opc-${id}`);
-    
     if (opNome) {
         if (+qInput.value <= 0 && d > 0) return;
         document.querySelectorAll('.op-modal-qty').forEach(inp => { if(inp.dataset.n === opNome) inp.value = Math.max(0, +inp.value + d); });
@@ -384,19 +316,15 @@ function mudarGrid(d, id, precoBase, nome, si, ii, opNome = null, opPreco = 0) {
             if(menuOpc) menuOpc.classList.remove('aberto');
         }
     }
-
     const qMain = +qInput.value;
     let extras = [], pE = 0;
     document.querySelectorAll('.op-modal-qty').forEach(o => { if(+o.value > 0) { extras.push({n: o.dataset.n, q: +o.value}); pE += (+o.value * +o.dataset.p); }});
-    
     const sub = qMain > 0 ? (qMain * precoBase) + pE : 0;
     carrinho = carrinho.filter(c => c.idRef !== id);
     if (qMain > 0) carrinho.push({ nome, q: qMain, sub, ex: extras, idRef: id });
-    
     if(el(`sub-modal-${id}`)) el(`sub-modal-${id}`).innerText = `Subtotal: ${fmtMoeda(sub)}`;
     const badge = el(`badge-${id}`); if(badge) { badge.innerText = qMain; badge.style.display = qMain > 0 ? 'block' : 'none'; }
     el('btn-modal-prosseguir').style.display = carrinho.length > 0 ? "flex" : "none";
-    
     atualizarTotais();
 }
 
@@ -404,18 +332,13 @@ function atualizarTotais() {
     totalItens = carrinho.reduce((acc, i) => acc + i.sub, 0);
     let qtdTotal = carrinho.reduce((acc, i) => acc + i.q, 0);
     totalGeral = totalItens + taxaEntrega;
-    
-    // Atualiza barra inferior
     el('cesta-rodape').style.display = carrinho.length ? 'block' : 'none';
     el('count-txt').innerText = `${qtdTotal} ${qtdTotal > 1 ? 'itens adicionados' : 'item adicionado'}`;
-    el('total-txt').innerText = fmtMoeda(totalItens); // Mostra apenas total de itens na barra
-    
-    // Atualiza modais internos
+    el('total-txt').innerText = fmtMoeda(totalItens);
     if(el('revisao-total-txt')) el('revisao-total-txt').innerText = `TOTAL: ${fmtMoeda(totalGeral)}`;
     if(el('pix-valor-txt')) el('pix-valor-txt').innerText = fmtMoeda(totalGeral);
 }
 
-// --- 3. CHECKOUT E DADOS ---
 function abrirRevisao() { 
     fecharModais(); el('modalOverlay').style.display = 'block'; el('modalRevisao').style.display = 'block'; 
     let htmlItens = carrinho.map((i, idx) => `
@@ -426,7 +349,6 @@ function abrirRevisao() {
             </div>
             <button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button>
         </div>`).join(''); 
-
     if (memory.entrega === 'Entrega') {
         htmlItens += `<div class="cesta-item-linha" style="background:#faf7f2; border:1px dashed var(--a-brown); margin-top:10px;">
                 <div style="flex:1"><div style="font-size:0.9rem; color:var(--a-brown);">Taxa de Entrega - R$ 10,00</div></div></div>`;
@@ -459,9 +381,7 @@ function abrirDados() {
 }
 
 function irParaPagamento() { 
-    const n = el('nomeCli').value.trim();
-    const t = el('telCli').value.trim();
-    const e = el('endCliDados').value.trim();
+    const n = el('nomeCli').value.trim(), t = el('telCli').value.trim(), e = el('endCliDados').value.trim();
     if(!n || !t) return alert("Preencha os campos obrigatórios!");
     if(memory.entrega === 'Entrega' && !e) return alert("Endereço obrigatório!");
     memory.nome = n; memory.tel = t; 
@@ -481,26 +401,16 @@ function selPgto(t, elem) {
 function finalizar() { 
     if(!pgtoSel) return alert("Selecione o pagamento!"); 
     el('modalDados').style.display = 'none'; el('modalSucesso').style.display = 'block'; 
-    
     const itensStr = carrinho.map(i => `${i.q}x ${i.nome}` + (i.ex.length ? ` [${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}]` : '')).join(" | ");
-    fetch("https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec", { 
-        method: 'POST', mode: 'no-cors', 
-        body: JSON.stringify({ nome: memory.nome, telefone: memory.tel, tipoEntrega: memory.entrega, endereco: memory.endereco || "N/A", itens: itensStr, total: totalGeral.toFixed(2), pagamento: pgtoSel })
-    });
-    
+    fetch("https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec", { method: 'POST', mode: 'no-cors', body: JSON.stringify({ nome: memory.nome, telefone: memory.tel, tipoEntrega: memory.entrega, endereco: memory.endereco || "N/A", itens: itensStr, total: totalGeral.toFixed(2), pagamento: pgtoSel }) });
     const itensMsg = carrinho.map(i => `*${i.q}x ${i.nome}*${i.ex.length ? i.ex.map(o => `\n   └ ${o.q}x ${o.n}`).join('') : ''}`).join('\n\n'); 
     ultimaMsg = `NOVO PEDIDO - PAO DO CISO\n━━━━━━━━━━━━━━━━━━━━\nCLIENTE\nNome: *${memory.nome}*\nTelefone: *${memory.tel}*\n━━━━━━━━━━━━━━━━━━━━\nENTREGA\nTipo: ${memory.entrega}\n${memory.endereco ? `Endereço: *${memory.endereco}*\n` : ""}━━━━━━━━━━━━━━━━━━━━\nITENS DO PEDIDO\n${itensMsg}\n\n${taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00\n` : ""}━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO\nForma: ${pgtoSel}\nTOTAL: *${fmtMoeda(totalGeral)}*\n━━━━━━━━━━━━━━━━━━━━\n_Pedido gerado via cardápio digital._`;    
-    
-    setTimeout(() => { 
-        window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(ultimaMsg)}`, '_blank'); 
-        el('modalSucesso').style.display = 'none'; el('modalPosEnvio').style.display = 'block';
-    }, 4000); 
+    setTimeout(() => { window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(ultimaMsg)}`, '_blank'); el('modalSucesso').style.display = 'none'; el('modalPosEnvio').style.display = 'block'; }, 4000); 
 }
 
-// --- 4. UTILITÁRIOS ---
 function abrirModalFornada() {
     const dF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
-    const dP = new Date(dF); dP.setDate(dP.getDate() - 3);
+    const dP = new Date(dF); dP.setDate(dP.getDate() - 2); 
     const fmt = d => d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'});
     el('conteudoFornada').innerHTML = `<p>📅 <b>DATA DA FORNADA:</b> <br><span style="color:var(--p-green); font-weight:900; font-size:1.2rem;">${fmt(dF)}</span></p><br><p>⚠️ <b>PEDIDOS ATÉ:</b> <br><span style="color:var(--red); font-weight:900; font-size:1.2rem;">${fmt(dP)}</span></p>`;
     el('modalOverlay').style.display = 'block'; el('modalFornada').style.display = 'block';
@@ -512,17 +422,7 @@ function reenviarWhats() { window.open(`https://wa.me/5511982391781?text=${encod
 function voltarParaDados() { el('etapa-pagamento').style.display = 'none'; el('etapa-dados').style.display = 'block'; }
 function voltarParaRevisao() { el('modalDados').style.display = 'none'; el('modalRevisao').style.display = 'block'; }
 function novoPedido() { location.reload(); }
-function encerrarSistema() {
-    localStorage.clear();
-    window.close();
-    // Caso o navegador bloqueie o fechamento automático, avisa o usuário:
-    if (!window.closed) {
-        alert("Dados locais limpos. Por favor, feche esta aba manualmente.");
-    }
-}
-</script>
-</body>
-</html>
+function encerrarSistema() { localStorage.clear(); window.close(); if (!window.closed) { alert("Dados locais limpos. Por favor, feche esta aba manualmente."); } }
 </script>
 </body>
 </html>
