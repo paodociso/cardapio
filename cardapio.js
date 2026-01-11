@@ -1,297 +1,84 @@
 const dadosIniciais = {
-  "opcionaisPãesde fermentação natural": [
-    [
-      "Alichella (100g)",
-      "20.00"
-    ],
-    [
-      "Sardella (100g)",
-      "20.00"
-    ],
-    [
-      "Melanzane sottolio (100g)",
-      "20.00"
-    ],
-    [
-      "Manteiga temperada (100g)",
-      "17.00"
-    ],
-    [
-      "Confit de alho (100g)",
-      "20.00"
-    ],
-    [
-      "Confit de alho e tomates cereja (100g)",
-      "20.00"
-    ],
-    [
-      "Picles de cebola (100g)",
-      "15.00"
-    ],
-    [
-      "Potinho de vidro",
-      "5.00"
-    ]
+  "opcionaisPães de fermentação natural": [
+    ["Alichella (100g)", "20.00"],
+    ["Sardella (100g)", "20.00"],
+    ["Melanzane sottolio (100g)", "20.00"],
+    ["Manteiga temperada (100g)", "17.00"],
+    ["Confit de alho (100g)", "20.00"],
+    ["Confit de alho e tomates cereja (100g)", "20.00"],
+    ["Picles de cebola (100g)", "15.00"],
+    ["Potinho de vidro", "5.00"]
   ],
   "opcionaisPanini": [
-    [
-      "Alichella",
-      "3.00"
-    ],
-    [
-      "Sardella",
-      "3.00"
-    ],
-    [
-      "Melanzane sottolio",
-      "3.00"
-    ],
-    [
-      "Manteiga",
-      "2.00"
-    ],
-    [
-      "Manteiga temperada com alho e parmesão",
-      "3.00"
-    ],
-    [
-      "Confit de alho",
-      "2.00"
-    ],
-    [
-      "Confit de alho e tomates cereja",
-      "3.00"
-    ],
-    [
-      "Picles de cebola",
-      "2.00"
-    ],
-    [
-      "Bresaola",
-      "9.00"
-    ],
-    [
-      "Lombo piripiri",
-      "9.00"
-    ],
-    [
-      "Mortadela",
-      "5.00"
-    ],
-    [
-      "Pastrame",
-      "9.00"
-    ],
-    [
-      "Presunto cru",
-      "9.00"
-    ],
-    [
-      "Salame",
-      "7.00"
-    ],
-    [
-      "Chancliche",
-      "7.00"
-    ],
-    [
-      "Chancliche apimentado",
-      "7.00"
-    ],
-    [
-      "Muçarela",
-      "3.00"
-    ],
-    [
-      "Provolone",
-      "5.00"
-    ],
-    [
-      "Queijo Prato",
-      "5.00"
-    ],
-    [
-      "Alface",
-      "1.00"
-    ],
-    [
-      "Pepino",
-      "1.00"
-    ],
-    [
-      "Pimentão",
-      "1.00"
-    ],
-    [
-      "Rúcula",
-      "1.00"
-    ],
-    [
-      "Tomate",
-      "1.00"
-    ],
-    [
-      "Azeite",
-      "1.00"
-    ],
-    [
-      "Pesto tradicional (manjericão)",
-      "2.00"
-    ],
-    [
-      "Pesto de azeitona",
-      "2.00"
-    ],
-    [
-      "Maionese",
-      "2.00"
-    ],
-    [
-      "Maionese temperada",
-      "2.00"
-    ],
-    [
-      "Pastinha de goronzola",
-      "2.00"
-    ],
-    [
-      "Pastinha de parmesão",
-      "2.00"
-    ],
-    [
-      "Pastinha de pimentão vermelho",
-      "2.00"
-    ]
+    ["Alichella", "3.00"],
+    ["Sardella", "3.00"],
+    ["Melanzane sottolio", "3.00"],
+    ["Manteiga", "2.00"],
+    ["Manteiga temperada com alho e parmesão", "3.00"],
+    ["Confit de alho", "2.00"],
+    ["Confit de alho e tomates cereja", "3.00"],
+    ["Picles de cebola", "2.00"],
+    ["Bresaola", "9.00"],
+    ["Lombo piripiri", "9.00"],
+    ["Mortadela", "5.00"],
+    ["Pastrame", "9.00"],
+    ["Presunto cru", "9.00"],
+    ["Salame", "7.00"],
+    ["Chancliche", "7.00"],
+    ["Chancliche apimentado", "7.00"],
+    ["Muçarela", "3.00"],
+    ["Provolone", "5.00"],
+    ["Queijo Prato", "5.00"],
+    ["Alface", "1.00"],
+    ["Pepino", "1.00"],
+    ["Pimentão", "1.00"],
+    ["Rúcula", "1.00"],
+    ["Tomate", "1.00"],
+    ["Azeite", "1.00"],
+    ["Pesto tradicional (manjericão)", "2.00"],
+    ["Pesto de azeitona", "2.00"],
+    ["Maionese", "2.00"],
+    ["Maionese temperada", "2.00"],
+    ["Pastinha de goronzola", "2.00"],
+    ["Pastinha de parmesão", "2.00"],
+    ["Pastinha de pimentão vermelho", "2.00"]
   ],
   "opcionaisBebidas": [
-    [
-      "Taça de vidro",
-      "40.00"
-    ],
-    [
-      "Taça champangne",
-      "30.00"
-    ]
+    ["Taça de vidro", "40.00"],
+    ["Taça champangne", "30.00"]
   ],
   "opcionaisAntipasti": [
-    [
-      "Potinho de vidro",
-      "5.00"
-    ]
+    ["Potinho de vidro", "5.00"]
   ],
   "opcionaisTábuas": [
-    [
-      "Alichella",
-      "10.00"
-    ],
-    [
-      "Sardella",
-      "10.00"
-    ],
-    [
-      "Melanzane sottolio",
-      "10.00"
-    ],
-    [
-      "Manteiga",
-      "3.00"
-    ],
-    [
-      "Manteiga temperada com alho e parmesão",
-      "3.00"
-    ],
-    [
-      "Confit de alho",
-      "4.00"
-    ],
-    [
-      "Confit de alho e tomates cereja",
-      "4.00"
-    ],
-    [
-      "Picles de cebola",
-      "3.00"
-    ],
-    [
-      "Bresaola",
-      "15.00"
-    ],
-    [
-      "Lombo piripiri",
-      "15.00"
-    ],
-    [
-      "Mortadela",
-      "10.00"
-    ],
-    [
-      "Pastrame",
-      "15.00"
-    ],
-    [
-      "Presunto cru",
-      "15.00"
-    ],
-    [
-      "Salame",
-      "11.00"
-    ],
-    [
-      "Chancliche",
-      "7.00"
-    ],
-    [
-      "Chancliche apimentado",
-      "7.00"
-    ],
-    [
-      "Muçarela",
-      "5.00"
-    ],
-    [
-      "Provolone",
-      "8.00"
-    ],
-    [
-      "Queijo Prato",
-      "7.00"
-    ],
-    [
-      "Tomate",
-      "3.00"
-    ],
-    [
-      "Azeite",
-      "3.00"
-    ],
-    [
-      "Pesto tradicional (manjericão)",
-      "4.00"
-    ],
-    [
-      "Pesto de azeitona",
-      "4.00"
-    ],
-    [
-      "Maionese",
-      "3.00"
-    ],
-    [
-      "Maionese temperada",
-      "3.00"
-    ],
-    [
-      "Pastinha de goronzola",
-      "4.00"
-    ],
-    [
-      "Pastinha de parmesão",
-      "4.00"
-    ],
-    [
-      "Pastinha de pimentão vermelho",
-      "4.00"
-    ]
+    ["Alichella", "10.00"],
+    ["Sardella", "10.00"],
+    ["Melanzane sottolio", "10.00"],
+    ["Manteiga", "3.00"],
+    ["Manteiga temperada com alho e parmesão", "3.00"],
+    ["Confit de alho", "4.00"],
+    ["Confit de alho e tomates cereja", "4.00"],
+    ["Picles de cebola", "3.00"],
+    ["Bresaola", "15.00"],
+    ["Lombo piripiri", "15.00"],
+    ["Mortadela", "10.00"],
+    ["Pastrame", "15.00"],
+    ["Presunto cru", "15.00"],
+    ["Salame", "11.00"],
+    ["Chancliche", "7.00"],
+    ["Chancliche apimentado", "7.00"],
+    ["Muçarela", "5.00"],
+    ["Provolone", "8.00"],
+    ["Queijo Prato", "7.00"],
+    ["Tomate", "3.00"],
+    ["Azeite", "3.00"],
+    ["Pesto tradicional (manjericão)", "4.00"],
+    ["Pesto de azeitona", "4.00"],
+    ["Maionese", "3.00"],
+    ["Maionese temperada", "3.00"],
+    ["Pastinha de goronzola", "4.00"],
+    ["Pastinha de parmesão", "4.00"],
+    ["Pastinha de pimentão vermelho", "4.00"]
   ],
   "secoes": [
     {
@@ -343,27 +130,21 @@ const dadosIniciais = {
           "Conserva de aliche inteiras, curadas e acondicionadas em azeite com salsa fresca.",
           "20.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjB6CH6FBqAhBXaVZiqLdjRqhlXGeDsrhkxKNgpRaeZw6lVWyGJ92hhVzNU4GxLFqq_B651AwJVwi1axSj58lPa6bkByQtR8RuSBk2EkdFLmPhcb-y3V4yyt-WOXjCBvVsaRbS2IsIW_b4YglTwG9YkHncLqWdrEo7SiFdLT3f7KIq4Mfi3ayKaN_vJSp4/s320/IMG_20201202_174740.jpg",
-          [
-            "Potinho de vidro"
-          ]
+          ["Potinho de vidro"]
         ],
         [
           "Melanzane sottolio (porção de 100g)",
           "Berinjelas curtidas no vinagre e preservada no azeite com ervas e alho.",
           "20.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjygUAEJw4jjQR0fWMII5hc7QX1Ppu22I32LXjNTfcxf7B43coy-6gOXmdPiwCrL_NyWFuPM3HYzifiS_CuiqAD6efRxq9eYdbrr5I8C7x_jyn6I3w-OBplN5w184KYh5ZDnSF6iR6Bl6HQP5kRz8iycmQtRIfbeSR-5WvkfyQ7CFOuQKVLwwNPs5H_nj4/s4032/IMG_20201202_174658.jpg",
-          [
-            "Potinho de vidro"
-          ]
+          ["Potinho de vidro"]
         ],
         [
           "Sardella (porção de 100g)",
           "Pasta condimentada e cremosa, elaborada com aliche, pimenta e azeite de oliva.",
           "20.00",
           "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjQr6FhXNpHgq1UNH0_J2bSno3jBTP98sUzlCXzFAAHXXdPFD2ml002SzVE-fvX8pnZ7TXAPZ45fcbMvN6oypcIspRmQzvSvyH9On2BUgnWzrEt77mQWdDo5XSk0hsrg5OrfCEGZWB1a-7htRxs10OhXCM504N4-b1mSmK8FX5z9O4d84Y3pri-cJtqUOE/s320/IMG_20201202_174720.jpg",
-          [
-            "Potinho de vidro"
-          ]
+          ["Potinho de vidro"]
         ]
       ]
     },
@@ -374,21 +155,15 @@ const dadosIniciais = {
           "Vinho Casillero del Diabo",
           "Apresenta um perfil estruturado, com taninos presentes e notas de frutas escuras. Originário de vinhedos tradicionais do Chile, resulta em um vinho de caráter definido. É uma opção para quem aprecia um tinto clássico e equilibrado.",
           "65.00",
-          "https://adegasdevinhos.com.br/wp-content/uploads/2025/04/casillero-del-diablo-678x381.jpg",
-          [
-            "Taça de vidro",
-            "Taça champangne"
-          ]
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYaHOkBDckYwSbN7zRWW8jBaTbpAspAhL7Yw&s",
+          ["Taça de vidro", "Taça champangne"]
         ],
         [
           "Vinho Gato Negro",
           "Oferece um estilo acessível, com corpo médio e caráter frutado. Sua produção é voltada para a consistência e fácil harmonização. É uma escolha adequada para o consumo despretensioso no dia a dia.",
           "65.00",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu2fnk2nSTof_uQEhdkvXZph42MlGq_jjLKQ&s",
-          [
-            "Taça de vidro",
-            "Taça champangne"
-          ]
+          ["Taça de vidro", "Taça champangne"]
         ]
       ]
     }
