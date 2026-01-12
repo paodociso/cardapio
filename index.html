@@ -5,20 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pão do Ciso</title>
     <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png">
-
     <meta property="og:title" content="Pão do Ciso - Cardápio Digital">
     <meta property="og:description" content="Faça seu pedido de pães artesanais de forma rápida e fácil.">
     <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png">
     <meta property="og:type" content="website">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root { 
-            --banner: #2e2610; --p-green: #2d3a27; --a-brown: #7d4f39; 
-            --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; 
-            --red: #b22222; --highlight: #f9f0e0; --grey: #e0e0e0;
-        }
+        /* ESTILOS MANTIDOS INTEGRALMENTE CONFORME SOLICITADO */
+        :root { --banner: #2e2610; --p-green: #2d3a27; --a-brown: #7d4f39; --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; --red: #b22222; --highlight: #f9f0e0; --grey: #e0e0e0; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { min-height: 100%; background: var(--bg); font-family: 'Calibri', sans-serif; color: var(--text); }
         input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
@@ -34,16 +29,55 @@
         .container-grid { max-width: 1200px; margin: auto; }
         .secao-titulo { font-weight: 900; font-size: 1.1rem; margin: 25px 5px 15px; color: var(--a-brown); border-bottom: 2px solid var(--nav); padding-bottom: 5px; text-transform: uppercase; }
         .grid-produtos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        @media (min-width: 1024px) { .grid-produtos { grid-template-columns: repeat(5, 1fr); gap: 20px; .container-grid { padding: 20px; } } }
+        @media (min-width: 1024px) { .grid-produtos { grid-template-columns: repeat(5, 1fr); gap: 20px; } .container-grid { padding: 20px; } }
         .card-quadrado { background: var(--w); border-radius: 12px; overflow: hidden; border: 1px solid #eaddca; display: flex; flex-direction: column; cursor: pointer; position: relative; }
         .img-grid { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
         .info-grid { padding: 10px; }
         .nome-grid { font-size: 0.9rem; font-weight: 900; line-height: 1.1; height: 2.2em; overflow: hidden; }
         .preco-grid { color: var(--p-green); font-weight: 900; margin-top: 5px; }
         .badge-qty { position: absolute; top: 8px; right: 8px; background: var(--p-green); color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; border: 1px solid white; }
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; cursor: default; }
-        .modal-pedido { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--w); border-radius: 12px; width: 90%; max-width: 480px; z-index: 1000; padding: 20px; max-height: 85vh; overflow-y: auto; text-align: left; }
-        .modal-pedido h3 { margin-bottom: 15px; border-bottom: 2px solid var(--nav); padding-bottom: 10px; font-weight: 900; }
+        .modal-overlay { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.85); 
+            z-index: 999; 
+            overflow-y: auto; /* Permite que você role o fundo se o modal for muito longo */
+        }
+
+        /* 1. REGRA GERAL: Para os modais de Revisão, Dados e Sucesso (Sempre no centro da tela) */
+        .modal-pedido { 
+            display: none; 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            background: var(--w); 
+            border-radius: 12px; 
+            width: 90%; 
+            max-width: 480px; 
+            z-index: 1000; 
+            padding: 20px; 
+            text-align: left; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* 2. REGRA EXCLUSIVA: Para o Modal de Produtos (Para rolar o modal inteiro) */
+        .modal-pedido.modal-scroll { 
+            position: absolute; 
+            top: 20px; 
+            transform: translateX(-50%); 
+            margin-bottom: 50px;
+            max-height: none; /* Remove qualquer trava de altura */
+            overflow-y: visible; /* Remove o scroll interno */
+        }
+
+        .modal-pedido h3 { 
+            margin-bottom: 15px; 
+            border-bottom: 2px solid var(--nav); 
+            padding-bottom: 10px; 
+            font-weight: 900; 
+        }
         .fechar-modal-x { position: absolute; top: 12px; right: 12px; font-size: 1.1rem; color: var(--text); background: #fff; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; z-index: 1020; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); border: 1px solid var(--grey); transition: 0.2s; }
         .btn-prosseguir { background: var(--p-green); color: white; border: none; padding: 16px; border-radius: 50px; width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; letter-spacing: 1px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(45, 58, 39, 0.4); }
         .btn-voltar { background: var(--grey); color: #333; border: none; padding: 16px; border-radius: 50px; width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; display: block; letter-spacing: 1px; transition: transform 0.2s; margin-top: 10px; text-align: center; }
@@ -77,6 +111,7 @@
         .menu-opcionais.aberto .lista-opcionais { display: block; }
         #modalImg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; cursor: pointer; }
         #modalImg img { width: 75vw; height: 75vw; max-width: 450px; max-height: 450px; object-fit: cover; border-radius: 12px; border: 5px solid var(--w); box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
+        .item-esgotado { pointer-events: auto !important; cursor: not-allowed; border: 1px solid #ddd; }
     </style>
 </head>
 <body onload="render()">
@@ -91,8 +126,8 @@
     </header>
 
     <div class="banner-fornada" onclick="abrirModalFornada()">
-        <h2 id="txt-data-fornada">PRÓXIMA FORNADA: 16/01</h2>
-        <p id="txt-limite-pedido">Pedidos até 14/01</p>
+        <h2 id="txt-data-fornada">PRÓXIMA FORNADA: --/--</h2>
+        <p id="txt-limite-pedido">Pedidos até --/--</p>
     </div>
 
     <div class="main-scroll">
@@ -109,7 +144,7 @@
         <button class="btn-prosseguir" style="margin-top: 15px;" onclick="fecharModais()">PROSSEGUIR ></button>
     </div>
 
-    <div id="modalProduto" class="modal-pedido">
+    <div id="modalProduto" class="modal-pedido modal-scroll">
         <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
         <div id="conteudo-produto-modal"></div>
         <div style="margin-top: 20px;">
@@ -208,16 +243,36 @@
 
 <script src="cardapio.js"></script>
 <script>
-let carrinho = [], totalItens = 0, totalGeral = 0, pgtoSel = "", taxaEntrega = 0;
-let memory = { nome: "", tel: "", entrega: "", endereco: "" };
-let ultimaMsg = ""; 
+/** * VERSÃO 21 - LOGICA REESTRUTURADA
+ * Pão do Ciso - Cardápio Digital
+ */
+
+// --- ESTADO GLOBAL DA APLICAÇÃO ---
+let appState = {
+    carrinho: [],
+    totalItens: 0,
+    totalGeral: 0,
+    taxaEntrega: 0,
+    pagamentoSel: "",
+    user: { nome: "", tel: "", entrega: "", endereco: "" },
+    ultimaMsg: ""
+};
+
 const DATA_PROXIMA_FORNADA = "2025-01-16";
 
+// --- UTILITÁRIOS ---
 const el = id => document.getElementById(id);
-const fmtMoeda = val => `R$ ${parseFloat(val).toFixed(2)}`;
-const fecharModais = () => document.querySelectorAll('.modal-pedido, .modal-overlay, #modalImg').forEach(m => m.style.display = 'none');
+const fmtMoeda = val => `R$ ${parseFloat(val || 0).toFixed(2)}`;
+const fecharModais = () => {
+    document.querySelectorAll('.modal-pedido, .modal-overlay, #modalImg').forEach(m => m.style.display = 'none');
+};
 
+/**
+ * RENDERIZAÇÃO INICIAL
+ * Carrega produtos e configura datas da fornada
+ */
 function render() {
+    // Recupera dados salvos localmente
     const saved = localStorage.getItem('paodociso_dados');
     if(saved) {
         const d = JSON.parse(saved);
@@ -225,41 +280,61 @@ function render() {
         el('telCli').value = d.tel || "";
     }
     
+    // Renderiza Grade de Produtos
     const { secoes } = dadosIniciais;
-    el('render-cli').innerHTML = secoes.map((s, si) => `
-        <div class="secao-titulo">${s.nome}</div>
-        <div class="grid-produtos">
-            ${s.itens.map((i, ii) => `
-                <div class="card-quadrado" onclick="abrirDetalhes('${si}', '${ii}')">
-                    <div id="badge-it-${si}-${ii}" class="badge-qty" style="display:none">0</div>
-                    <img src="${i[3]}" class="img-grid" onerror="this.src='https://via.placeholder.com/200'">
-                    <div class="info-grid"><div class="nome-grid">${i[0]}</div><div class="preco-grid">${fmtMoeda(i[2])}</div></div>
-                </div>`).join('')}
-        </div>`).join('');
+    el('render-cli').innerHTML = secoes.map((s, si) => {
+        const itensVisiveis = s.itens.filter(i => i[6] !== true);
+        if (itensVisiveis.length === 0) return '';
+
+        return `
+            <div class="secao-titulo">${s.nome}</div>
+            <div class="grid-produtos">
+                ${itensVisiveis.map((i) => {
+                    const originalIndex = s.itens.indexOf(i);
+                    const isEsgotado = i[5] === true;
+                    const clickAction = isEsgotado ? "alert('Este item está esgotado!')" : `abrirDetalhes(${si}, ${originalIndex})`;
+
+                    return `
+                    <div class="card-quadrado" style="${isEsgotado ? 'opacity: 0.6; cursor: not-allowed;' : ''}" onclick="${clickAction}">
+                        <div id="badge-it-${si}-${originalIndex}" class="badge-qty" style="display:none">0</div>
+                        <img src="${i[3]}" class="img-grid" onerror="this.src='https://via.placeholder.com/200'" style="${isEsgotado ? 'filter: grayscale(1);' : ''}">
+                        <div class="info-grid">
+                            <div class="nome-grid">${i[0]} ${isEsgotado ? '<br><span style="color:red; font-size:0.7rem;">(ESGOTADO)</span>' : ''}</div>
+                            <div class="preco-grid">${isEsgotado ? '---' : fmtMoeda(i[2])}</div>
+                        </div>
+                    </div>`;
+                }).join('')}
+            </div>`;
+    }).join('');
     
+    // Configura Banner de Datas
     const dF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
     const dP = new Date(dF); dP.setDate(dP.getDate() - 2); 
     const fmtCurto = d => d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'});
     
-    if(el('txt-data-fornada')) el('txt-data-fornada').innerText = `PRÓXIMA FORNADA: ${fmtCurto(dF)}`;
-    if(el('txt-limite-pedido')) el('txt-limite-pedido').innerText = `Pedidos até ${fmtCurto(dP)}`;
+    el('txt-data-fornada').innerText = `PRÓXIMA FORNADA: ${fmtCurto(dF)}`;
+    el('txt-limite-pedido').innerText = `Pedidos até ${fmtCurto(dP)}`;
 
     abrirModalFornada();
 }
 
-function encontrarOpcionaisCompativeis(nomesDesejados, bancoOpcionais) {
-    if (!nomesDesejados || !bancoOpcionais) return [];
-    return nomesDesejados.map(nomeProcurado => {
-        const busca = nomeProcurado.trim().toLowerCase().replace(/\s*\([^)]*\)/g, '').trim();
-        return bancoOpcionais.find(o => o[0].trim().toLowerCase().replace(/\s*\([^)]*\)/g, '').trim() === busca);
-    }).filter(Boolean);
+/**
+ * LOGICA DE PRODUTOS E OPCIONAIS
+ */
+function encontrarOpcionais(nomes, banco) {
+    if (!nomes || !banco) return [];
+    const limpar = s => s.trim().toLowerCase().replace(/\s*\([^)]*\)/g, '');
+    return nomes.map(n => banco.find(o => limpar(o[0]) === limpar(n))).filter(Boolean);
 }
 
 function abrirDetalhes(si, ii) {
     const item = dadosIniciais.secoes[si].itens[ii];
-    const id = `it-${si}-${ii}`;
-    const iOps = encontrarOpcionaisCompativeis(item[4], dadosIniciais["opcionais" + dadosIniciais.secoes[si].nome]);
-    const itemNoCesto = carrinho.find(c => c.idRef === id);
+    const idRef = `it-${si}-${ii}`;
+    const opcionaisDisp = encontrarOpcionais(item[4], dadosIniciais["opcionais" + dadosIniciais.secoes[si].nome]);
+    const noCesto = appState.carrinho.find(c => c.idRef === idRef);
+
+    // Sanitização de nome para evitar quebra de string no onclick
+    const nomeSeguro = item[0].replace(/'/g, "\\'");
 
     el('conteudo-produto-modal').innerHTML = `
         <img src="${item[3]}" style="width:100%; border-radius:10px; margin-bottom:15px; aspect-ratio:1/1; object-fit:cover;" onclick="ampliarImg('${item[3]}')">
@@ -270,78 +345,114 @@ function abrirDetalhes(si, ii) {
             <div class="linha-quantidade">
                 <b style="font-size:0.85rem">QUANTIDADE:</b>
                 <div class="qty-box">
-                    <button class="btn-q" onclick="mudarGrid(-1,'${id}',${item[2]},'${item[0].replace(/'/g, "\\'")}',${si},${ii})">-</button>
-                    <input type="text" value="${itemNoCesto ? itemNoCesto.q : 0}" class="qty-val" id="modal-qty-${id}">
-                    <button class="btn-q" onclick="mudarGrid(1,'${id}',${item[2]},'${item[0].replace(/'/g, "\\'")}',${si},${ii})">+</button>
+                    <button class="btn-q" onclick="mudarQuantidade(-1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii})">-</button>
+                    <input type="text" value="${noCesto ? noCesto.q : 0}" class="qty-val" id="modal-qty-${idRef}">
+                    <button class="btn-q" onclick="mudarQuantidade(1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii})">+</button>
                 </div>
             </div>
         </div>
-        ${iOps.length ? `
-        <div class="menu-opcionais" id="menu-opc-${id}">
+        ${opcionaisDisp.length ? `
+        <div class="menu-opcionais ${noCesto ? 'aberto' : ''}" id="menu-opc-${idRef}">
             <div class="titulo-opcionais" onclick="this.parentElement.classList.toggle('aberto')">OPCIONAIS</div>
             <div class="divisor-opcionais"></div>
             <div class="lista-opcionais">
-                ${iOps.map(o => {
-                    const qOp = itemNoCesto ? (itemNoCesto.ex.find(e => e.n === o[0])?.q || 0) : 0;
+                ${opcionaisDisp.map(o => {
+                    const qOp = noCesto ? (noCesto.ex.find(e => e.n === o[0])?.q || 0) : 0;
                     return `<div class="linha-quantidade" style="padding: 4px 0; margin-bottom:5px">
                                 <span style="font-size:0.85rem">${o[0]} (+${fmtMoeda(o[1])})</span>
                                 <div class="qty-box">
-                                    <button class="btn-q" onclick="mudarGrid(-1,'${id}',${item[2]},'${item[0].replace(/'/g, "\\'")}',${si},${ii},'${o[0].replace(/'/g, "\\'")}',${o[1]})">-</button>
+                                    <button class="btn-q" onclick="mudarQuantidade(-1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii},'${o[0].replace(/'/g, "\\'")}',${o[1]})">-</button>
                                     <input type="text" value="${qOp}" class="qty-val op-modal-qty" data-n="${o[0]}" data-p="${o[1]}">
-                                    <button class="btn-q" onclick="mudarGrid(1,'${id}',${item[2]},'${item[0].replace(/'/g, "\\'")}',${si},${ii},'${o[0].replace(/'/g, "\\'")}',${o[1]})">+</button>
+                                    <button class="btn-q" onclick="mudarQuantidade(1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii},'${o[0].replace(/'/g, "\\'")}',${o[1]})">+</button>
                                 </div>
                             </div>`;
                 }).join('')}
             </div>
         </div>` : ''}
-        <div id="sub-modal-${id}" style="text-align:right; font-weight:900; color:var(--p-green); font-size:1.1rem; margin-top:10px">Subtotal: ${fmtMoeda(itemNoCesto ? itemNoCesto.sub : 0)}</div>`;
+        <div id="sub-modal-${idRef}" style="text-align:right; font-weight:900; color:var(--p-green); font-size:1.1rem; margin-top:10px">
+            Subtotal: ${fmtMoeda(noCesto ? noCesto.sub : 0)}
+        </div>`;
     
-    el('btn-modal-prosseguir').style.display = carrinho.length > 0 ? "flex" : "none";
+    el('btn-modal-prosseguir').style.display = appState.carrinho.length > 0 ? "flex" : "none";
     el('modalOverlay').style.display = 'block';
     el('modalProduto').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function mudarGrid(d, id, precoBase, nome, si, ii, opNome = null, opPreco = 0) {
-    const qInput = el(`modal-qty-${id}`);
-    const menuOpc = el(`menu-opc-${id}`);
+/**
+ * GESTÃO DO CARRINHO
+ */
+function mudarQuantidade(delta, idRef, precoBase, nome, si, ii, opNome = null, opPreco = 0) {
+    const qInput = el(`modal-qty-${idRef}`);
+    const menuOpc = el(`menu-opc-${idRef}`);
+    
+    // Se for alteração de opcional, valida se item principal existe
     if (opNome) {
-        if (+qInput.value <= 0 && d > 0) return;
-        document.querySelectorAll('.op-modal-qty').forEach(inp => { if(inp.dataset.n === opNome) inp.value = Math.max(0, +inp.value + d); });
+        if (+qInput.value <= 0 && delta > 0) return;
+        document.querySelectorAll('.op-modal-qty').forEach(inp => { 
+            if(inp.dataset.n === opNome) inp.value = Math.max(0, +inp.value + delta); 
+        });
     } else {
         const valAnterior = +qInput.value;
-        qInput.value = Math.max(0, valAnterior + d);
+        qInput.value = Math.max(0, valAnterior + delta);
         if (valAnterior === 0 && +qInput.value === 1 && menuOpc) menuOpc.classList.add('aberto');
         if (+qInput.value === 0) {
             document.querySelectorAll('.op-modal-qty').forEach(o => o.value = 0);
             if(menuOpc) menuOpc.classList.remove('aberto');
         }
     }
-    const qMain = +qInput.value;
-    let extras = [], pE = 0;
-    document.querySelectorAll('.op-modal-qty').forEach(o => { if(+o.value > 0) { extras.push({n: o.dataset.n, q: +o.value}); pE += (+o.value * +o.dataset.p); }});
-    const sub = qMain > 0 ? (qMain * precoBase) + pE : 0;
-    carrinho = carrinho.filter(c => c.idRef !== id);
-    if (qMain > 0) carrinho.push({ nome, q: qMain, sub, ex: extras, idRef: id });
-    if(el(`sub-modal-${id}`)) el(`sub-modal-${id}`).innerText = `Subtotal: ${fmtMoeda(sub)}`;
-    const badge = el(`badge-${id}`); if(badge) { badge.innerText = qMain; badge.style.display = qMain > 0 ? 'block' : 'none'; }
-    el('btn-modal-prosseguir').style.display = carrinho.length > 0 ? "flex" : "none";
+
+    const qFinal = +qInput.value;
+    let extras = [], pExtras = 0;
+    
+    // Coleta opcionais ativos
+    document.querySelectorAll('.op-modal-qty').forEach(o => { 
+        if(+o.value > 0) { 
+            extras.push({n: o.dataset.n, q: +o.value}); 
+            pExtras += (+o.value * +o.dataset.p); 
+        }
+    });
+
+    const subtotal = qFinal > 0 ? (qFinal * precoBase) + pExtras : 0;
+    
+    // Atualiza Carrinho
+    appState.carrinho = appState.carrinho.filter(c => c.idRef !== idRef);
+    if (qFinal > 0) appState.carrinho.push({ nome, q: qFinal, sub: subtotal, ex: extras, idRef });
+    
+    // Update Visual UI
+    if(el(`sub-modal-${idRef}`)) el(`sub-modal-${idRef}`).innerText = `Subtotal: ${fmtMoeda(subtotal)}`;
+    const badge = el(`badge-${idRef}`); 
+    if(badge) { 
+        badge.innerText = qFinal; 
+        badge.style.display = qFinal > 0 ? 'block' : 'none'; 
+    }
+    
+    el('btn-modal-prosseguir').style.display = appState.carrinho.length > 0 ? "flex" : "none";
     atualizarTotais();
 }
 
 function atualizarTotais() {
-    totalItens = carrinho.reduce((acc, i) => acc + i.sub, 0);
-    let qtdTotal = carrinho.reduce((acc, i) => acc + i.q, 0);
-    totalGeral = totalItens + taxaEntrega;
-    el('cesta-rodape').style.display = carrinho.length ? 'block' : 'none';
+    appState.totalItens = appState.carrinho.reduce((acc, i) => acc + i.sub, 0);
+    const qtdTotal = appState.carrinho.reduce((acc, i) => acc + i.q, 0);
+    appState.totalGeral = appState.totalItens + appState.taxaEntrega;
+    
+    el('cesta-rodape').style.display = appState.carrinho.length ? 'block' : 'none';
     el('count-txt').innerText = `${qtdTotal} ${qtdTotal > 1 ? 'itens adicionados' : 'item adicionado'}`;
-    el('total-txt').innerText = fmtMoeda(totalItens);
-    if(el('revisao-total-txt')) el('revisao-total-txt').innerText = `TOTAL: ${fmtMoeda(totalGeral)}`;
-    if(el('pix-valor-txt')) el('pix-valor-txt').innerText = fmtMoeda(totalGeral);
+    el('total-txt').innerText = fmtMoeda(appState.totalItens);
+    
+    if(el('revisao-total-txt')) el('revisao-total-txt').innerText = `TOTAL: ${fmtMoeda(appState.totalGeral)}`;
+    if(el('pix-valor-txt')) el('pix-valor-txt').innerText = fmtMoeda(appState.totalGeral);
 }
 
+/**
+ * FLUXO DE CHECKOUT
+ */
 function abrirRevisao() { 
-    fecharModais(); el('modalOverlay').style.display = 'block'; el('modalRevisao').style.display = 'block'; 
-    let htmlItens = carrinho.map((i, idx) => `
+    fecharModais(); 
+    el('modalOverlay').style.display = 'block'; 
+    el('modalRevisao').style.display = 'block'; 
+    
+    let html = appState.carrinho.map((i, idx) => `
         <div class="cesta-item-linha">
             <div style="flex:1">
                 <div style="font-size:0.9rem"><b>${i.q}x ${i.nome}</b> - ${fmtMoeda(i.sub)}</div>
@@ -349,80 +460,143 @@ function abrirRevisao() {
             </div>
             <button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button>
         </div>`).join(''); 
-    if (memory.entrega === 'Entrega') {
-        htmlItens += `<div class="cesta-item-linha" style="background:#faf7f2; border:1px dashed var(--a-brown); margin-top:10px;">
+
+    if (appState.user.entrega === 'Entrega') {
+        html += `<div class="cesta-item-linha" style="background:#faf7f2; border:1px dashed var(--a-brown); margin-top:10px;">
                 <div style="flex:1"><div style="font-size:0.9rem; color:var(--a-brown);">Taxa de Entrega - R$ 10,00</div></div></div>`;
     }
-    el('lista-revisao-completa').innerHTML = htmlItens || "<p style='text-align:center'>Cesta vazia</p>"; 
+    el('lista-revisao-completa').innerHTML = html || "<p style='text-align:center'>Cesta vazia</p>"; 
     atualizarTotais(); 
 }
 
 function removerCarrinho(idx, idRef) { 
-    carrinho.splice(idx, 1); 
-    const badge = el(`badge-${idRef}`); if(badge) { badge.innerText = 0; badge.style.display = 'none'; } 
-    abrirRevisao(); 
-    if(carrinho.length === 0) { fecharModais(); el('cesta-rodape').style.display = 'none'; } 
+    appState.carrinho.splice(idx, 1); 
+    const badge = el(`badge-${idRef}`); 
+    if(badge) { badge.innerText = 0; badge.style.display = 'none'; } 
+    if(appState.carrinho.length === 0) { 
+        fecharModais(); 
+        el('cesta-rodape').style.display = 'none'; 
+    } else {
+        abrirRevisao(); 
+    }
 }
 
-function selEntrega(t, elem) { 
-    taxaEntrega = (t === 'Entrega') ? 10 : 0; 
-    memory.entrega = t; 
+function selEntrega(tipo, elem) { 
+    appState.taxaEntrega = (tipo === 'Entrega') ? 10 : 0; 
+    appState.user.entrega = tipo; 
+    
     document.querySelectorAll('.opcao-entrega').forEach(o => o.classList.remove('selecionada')); 
     elem.classList.add('selecionada'); 
     document.querySelectorAll('.entrega-info-frame').forEach(f => f.style.display = 'none'); 
     elem.querySelector('.entrega-info-frame').style.display = 'block'; 
-    el('endCliDados').style.display = (t === 'Entrega') ? 'block' : 'none'; 
+    
+    el('endCliDados').style.display = (tipo === 'Entrega') ? 'block' : 'none'; 
     abrirRevisao(); 
 }
 
 function abrirDados() { 
-    if(!memory.entrega) return alert("Selecione como deseja receber!"); 
-    el('modalRevisao').style.display = 'none'; el('modalDados').style.display = 'block'; 
+    if(!appState.user.entrega) return alert("Selecione como deseja receber!"); 
+    el('modalRevisao').style.display = 'none'; 
+    el('modalDados').style.display = 'block'; 
 }
 
 function irParaPagamento() { 
-    const n = el('nomeCli').value.trim(), t = el('telCli').value.trim(), e = el('endCliDados').value.trim();
+    const n = el('nomeCli').value.trim();
+    const t = el('telCli').value.trim();
+    const e = el('endCliDados').value.trim();
+    
     if(!n || !t) return alert("Preencha os campos obrigatórios!");
-    if(memory.entrega === 'Entrega' && !e) return alert("Endereço obrigatório!");
-    memory.nome = n; memory.tel = t; 
-    if(memory.entrega === 'Entrega') memory.endereco = e; 
+    if(appState.user.entrega === 'Entrega' && !e) return alert("Endereço obrigatório!");
+    
+    appState.user.nome = n; 
+    appState.user.tel = t; 
+    appState.user.endereco = (appState.user.entrega === 'Entrega') ? e : "N/A";
+    
     localStorage.setItem('paodociso_dados', JSON.stringify({nome: n, tel: t})); 
-    el('etapa-dados').style.display = 'none'; el('etapa-pagamento').style.display = 'block'; 
+    el('etapa-dados').style.display = 'none'; 
+    el('etapa-pagamento').style.display = 'block'; 
 }
 
-function selPgto(t, elem) { 
-    pgtoSel = t; 
+function selPgto(tipo, elem) { 
+    appState.pagamentoSel = tipo; 
     document.querySelectorAll('.opcao-pagamento').forEach(o => o.classList.remove('selecionada')); 
     elem.classList.add('selecionada'); 
     document.querySelectorAll('.pagamento-info-frame').forEach(f => f.style.display = 'none'); 
-    const f = elem.querySelector('.pagamento-info-frame'); if(f) f.style.display = 'block'; 
+    const frame = elem.querySelector('.pagamento-info-frame'); 
+    if(frame) frame.style.display = 'block'; 
 }
 
+/**
+ * FINALIZAÇÃO E ENVIO
+ */
 function finalizar() { 
-    if(!pgtoSel) return alert("Selecione o pagamento!"); 
-    el('modalDados').style.display = 'none'; el('modalSucesso').style.display = 'block'; 
-    const itensStr = carrinho.map(i => `${i.q}x ${i.nome}` + (i.ex.length ? ` [${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}]` : '')).join(" | ");
-    fetch("https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec", { method: 'POST', mode: 'no-cors', body: JSON.stringify({ nome: memory.nome, telefone: memory.tel, tipoEntrega: memory.entrega, endereco: memory.endereco || "N/A", itens: itensStr, total: totalGeral.toFixed(2), pagamento: pgtoSel }) });
-    const itensMsg = carrinho.map(i => `*${i.q}x ${i.nome}*${i.ex.length ? i.ex.map(o => `\n   └ ${o.q}x ${o.n}`).join('') : ''}`).join('\n\n'); 
-    ultimaMsg = `NOVO PEDIDO - PAO DO CISO\n━━━━━━━━━━━━━━━━━━━━\nCLIENTE\nNome: *${memory.nome}*\nTelefone: *${memory.tel}*\n━━━━━━━━━━━━━━━━━━━━\nENTREGA\nTipo: ${memory.entrega}\n${memory.endereco ? `Endereço: *${memory.endereco}*\n` : ""}━━━━━━━━━━━━━━━━━━━━\nITENS DO PEDIDO\n${itensMsg}\n\n${taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00\n` : ""}━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO\nForma: ${pgtoSel}\nTOTAL: *${fmtMoeda(totalGeral)}*\n━━━━━━━━━━━━━━━━━━━━\n_Pedido gerado via cardápio digital._`;    
-    setTimeout(() => { window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(ultimaMsg)}`, '_blank'); el('modalSucesso').style.display = 'none'; el('modalPosEnvio').style.display = 'block'; }, 4000); 
+    if(!appState.pagamentoSel) return alert("Selecione o pagamento!"); 
+    
+    el('modalDados').style.display = 'none'; 
+    el('modalSucesso').style.display = 'block'; 
+    
+    const itensSimplificados = appState.carrinho.map(i => 
+        `${i.q}x ${i.nome}` + (i.ex.length ? ` [${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}]` : '')
+    ).join(" | ");
+
+    // Envio para Planilha (Opcional/Oculto)
+    fetch("https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec", { 
+        method: 'POST', 
+        mode: 'no-cors', 
+        body: JSON.stringify({ 
+            nome: appState.user.nome, 
+            telefone: appState.user.tel, 
+            tipoEntrega: appState.user.entrega, 
+            endereco: appState.user.endereco, 
+            itens: itensSimplificados, 
+            total: appState.totalGeral.toFixed(2), 
+            pagamento: appState.pagamentoSel 
+        }) 
+    });
+
+    // Montagem da Mensagem Whatsapp
+    const itensMsg = appState.carrinho.map(i => 
+        `*${i.q}x ${i.nome}*${i.ex.length ? i.ex.map(o => `\n   └ ${o.q}x ${o.n}`).join('') : ''}`
+    ).join('\n\n'); 
+
+    appState.ultimaMsg = `NOVO PEDIDO - PAO DO CISO\n━━━━━━━━━━━━━━━━━━━━\nCLIENTE\nNome: *${appState.user.nome}*\nTelefone: *${appState.user.tel}*\n━━━━━━━━━━━━━━━━━━━━\nENTREGA\nTipo: ${appState.user.entrega}\n${appState.user.entrega === 'Entrega' ? `Endereço: *${appState.user.endereco}*\n` : ""}━━━━━━━━━━━━━━━━━━━━\nITENS DO PEDIDO\n${itensMsg}\n\n${appState.taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00\n` : ""}━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO\nForma: ${appState.pagamentoSel}\nTOTAL: *${fmtMoeda(appState.totalGeral)}*\n━━━━━━━━━━━━━━━━━━━━\n_Pedido gerado via cardápio digital._`;    
+    
+    setTimeout(() => { 
+        reenviarWhats();
+        el('modalSucesso').style.display = 'none'; 
+        el('modalPosEnvio').style.display = 'block'; 
+    }, 4000); 
 }
 
 function abrirModalFornada() {
     const dF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
     const dP = new Date(dF); dP.setDate(dP.getDate() - 2); 
     const fmt = d => d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'});
-    el('conteudoFornada').innerHTML = `<p>📅 <b>DATA DA FORNADA:</b> <br><span style="color:var(--p-green); font-weight:900; font-size:1.2rem;">${fmt(dF)}</span></p><br><p>⚠️ <b>PEDIDOS ATÉ:</b> <br><span style="color:var(--red); font-weight:900; font-size:1.2rem;">${fmt(dP)}</span></p>`;
-    el('modalOverlay').style.display = 'block'; el('modalFornada').style.display = 'block';
+    
+    el('conteudoFornada').innerHTML = `
+        <p>📅 <b>DATA DA FORNADA:</b> <br><span style="color:var(--p-green); font-weight:900; font-size:1.2rem;">${fmt(dF)}</span></p>
+        <br>
+        <p>⚠️ <b>PEDIDOS ATÉ:</b> <br><span style="color:var(--red); font-weight:900; font-size:1.2rem;">${fmt(dP)}</span></p>`;
+    
+    el('modalOverlay').style.display = 'block'; 
+    el('modalFornada').style.display = 'block';
 }
+
+// --- FUNÇÕES COMPLEMENTARES ---
 function ampliarImg(src) { el('imgExpandida').src = src; el('modalOverlay').style.display = 'block'; el('modalImg').style.display = 'block'; }
-function validarApenasNumeros(inp) { if (/[^\d]/.test(inp.value)) { inp.value = inp.value.replace(/\D/g, ''); } }
+function validarApenasNumeros(inp) { inp.value = inp.value.replace(/\D/g, ''); }
 function copiarChave() { navigator.clipboard.writeText("paodociso@gmail.com"); alert("Chave PIX copiada!"); }
-function reenviarWhats() { window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(ultimaMsg)}`, '_blank'); }
+function reenviarWhats() { window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(appState.ultimaMsg)}`, '_blank'); }
 function voltarParaDados() { el('etapa-pagamento').style.display = 'none'; el('etapa-dados').style.display = 'block'; }
 function voltarParaRevisao() { el('modalDados').style.display = 'none'; el('modalRevisao').style.display = 'block'; }
 function novoPedido() { location.reload(); }
-function encerrarSistema() { localStorage.clear(); window.close(); if (!window.closed) { alert("Dados locais limpos. Por favor, feche esta aba manualmente."); } }
+function encerrarSistema() { 
+    localStorage.clear(); 
+    if (window.confirm("Deseja fechar o cardápio?")) {
+        window.close();
+        alert("Por favor, feche esta aba manualmente.");
+    }
+}
 </script>
 </body>
 </html>

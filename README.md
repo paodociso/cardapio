@@ -1,58 +1,66 @@
-Este README descreve o ecossistema do **Pão do Ciso (V19.0)**, um webapp focado em vendas via WhatsApp com gestão de cardápio dinâmica. O sistema é composto por uma interface de vendas para o cliente (`index-teste.html`) e uma interface de administração (`gestao-cardapio.html`).
+---
+
+# 🥖 Pão do Ciso - Cardápio Digital & Gestão
+
+Este projeto é uma solução completa para pedidos online de pães artesanais e produtos de fermentação natural. O sistema permite que clientes visualizem o cardápio, selecionem opcionais, montem seu carrinho e enviem o pedido diretamente via WhatsApp, além de oferecer um painel administrativo para gestão de produtos e preços.
+
+## 🚀 Estrutura do Projeto
+
+O sistema é composto por três arquivos principais:
+
+* **`index.html`**: A interface do cliente (Cardápio Digital). Responsável pela exibição dos produtos, cálculos de subtotal, formulário de entrega e integração com a API do WhatsApp.
+* **`cardapio.js`**: A base de dados inicial e estrutura de dados do sistema. Contém as definições de categorias, itens, preços e listas de opcionais.
+* **`gestao-cardapio.html`**: O painel administrativo. Permite ao gestor alterar preços, adicionar/remover itens, organizar a ordem das seções e atualizar a data da próxima fornada sem mexer no código.
 
 ---
 
-# 🥖 Pão do Ciso - V19.0
+## 🛠️ Funcionalidades
 
-Sistema de cardápio digital interativo projetado para automação de pedidos, cálculo de opcionais e integração direta com WhatsApp e Google Sheets.
+### 🛒 Para o Cliente
 
-## 🚀 Funcionalidades Principais
+* **Interface Responsiva**: Otimizada para dispositivos móveis.
+* **Seleção Dinâmica**: Escolha de opcionais (como tipos de taças para vinhos ou acompanhamentos para pães).
+* **Carrinho em Tempo Real**: Cálculo automático de totais e sub-totais.
+* **Fluxo de Checkout**: Coleta de dados de entrega/retirada e geração de mensagem formatada para o WhatsApp do estabelecimento.
+* **Aviso de Fornada**: Modal informativo com datas de produção e limite para pedidos.
 
-### 1. Cardápio Inteligente e Dinâmico
+### ⚙️ Para o Administrador
 
-* **Categorias Expansíveis**: Organização dos produtos em seções colapsáveis (Pães, Antipasti, Panini, etc.) para facilitar a navegação.
-* **Cálculo em Tempo Real**: O sistema calcula automaticamente o subtotal de cada item conforme a quantidade e os opcionais selecionados são alterados.
-* **Gestão de Opcionais**: Suporte a diferentes listas de opcionais baseadas no tipo de produto (ex: opcionais específicos para Panini vs. opcionais gerais para Pães).
-
-### 2. Fluxo de Checkout Automatizado
-
-* **Cesta de Compras**: Barra inferior fixa que exibe o total acumulado e permite revisar os itens antes de finalizar.
-* **Persistência de Dados**: Utiliza `localStorage` para salvar os dados do cliente (nome, telefone e endereço), evitando que ele precise digitar tudo novamente em pedidos futuros.
-* **Múltiplas Formas de Pagamento**: Suporte a Pix (com cópia de chave e QR Code), Cartão e Dinheiro.
-
-### 3. Confirmação e Envio (WhatsApp)
-
-* **Modal de Salvamento**: Ao finalizar, o sistema exibe um modal de confirmação: *"Seu pedido foi salvo! Você será automaticamente direcionado..."*.
-* **Timer de Redirecionamento**: Aguarda **4 segundos** para garantir que o usuário leia a confirmação antes de abrir o WhatsApp.
-* **Integração com Planilha**: Envia os dados do pedido automaticamente para uma Planilha Google via API (Google Apps Script) para controle gerencial.
-
-### 4. Gestor de Cardápio (`gestao-cardapio.html`)
-
-* **Edição Direta**: Interface administrativa para alterar nomes, descrições, preços e links de imagens dos produtos.
-* **Gerenciamento de Seções**: Permite adicionar ou remover itens de categorias específicas e gerenciar as listas de opcionais.
-* **Exportação de Dados**: Gera o código formatado para o arquivo `cardapio.js`, permitindo atualizações rápidas do inventário.
+* **Gerenciamento de Estoque**: Ativar/Desativar itens rapidamente (disponibilidade).
+* **Editor de Preços e Descrições**: Alteração direta na interface administrativa.
+* **Organização por Drag-and-Drop**: Reordenação de itens e seções usando a biblioteca `SortableJS`.
+* **Persistência Local**: Utiliza `localStorage` para salvar as alterações feitas no painel, garantindo que as modificações reflitam no cardápio.
+* **Exportação de Dados**: Função para gerar um novo arquivo `cardapio.js` ou copiar o JSON atualizado.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 💻 Tecnologias Utilizadas
 
-* **Frontend**: HTML5, CSS3 (variáveis e animações), JavaScript (Vanilla).
-* **Ícones**: Font Awesome 6.0.
-* **Backend/Storage**:
-* Google Apps Script (para integração com Planilhas).
-* `localStorage` (armazenamento local no navegador do cliente).
-
-
-* **Comunicação**: Protocolo `wa.me` para integração com WhatsApp.
+* **HTML5 / CSS3**: Estrutura e estilização moderna com variáveis CSS.
+* **JavaScript (Vanilla)**: Lógica de negócio, manipulação de DOM e persistência de dados.
+* **SortableJS**: Biblioteca para reordenação de itens por arrasto.
+* **Font Awesome**: Ícones para interface.
+* **Google Fonts**: Tipografia personalizada.
 
 ---
 
-## 📋 Como Atualizar o Cardápio
+## 📋 Como Usar
 
-1. Abra o arquivo `gestao-cardapio.html` no seu navegador.
-2. Realize as alterações desejadas nos itens ou preços.
-3. Clique em **"Gerar Código para cardapio.js"**.
-4. Copie o código gerado e substitua todo o conteúdo do seu arquivo `cardapio.js` atual.
-5. Salve o arquivo e atualize o site do cliente.
+1. **Configuração Inicial**: Certifique-se de que os três arquivos (`index.html`, `cardapio.js`, `gestao-cardapio.html`) estejam na mesma pasta.
+2. **Acesso ao Painel**: Abra o arquivo `gestao-cardapio.html` para configurar seus produtos e a data da próxima fornada.
+3. **Publicação**: O sistema pode ser hospedado em qualquer serviço de páginas estáticas (GitHub Pages, Vercel, Netlify ou até mesmo via FTP em um servidor simples).
+4. **Pedidos**: As mensagens de pedidos serão enviadas para o número configurado na função `enviarWhatsApp` no arquivo `index.html`.
+
+---
+
+## 🔒 Segurança e Dados
+
+Os dados de gestão são salvos no `localStorage` do navegador. Para uma mudança definitiva que persista em todos os dispositivos dos clientes, as alterações feitas no painel administrativo devem ser copiadas e coladas de volta no arquivo `cardapio.js` (ou salvas via backend, se implementado futuramente).
+
+---
+
+## 📝 Licença
+
+Este projeto foi desenvolvido para o uso exclusivo da marca **Pão do Ciso**.
 
 ---
