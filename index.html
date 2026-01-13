@@ -98,6 +98,35 @@
         .rodape-info .item-total { font-size: 1.1rem; font-weight: 900; }
         .btn-ver-cesta { background: var(--p-green); color: white; border: 2px solid white; padding: 8px 15px; border-radius: 30px; font-weight: 900; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; }
         .linha-quantidade { display: flex; justify-content: space-between; align-items: center; padding: 10px; gap: 8px; flex-wrap: wrap; }
+
+        /* Nova regra para impedir que o contador do opcional pule de linha */
+        .linha-opcional-estilizada {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            gap: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nome-opcional-container {
+            flex: 1; /* Ocupa todo o espaço da esquerda */
+            font-size: 0.85rem;
+            line-height: 1.2;
+            color: var(--text);
+        }
+
+        .qty-box-opcional {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid var(--p-green);
+            border-radius: 6px;
+            height: 32px;
+            background: white;
+            width: 95px; 
+            flex-shrink: 0; /* Impede o contador de ser esmagado */
+        }
+
         .qty-box { display: flex; align-items: center; border: 1.5px solid var(--p-green); border-radius: 6px; height: 32px; background: white; width: 95px; flex-shrink: 0; }
         .btn-q { background: var(--p-green); border: none; width: 30px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
         .qty-val { flex: 1; border: none; text-align: center; font-weight: bold; font-size: 0.9rem; pointer-events: none; }
@@ -351,24 +380,32 @@ function abrirDetalhes(si, ii) {
                 </div>
             </div>
         </div>
+        
         ${opcionaisDisp.length ? `
-        <div class="menu-opcionais ${noCesto ? 'aberto' : ''}" id="menu-opc-${idRef}">
-            <div class="titulo-opcionais" onclick="this.parentElement.classList.toggle('aberto')">OPCIONAIS</div>
-            <div class="divisor-opcionais"></div>
-            <div class="lista-opcionais">
-                ${opcionaisDisp.map(o => {
-                    const qOp = noCesto ? (noCesto.ex.find(e => e.n === o[0])?.q || 0) : 0;
-                    return `<div class="linha-quantidade" style="padding: 4px 0; margin-bottom:5px">
-                                <span style="font-size:0.85rem">${o[0]} (+${fmtMoeda(o[1])})</span>
-                                <div class="qty-box">
-                                    <button class="btn-q" onclick="mudarQuantidade(-1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii},'${o[0].replace(/'/g, "\\'")}',${o[1]})">-</button>
-                                    <input type="text" value="${qOp}" class="qty-val op-modal-qty" data-n="${o[0]}" data-p="${o[1]}">
-                                    <button class="btn-q" onclick="mudarQuantidade(1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii},'${o[0].replace(/'/g, "\\'")}',${o[1]})">+</button>
-                                </div>
-                            </div>`;
-                }).join('')}
-            </div>
-        </div>` : ''}
+    <div class="menu-opcionais ${noCesto ? 'aberto' : ''}" id="menu-opc-${idRef}">
+        <div class="titulo-opcionais" onclick="this.parentElement.classList.toggle('aberto')">OPCIONAIS</div>
+        <div class="divisor-opcionais"></div>
+        <div class="lista-opcionais">
+            ${opcionaisDisp.map(o => {
+                const qOp = noCesto ? (noCesto.ex.find(e => e.n === o[0])?.q || 0) : 0;
+                const nomeOpcSeguro = o[0].replace(/'/g, "\\'"); 
+                
+                return `
+                <div class="linha-opcional-estilizada">
+                    <div class="nome-opcional-container">
+                        <strong>${o[0]}</strong><br>
+                        <span style="color:var(--p-green); font-size:0.8rem;">+ ${fmtMoeda(o[1])}</span>
+                    </div>
+                    <div class="qty-box-opcional">
+                        <button class="btn-q" onclick="mudarQuantidade(-1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii},'${nomeOpcSeguro}',${o[1]})">-</button>
+                        <input type="text" value="${qOp}" class="qty-val op-modal-qty" data-n="${o[0]}" data-p="${o[1]}">
+                        <button class="btn-q" onclick="mudarQuantidade(1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii},'${nomeOpcSeguro}',${o[1]})">+</button>
+                    </div>
+                </div>`;
+            }).join('')}
+        </div>
+    </div>` : ''}
+
         <div id="sub-modal-${idRef}" style="text-align:right; font-weight:900; color:var(--p-green); font-size:1.1rem; margin-top:10px">
             Subtotal: ${fmtMoeda(noCesto ? noCesto.sub : 0)}
         </div>`;
