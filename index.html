@@ -567,56 +567,57 @@ function selPgto(tipo, elem) {
  * FINALIZAÇÃO E ENVIO
  */
 function finalizar() { 
-    if(!appState.pagamentoSel) return alert("Selecione o pagamento!"); 
+    if(!appState.pagamentoSel) return alert("Selecione o pagamento!");
     
-    el('modalDados').style.display = 'none'; 
-    el('modalSucesso').style.display = 'block'; 
+    el('modalDados').style.display = 'none';
+    el('modalSucesso').style.display = 'block';
     
-    const itensSimplificados = appState.carrinho.map(i => 
-        `${i.q}x ${i.nome}` + (i.ex.length ? ` [${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}]` : '')
-    ).join(" | ");
+    // 1. FORMATAÇÃO PARA A PLANILHA
+    // Cada item (com seus opcionais) vira uma linha única.
+    // O Google Script usará o "\n" para quebrar esses itens em linhas diferentes na aba 'pedidosAbertos'.
+    const itensParaPlanilha = appState.carrinho.map(i => {
+        let textoItem = `${i.q}x ${i.nome}`;
+        if (i.ex && i.ex.length > 0) {
+            textoItem += ` [${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}]`;
+        }
+        return textoItem;
+    }).join("\n");
 
-    // Envio para Planilha (Opcional/Oculto)
-    fetch("https://script.google.com/macros/s/AKfycbxdCvZQgulHwUnKcyVSueuS_0doo_Ggh7xynYsuyXqolGlfJPruUHDtgFSNpeYnZZwlZw/exec", { 
+    // 2. LINK WHATSAPP PARA A PLANILHA
+    const linkZapPlanilha = `https://wa.me/55${appState.user.tel}`;
+
+    // 3. ENVIO DOS DADOS PARA O GOOGLE SCRIPT
+    // Certifique-se de que a URL abaixo é a da sua última implantação (Deploy)
+    const urlScript = "https://script.google.com/macros/s/AKfycbwfhM8c2EQUhevSbDJwLYrfGl2FsCOZ65bc-WMsobQeGPGolXyAfwyYkJok31e2JOWoHQ/exec";
+
+    fetch(urlScript, { 
         method: 'POST', 
         mode: 'no-cors', 
         body: JSON.stringify({ 
             nome: appState.user.nome, 
             telefone: appState.user.tel, 
+            whatsapp_link: linkZapPlanilha,
             tipoEntrega: appState.user.entrega, 
             endereco: appState.user.endereco, 
-            itens: itensSimplificados, 
-            total: appState.totalGeral.toFixed(2), 
-            pagamento: appState.pagamentoSel 
+            itens: itensParaPlanilha, 
+            pagamento: appState.pagamentoSel,
+            total: appState.totalGeral.toFixed(2)
         }) 
     });
 
-    // Montagem da Mensagem Whatsapp
+    // 4. MONTAGEM DA MENSAGEM PARA WHATSAPP (Visual do Cliente)
     const itensMsg = appState.carrinho.map(i => 
         `*${i.q}x ${i.nome}*${i.ex.length ? i.ex.map(o => `\n   └ ${o.q}x ${o.n}`).join('') : ''}`
-    ).join('\n\n'); 
+    ).join('\n\n');
 
-    appState.ultimaMsg = `NOVO PEDIDO - PAO DO CISO\n━━━━━━━━━━━━━━━━━━━━\nCLIENTE\nNome: *${appState.user.nome}*\nTelefone: *${appState.user.tel}*\n━━━━━━━━━━━━━━━━━━━━\nENTREGA\nTipo: ${appState.user.entrega}\n${appState.user.entrega === 'Entrega' ? `Endereço: *${appState.user.endereco}*\n` : ""}━━━━━━━━━━━━━━━━━━━━\nITENS DO PEDIDO\n${itensMsg}\n\n${appState.taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00\n` : ""}━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO\nForma: ${appState.pagamentoSel}\nTOTAL: *${fmtMoeda(appState.totalGeral)}*\n━━━━━━━━━━━━━━━━━━━━\n_Pedido gerado via cardápio digital._`;    
+    appState.ultimaMsg = `NOVO PEDIDO - PAO DO CISO\n━━━━━━━━━━━━━━━━━━━━\nCLIENTE\nNome: *${appState.user.nome}*\nTelefone: *${appState.user.tel}*\n━━━━━━━━━━━━━━━━━━━━\nENTREGA\nTipo: ${appState.user.entrega}\n${appState.user.entrega === 'Entrega' ? `Endereço: *${appState.user.endereco}*\n` : ""}━━━━━━━━━━━━━━━━━━━━\nITENS DO PEDIDO\n${itensMsg}\n\n${appState.taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00\n` : ""}━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO\nForma: ${appState.pagamentoSel}\nTOTAL: *${fmtMoeda(appState.totalGeral)}*\n━━━━━━━━━━━━━━━━━━━━\n_Pedido gerado via cardápio digital._`;
     
+    // Redirecionamento após 4 segundos
     setTimeout(() => { 
         reenviarWhats();
-        el('modalSucesso').style.display = 'none'; 
-        el('modalPosEnvio').style.display = 'block'; 
+        el('modalSucesso').style.display = 'none';
+        el('modalPosEnvio').style.display = 'block';
     }, 4000); 
-}
-
-function abrirModalFornada() {
-    const dF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
-    const dP = new Date(dF); dP.setDate(dP.getDate() - 2); 
-    const fmt = d => d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'});
-    
-    el('conteudoFornada').innerHTML = `
-        <p>📅 <b>DATA DA FORNADA:</b> <br><span style="color:var(--p-green); font-weight:900; font-size:1.2rem;">${fmt(dF)}</span></p>
-        <br>
-        <p>⚠️ <b>PEDIDOS ATÉ:</b> <br><span style="color:var(--red); font-weight:900; font-size:1.2rem;">${fmt(dP)}</span></p>`;
-    
-    el('modalOverlay').style.display = 'block'; 
-    el('modalFornada').style.display = 'block';
 }
 
 // --- FUNÇÕES COMPLEMENTARES ---
