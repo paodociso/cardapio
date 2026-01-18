@@ -471,7 +471,7 @@ const dadosIniciais = {
             "Maionese",
             "Maionese temperada"
           ],
-          false
+          true
         ]
       ]
     },
@@ -481,7 +481,7 @@ const dadosIniciais = {
         [
           "Tábua de frios",
           "Tábua de frios variados.",
-          "20.00",
+          "49.00",
           "https://www.seara.com.br/wp-content/uploads/2025/09/tabua-de-frios-portal-minha-receita-2.jpg",
           [
             "Alichella",
@@ -513,7 +513,7 @@ const dadosIniciais = {
             "Pastinha de parmesão",
             "Pastinha de pimentão vermelho"
           ],
-          true
+          false
         ]
       ]
     },
