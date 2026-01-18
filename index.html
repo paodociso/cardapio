@@ -46,30 +46,22 @@
         }
 
         /* 1. REGRA GERAL: Para os modais de Revisão, Dados e Sucesso (Sempre no centro da tela) */
+        /* 1A. REGRA GERAL: Ajustada para permitir rolagem em telas pequenas ou cestas grandes */
         .modal-pedido { 
             display: none; 
-            position: fixed; 
-            top: 50%; 
+            position: absolute; /* Mudado de fixed para absolute */
+            top: 20px; 
             left: 50%; 
-            transform: translate(-50%, -50%); 
+            transform: translateX(-50%); 
             background: var(--w); 
             border-radius: 12px; 
-            width: 90%; 
+            width: 95%; 
             max-width: 480px; 
             z-index: 1000; 
             padding: 20px; 
             text-align: left; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        /* 2. REGRA EXCLUSIVA: Para o Modal de Produtos (Para rolar o modal inteiro) */
-        .modal-pedido.modal-scroll { 
-            position: absolute; 
-            top: 20px; 
-            transform: translateX(-50%); 
             margin-bottom: 50px;
-            max-height: none; /* Remove qualquer trava de altura */
-            overflow-y: visible; /* Remove o scroll interno */
         }
 
         .modal-pedido h3 { 
@@ -202,8 +194,8 @@
             </div>
         </div>
         <div style="font-weight:bold; margin-top:15px; text-align:right;" id="revisao-total-txt"></div>
-        <button class="btn-prosseguir" style="margin-top:20px;" onclick="abrirDados()">PROSSEGUIR ></button>
-        <button class="btn-voltar" onclick="fecharModais()">< VOLTAR AO CARDÁPIO</button>
+        <button class="btn-prosseguir" style="margin-top:20px; background: var(--a-brown);" onclick="fecharModais()">+ ADICIONAR MAIS ITENS +</button>
+        <button class="btn-prosseguir" style="margin-top:10px;" onclick="abrirDados()">PROSSEGUIR ></button>
     </div>
 
     <div id="modalDados" class="modal-pedido">
@@ -287,7 +279,7 @@ let appState = {
     ultimaMsg: ""
 };
 
-const DATA_PROXIMA_FORNADA = "2025-01-16";
+const DATA_PROXIMA_FORNADA = "2025-01-24";
 
 // --- UTILITÁRIOS ---
 const el = id => document.getElementById(id);
@@ -486,6 +478,7 @@ function atualizarTotais() {
  */
 function abrirRevisao() { 
     fecharModais(); 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     el('modalOverlay').style.display = 'block'; 
     el('modalRevisao').style.display = 'block'; 
     
@@ -535,6 +528,7 @@ function abrirDados() {
     if(!appState.user.entrega) return alert("Selecione como deseja receber!"); 
     el('modalRevisao').style.display = 'none'; 
     el('modalDados').style.display = 'block'; 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function irParaPagamento() { 
@@ -571,6 +565,7 @@ function finalizar() {
     
     el('modalDados').style.display = 'none';
     el('modalSucesso').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
     // 1. FORMATAÇÃO PARA A PLANILHA
     // Cada item (com seus opcionais) vira uma linha única.

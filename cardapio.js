@@ -344,7 +344,7 @@ const dadosIniciais = {
             "Picles de cebola (100g)",
             "Potinho de vidro"
           ],
-          true
+          false
         ],
         [
           "Ciabatta",
@@ -361,7 +361,7 @@ const dadosIniciais = {
             "Picles de cebola (100g)",
             "Potinho de vidro"
           ],
-          true
+          false
         ]
       ]
     },
@@ -471,7 +471,7 @@ const dadosIniciais = {
             "Maionese",
             "Maionese temperada"
           ],
-          true
+          false
         ]
       ]
     },
