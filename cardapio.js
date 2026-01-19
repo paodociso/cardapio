@@ -513,7 +513,7 @@ const dadosIniciais = {
             "Pastinha de parmesão",
             "Pastinha de pimentão vermelho"
           ],
-          false
+          true
         ]
       ]
     },
