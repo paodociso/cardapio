@@ -194,8 +194,19 @@
             </div>
         </div>
         <div style="font-weight:bold; margin-top:15px; text-align:right;" id="revisao-total-txt"></div>
-        <button class="btn-prosseguir" style="margin-top:20px; background: var(--a-brown);" onclick="fecharModais()">+ ADICIONAR MAIS ITENS +</button>
-        <button class="btn-prosseguir" style="margin-top:10px;" onclick="abrirDados()">PROSSEGUIR ></button>
+        <div style="margin-top: 20px; padding: 10px; background: #f9f0e0; border-radius: 8px; border: 1px dashed var(--a-brown);">
+        <p style="font-weight: bold; font-size: 0.8rem; margin-bottom: 5px;">POSSUI UM CUPOM?</p>
+        <div style="display: flex; gap: 5px;">
+            <input type="text" id="inputCupom" placeholder="Digite aqui" style="margin: 0; text-transform: uppercase;">
+            <button onclick="aplicarCupom()" style="background: var(--a-brown); color: white; border: none; padding: 0 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">APLICAR</button>
+        </div>
+        <div id="msgCupom" style="font-size: 0.75rem; margin-top: 5px; font-weight: bold;"></div>
+    </div>
+
+    <button class="btn-prosseguir" style="margin-top:20px; background: var(--a-brown);" onclick="fecharModais()">+ ADICIONAR MAIS ITENS +</button>
+    <button class="btn-prosseguir" style="margin-top:10px;" onclick="abrirDados()">PROSSEGUIR ></button>
+
+
     </div>
 
     <div id="modalDados" class="modal-pedido">
@@ -274,6 +285,8 @@ let appState = {
     totalItens: 0,
     totalGeral: 0,
     taxaEntrega: 0,
+    desconto: 0, // Nova propriedade
+    cupomAtivo: null, // Nova propriedade
     pagamentoSel: "",
     user: { nome: "", tel: "", entrega: "", endereco: "" },
     ultimaMsg: ""
@@ -462,16 +475,57 @@ function mudarQuantidade(delta, idRef, precoBase, nome, si, ii, opNome = null, o
 }
 
 function atualizarTotais() {
+    // Soma o valor bruto dos produtos
     appState.totalItens = appState.carrinho.reduce((acc, i) => acc + i.sub, 0);
+    
+    // Calcula o desconto apenas sobre os produtos
+    let valorDesconto = 0;
+    if(appState.cupomAtivo) {
+        valorDesconto = appState.totalItens * (appState.cupomAtivo.porcentagem / 100);
+    }
+    appState.desconto = valorDesconto;
+
     const qtdTotal = appState.carrinho.reduce((acc, i) => acc + i.q, 0);
-    appState.totalGeral = appState.totalItens + appState.taxaEntrega;
+    
+    // Total Geral = (Produtos - Desconto) + Entrega
+    appState.totalGeral = (appState.totalItens - appState.desconto) + appState.taxaEntrega;
     
     el('cesta-rodape').style.display = appState.carrinho.length ? 'block' : 'none';
     el('count-txt').innerText = `${qtdTotal} ${qtdTotal > 1 ? 'itens adicionados' : 'item adicionado'}`;
-    el('total-txt').innerText = fmtMoeda(appState.totalItens);
+    el('total-txt').innerText = fmtMoeda(appState.totalItens - appState.desconto);
     
-    if(el('revisao-total-txt')) el('revisao-total-txt').innerText = `TOTAL: ${fmtMoeda(appState.totalGeral)}`;
+    if(el('revisao-total-txt')) {
+        let resumoHTML = "";
+        if(appState.desconto > 0) {
+            resumoHTML += `<div style="color:red; font-size:0.85rem">Desconto (${appState.cupomAtivo.nome}): -${fmtMoeda(appState.desconto)}</div>`;
+        }
+        resumoHTML += `TOTAL: ${fmtMoeda(appState.totalGeral)}`;
+        el('revisao-total-txt').innerHTML = resumoHTML;
+    }
     if(el('pix-valor-txt')) el('pix-valor-txt').innerText = fmtMoeda(appState.totalGeral);
+}
+
+function aplicarCupom() {
+    const cod = el('inputCupom').value.trim().toLowerCase();
+    const msg = el('msgCupom');
+    
+    const cuponsValidos = {
+        'mathilde10': 10,
+        'mathilde15': 15,
+        'mathilde20': 20
+    };
+
+    if (cuponsValidos[cod]) {
+        appState.cupomAtivo = { nome: cod.toUpperCase(), porcentagem: cuponsValidos[cod] };
+        msg.style.color = "green";
+        msg.innerText = `Cupom ${cod.toUpperCase()} aplicado!`;
+        atualizarTotais();
+    } else {
+        appState.cupomAtivo = null;
+        msg.style.color = "red";
+        msg.innerText = "Cupom inválido ou expirado.";
+        atualizarTotais();
+    }
 }
 
 /**
@@ -606,7 +660,7 @@ function finalizar() {
         `*${i.q}x ${i.nome}*${i.ex.length ? i.ex.map(o => `\n   └ ${o.q}x ${o.n}`).join('') : ''}`
     ).join('\n\n');
 
-    appState.ultimaMsg = `NOVO PEDIDO - PAO DO CISO\n━━━━━━━━━━━━━━━━━━━━\nCLIENTE\nNome: *${appState.user.nome}*\nTelefone: *${appState.user.tel}*\n━━━━━━━━━━━━━━━━━━━━\nENTREGA\nTipo: ${appState.user.entrega}\n${appState.user.entrega === 'Entrega' ? `Endereço: *${appState.user.endereco}*\n` : ""}━━━━━━━━━━━━━━━━━━━━\nITENS DO PEDIDO\n${itensMsg}\n\n${appState.taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00\n` : ""}━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO\nForma: ${appState.pagamentoSel}\nTOTAL: *${fmtMoeda(appState.totalGeral)}*\n━━━━━━━━━━━━━━━━━━━━\n_Pedido gerado via cardápio digital._`;
+    appState.ultimaMsg = `NOVO PEDIDO - PAO DO CISO\n━━━━━━━━━━━━━━━━━━━━\nCLIENTE\nNome: *${appState.user.nome}*\nTelefone: *${appState.user.tel}*\n━━━━━━━━━━━━━━━━━━━━\nENTREGA\nTipo: ${appState.user.entrega}\n${appState.user.entrega === 'Entrega' ? `Endereço: *${appState.user.endereco}*\n` : ""}━━━━━━━━━━━━━━━━━━━━\nITENS DO PEDIDO\n${itensMsg}\n\n${appState.desconto > 0 ? `Cupom: ${appState.cupomAtivo.nome} (-${fmtMoeda(appState.desconto)})\n` : ""}${appState.taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00\n` : ""}━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO\nForma: ${appState.pagamentoSel}\nTOTAL: *${fmtMoeda(appState.totalGeral)}*\n━━━━━━━━━━━━━━━━━━━━\n_Pedido gerado via cardápio digital._`;
     
     // Redirecionamento após 4 segundos
     setTimeout(() => { 
