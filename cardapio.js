@@ -1,297 +1,84 @@
 const dadosIniciais = {
   "opcionaisPães de fermentação natural": [
-    [
-      "Alichella (100g)",
-      "20.00"
-    ],
-    [
-      "Sardella (100g)",
-      "20.00"
-    ],
-    [
-      "Melanzane sottolio (100g)",
-      "20.00"
-    ],
-    [
-      "Manteiga temperada (100g)",
-      "17.00"
-    ],
-    [
-      "Confit de alho (100g)",
-      "20.00"
-    ],
-    [
-      "Confit de alho e tomates cereja (100g)",
-      "20.00"
-    ],
-    [
-      "Picles de cebola (100g)",
-      "15.00"
-    ],
-    [
-      "Potinho de vidro",
-      "5.00"
-    ]
+    ["Alichella (100g)", "20.00"],
+    ["Sardella (100g)", "20.00"],
+    ["Melanzane sottolio (100g)", "20.00"],
+    ["Manteiga temperada (100g)", "17.00"],
+    ["Confit de alho (100g)", "20.00"],
+    ["Confit de alho e tomates cereja (100g)", "20.00"],
+    ["Picles de cebola (100g)", "15.00"],
+    ["Potinho de vidro", "5.00"]
   ],
   "opcionaisPanini": [
-    [
-      "Alichella",
-      "3.00"
-    ],
-    [
-      "Sardella",
-      "3.00"
-    ],
-    [
-      "Melanzane sottolio",
-      "3.00"
-    ],
-    [
-      "Manteiga",
-      "2.00"
-    ],
-    [
-      "Manteiga temperada com alho e parmesão",
-      "3.00"
-    ],
-    [
-      "Confit de alho",
-      "2.00"
-    ],
-    [
-      "Confit de alho e tomates cereja",
-      "3.00"
-    ],
-    [
-      "Picles de cebola",
-      "2.00"
-    ],
-    [
-      "Bresaola",
-      "9.00"
-    ],
-    [
-      "Lombo piripiri",
-      "9.00"
-    ],
-    [
-      "Mortadela",
-      "5.00"
-    ],
-    [
-      "Pastrame",
-      "9.00"
-    ],
-    [
-      "Presunto cru",
-      "9.00"
-    ],
-    [
-      "Salame",
-      "7.00"
-    ],
-    [
-      "Chancliche",
-      "7.00"
-    ],
-    [
-      "Chancliche apimentado",
-      "7.00"
-    ],
-    [
-      "Muçarela",
-      "3.00"
-    ],
-    [
-      "Provolone",
-      "5.00"
-    ],
-    [
-      "Queijo Prato",
-      "5.00"
-    ],
-    [
-      "Alface",
-      "1.00"
-    ],
-    [
-      "Pepino",
-      "1.00"
-    ],
-    [
-      "Pimentão",
-      "1.00"
-    ],
-    [
-      "Rúcula",
-      "1.00"
-    ],
-    [
-      "Tomate",
-      "1.00"
-    ],
-    [
-      "Azeite",
-      "1.00"
-    ],
-    [
-      "Pesto tradicional (manjericão)",
-      "2.00"
-    ],
-    [
-      "Pesto de azeitona",
-      "2.00"
-    ],
-    [
-      "Maionese",
-      "2.00"
-    ],
-    [
-      "Maionese temperada",
-      "2.00"
-    ],
-    [
-      "Pastinha de goronzola",
-      "2.00"
-    ],
-    [
-      "Pastinha de parmesão",
-      "2.00"
-    ],
-    [
-      "Pastinha de pimentão vermelho",
-      "2.00"
-    ]
+    ["Alichella", "3.00"],
+    ["Sardella", "3.00"],
+    ["Melanzane sottolio", "3.00"],
+    ["Manteiga", "2.00"],
+    ["Manteiga temperada com alho e parmesão", "3.00"],
+    ["Confit de alho", "2.00"],
+    ["Confit de alho e tomates cereja", "3.00"],
+    ["Picles de cebola", "2.00"],
+    ["Bresaola", "9.00"],
+    ["Lombo piripiri", "9.00"],
+    ["Mortadela", "5.00"],
+    ["Pastrame", "9.00"],
+    ["Presunto cru", "9.00"],
+    ["Salame", "7.00"],
+    ["Chancliche", "7.00"],
+    ["Chancliche apimentado", "7.00"],
+    ["Muçarela", "3.00"],
+    ["Provolone", "5.00"],
+    ["Queijo Prato", "5.00"],
+    ["Alface", "1.00"],
+    ["Pepino", "1.00"],
+    ["Pimentão", "1.00"],
+    ["Rúcula", "1.00"],
+    ["Tomate", "1.00"],
+    ["Azeite", "1.00"],
+    ["Pesto tradicional (manjericão)", "2.00"],
+    ["Pesto de azeitona", "2.00"],
+    ["Maionese", "2.00"],
+    ["Maionese temperada", "2.00"],
+    ["Pastinha de goronzola", "2.00"],
+    ["Pastinha de parmesão", "2.00"],
+    ["Pastinha de pimentão vermelho", "2.00"]
   ],
   "opcionaisBebidas": [
-    [
-      "Taça de vidro",
-      "40.00"
-    ],
-    [
-      "Taça champangne",
-      "30.00"
-    ]
+    ["Taça de vidro", "40.00"],
+    ["Taça champangne", "30.00"]
   ],
   "opcionaisAntipasti": [
-    [
-      "Potinho de vidro",
-      "5.00"
-    ]
+    ["Potinho de vidro", "5.00"]
   ],
   "opcionaisTábuas": [
-    [
-      "Alichella",
-      "10.00"
-    ],
-    [
-      "Sardella",
-      "10.00"
-    ],
-    [
-      "Melanzane sottolio",
-      "10.00"
-    ],
-    [
-      "Manteiga",
-      "3.00"
-    ],
-    [
-      "Manteiga temperada com alho e parmesão",
-      "3.00"
-    ],
-    [
-      "Confit de alho",
-      "4.00"
-    ],
-    [
-      "Confit de alho e tomates cereja",
-      "4.00"
-    ],
-    [
-      "Picles de cebola",
-      "3.00"
-    ],
-    [
-      "Bresaola",
-      "15.00"
-    ],
-    [
-      "Lombo piripiri",
-      "15.00"
-    ],
-    [
-      "Mortadela",
-      "10.00"
-    ],
-    [
-      "Pastrame",
-      "15.00"
-    ],
-    [
-      "Presunto cru",
-      "15.00"
-    ],
-    [
-      "Salame",
-      "11.00"
-    ],
-    [
-      "Chancliche",
-      "7.00"
-    ],
-    [
-      "Chancliche apimentado",
-      "7.00"
-    ],
-    [
-      "Muçarela",
-      "5.00"
-    ],
-    [
-      "Provolone",
-      "8.00"
-    ],
-    [
-      "Queijo Prato",
-      "7.00"
-    ],
-    [
-      "Tomate",
-      "3.00"
-    ],
-    [
-      "Azeite",
-      "3.00"
-    ],
-    [
-      "Pesto tradicional (manjericão)",
-      "4.00"
-    ],
-    [
-      "Pesto de azeitona",
-      "4.00"
-    ],
-    [
-      "Maionese",
-      "3.00"
-    ],
-    [
-      "Maionese temperada",
-      "3.00"
-    ],
-    [
-      "Pastinha de goronzola",
-      "4.00"
-    ],
-    [
-      "Pastinha de parmesão",
-      "4.00"
-    ],
-    [
-      "Pastinha de pimentão vermelho",
-      "4.00"
-    ]
+    ["Alichella", "10.00"],
+    ["Sardella", "10.00"],
+    ["Melanzane sottolio", "10.00"],
+    ["Manteiga", "3.00"],
+    ["Manteiga temperada com alho e parmesão", "3.00"],
+    ["Confit de alho", "4.00"],
+    ["Confit de alho e tomates cereja", "4.00"],
+    ["Picles de cebola", "3.00"],
+    ["Bresaola", "15.00"],
+    ["Lombo piripiri", "15.00"],
+    ["Mortadela", "10.00"],
+    ["Pastrame", "15.00"],
+    ["Presunto cru", "15.00"],
+    ["Salame", "11.00"],
+    ["Chancliche", "7.00"],
+    ["Chancliche apimentado", "7.00"],
+    ["Muçarela", "5.00"],
+    ["Provolone", "8.00"],
+    ["Queijo Prato", "7.00"],
+    ["Tomate", "3.00"],
+    ["Azeite", "3.00"],
+    ["Pesto tradicional (manjericão)", "4.00"],
+    ["Pesto de azeitona", "4.00"],
+    ["Maionese", "3.00"],
+    ["Maionese temperada", "3.00"],
+    ["Pastinha de goronzola", "4.00"],
+    ["Pastinha de parmesão", "4.00"],
+    ["Pastinha de pimentão vermelho", "4.00"]
   ],
   "secoes": [
     {
