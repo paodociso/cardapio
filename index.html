@@ -133,6 +133,18 @@
         #modalImg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; cursor: pointer; }
         #modalImg img { width: 75vw; height: 75vw; max-width: 450px; max-height: 450px; object-fit: cover; border-radius: 12px; border: 5px solid var(--w); box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
         .item-esgotado { pointer-events: auto !important; cursor: not-allowed; border: 1px solid #ddd; }
+        .total-destaque-box {
+            background-color: #ffcccb; /* Vermelho claro */
+            color: #b22222; /* Texto em tom de vermelho escuro para contraste */
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin: 20px 0;
+            border: 1px solid #f5b7b1;
+        }
+
     </style>
 </head>
 <body onload="render()">
@@ -177,36 +189,38 @@
     <div id="modalRevisao" class="modal-pedido">
         <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
         <h3>Minha Cesta</h3>
+        
         <div id="lista-revisao-completa"></div>
+
+        <div style="margin-top: 20px; padding: 12px; background: #f9f0e0; border-radius: 8px; border: 1px dashed var(--a-brown);">
+            <p style="font-weight: bold; font-size: 0.8rem; margin-bottom: 8px;">POSSUI UM CUPOM?</p>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="inputCupom" placeholder="CÓDIGO" style="margin: 0; text-transform: uppercase; height: 38px;">
+                <button onclick="aplicarCupom()" style="background: var(--a-brown); color: white; border: none; padding: 0 15px; border-radius: 6px; font-weight: bold; cursor: pointer; height: 38px;">APLICAR</button>
+            </div>
+            <div id="msgCupom" style="font-size: 0.75rem; margin-top: 5px; font-weight: bold;"></div>
+        </div>
+
         <div style="margin-top:20px;">
             <p style="font-weight: bold; font-size: 0.85rem; margin-bottom: 5px;">COMO DESEJA RECEBER?</p>
             <div class="opcao-entrega" onclick="selEntrega('Retirada', this)">
                 Vou retirar no local
-                <div class="entrega-info-frame">
-                    <div class="aviso-taxa-entrega"><i class="fas fa-walking"></i><div style="font-weight: normal;"><b>Retirada:</b><br>Gratuito</div></div>
-                </div>
             </div>
             <div class="opcao-entrega" onclick="selEntrega('Entrega', this)">
                 Entrega em domicílio
                 <div class="entrega-info-frame">
-                    <div class="aviso-taxa-entrega"><i class="fas fa-truck"></i><div style="font-weight: normal;"><b>Taxa de entrega:</b><br>R$ 10,00 adicionados ao total.</div></div>
+                    <div class="aviso-taxa-entrega">
+                        <i class="fas fa-truck"></i>
+                        <div style="font-weight: normal;"><b>Taxa de entrega:</b><br>R$ 10,00 adicionados ao total.</div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div style="font-weight:bold; margin-top:15px; text-align:right;" id="revisao-total-txt"></div>
-        <div style="margin-top: 20px; padding: 10px; background: #f9f0e0; border-radius: 8px; border: 1px dashed var(--a-brown);">
-        <p style="font-weight: bold; font-size: 0.8rem; margin-bottom: 5px;">POSSUI UM CUPOM?</p>
-        <div style="display: flex; gap: 5px;">
-            <input type="text" id="inputCupom" placeholder="Digite aqui" style="margin: 0; text-transform: uppercase;">
-            <button onclick="aplicarCupom()" style="background: var(--a-brown); color: white; border: none; padding: 0 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">APLICAR</button>
-        </div>
-        <div id="msgCupom" style="font-size: 0.75rem; margin-top: 5px; font-weight: bold;"></div>
-    </div>
 
-    <button class="btn-prosseguir" style="margin-top:20px; background: var(--a-brown);" onclick="fecharModais()">+ ADICIONAR MAIS ITENS +</button>
-    <button class="btn-prosseguir" style="margin-top:10px;" onclick="abrirDados()">PROSSEGUIR ></button>
+        <div id="revisao-total-txt"></div>
 
-
+        <button class="btn-prosseguir" style="margin-top:20px; background: var(--a-brown);" onclick="fecharModais()">+ ADICIONAR MAIS ITENS +</button>
+        <button class="btn-prosseguir" style="margin-top:10px;" onclick="abrirDados()">PROSSEGUIR ></button>
     </div>
 
     <div id="modalDados" class="modal-pedido">
@@ -475,33 +489,56 @@ function mudarQuantidade(delta, idRef, precoBase, nome, si, ii, opNome = null, o
 }
 
 function atualizarTotais() {
-    // Soma o valor bruto dos produtos
+    // 1. Cálculos Base
     appState.totalItens = appState.carrinho.reduce((acc, i) => acc + i.sub, 0);
     
-    // Calcula o desconto apenas sobre os produtos
     let valorDesconto = 0;
     if(appState.cupomAtivo) {
         valorDesconto = appState.totalItens * (appState.cupomAtivo.porcentagem / 100);
     }
     appState.desconto = valorDesconto;
-
-    const qtdTotal = appState.carrinho.reduce((acc, i) => acc + i.q, 0);
     
-    // Total Geral = (Produtos - Desconto) + Entrega
+    const qtdTotal = appState.carrinho.reduce((acc, i) => acc + i.q, 0);
     appState.totalGeral = (appState.totalItens - appState.desconto) + appState.taxaEntrega;
     
+    // 2. Atualização do Rodapé da Página
     el('cesta-rodape').style.display = appState.carrinho.length ? 'block' : 'none';
     el('count-txt').innerText = `${qtdTotal} ${qtdTotal > 1 ? 'itens adicionados' : 'item adicionado'}`;
-    el('total-txt').innerText = fmtMoeda(appState.totalItens - appState.desconto);
+    el('total-txt').innerText = fmtMoeda(appState.totalGeral);
     
+    // 3. Renderização do Resumo no Modal
     if(el('revisao-total-txt')) {
-        let resumoHTML = "";
+        let htmlResumo = `
+            <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; font-size: 0.9rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span>Subtotal Produtos:</span> <span>${fmtMoeda(appState.totalItens)}</span>
+                </div>`;
+        
         if(appState.desconto > 0) {
-            resumoHTML += `<div style="color:red; font-size:0.85rem">Desconto (${appState.cupomAtivo.nome}): -${fmtMoeda(appState.desconto)}</div>`;
+            htmlResumo += `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px; color: #b22222; font-weight: bold;">
+                    <span>Desconto (${appState.cupomAtivo.nome}):</span> <span>- ${fmtMoeda(appState.desconto)}</span>
+                </div>`;
         }
-        resumoHTML += `TOTAL: ${fmtMoeda(appState.totalGeral)}`;
-        el('revisao-total-txt').innerHTML = resumoHTML;
+
+        if(appState.taxaEntrega > 0) {
+            htmlResumo += `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span>Taxa de Entrega:</span> <span>${fmtMoeda(appState.taxaEntrega)}</span>
+                </div>`;
+        }
+
+        htmlResumo += `</div>`; // Fecha div de resumo
+        
+        // Adiciona o Botão Retangular Vermelho Claro para o Total
+        htmlResumo += `
+            <div class="total-destaque-box">
+                TOTAL: ${fmtMoeda(appState.totalGeral)}
+            </div>`;
+            
+        el('revisao-total-txt').innerHTML = htmlResumo;
     }
+    
     if(el('pix-valor-txt')) el('pix-valor-txt').innerText = fmtMoeda(appState.totalGeral);
 }
 
@@ -570,13 +607,21 @@ function selEntrega(tipo, elem) {
     appState.taxaEntrega = (tipo === 'Entrega') ? 10 : 0; 
     appState.user.entrega = tipo; 
     
+    // Reset de estilos das opções
     document.querySelectorAll('.opcao-entrega').forEach(o => o.classList.remove('selecionada')); 
-    elem.classList.add('selecionada'); 
     document.querySelectorAll('.entrega-info-frame').forEach(f => f.style.display = 'none'); 
-    elem.querySelector('.entrega-info-frame').style.display = 'block'; 
     
-    el('endCliDados').style.display = (tipo === 'Entrega') ? 'block' : 'none'; 
-    abrirRevisao(); 
+    // Ativa a opção clicada
+    elem.classList.add('selecionada'); 
+    
+    // Mostra o aviso interno (o ícone do caminhão) se for Entrega
+    const frame = elem.querySelector('.entrega-info-frame');
+    if(frame) frame.style.display = 'block';
+
+    // Mostra/Esconde campo de endereço
+    if(el('endCliDados')) el('endCliDados').style.display = (tipo === 'Entrega') ? 'block' : 'none'; 
+    
+    atualizarTotais(); 
 }
 
 function abrirDados() { 
