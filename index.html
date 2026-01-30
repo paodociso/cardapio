@@ -2,734 +2,240 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pão do Ciso</title>
-    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png">
-    <meta property="og:title" content="Pão do Ciso - Cardápio Digital">
-    <meta property="og:description" content="Faça seu pedido de pães artesanais de forma rápida e fácil.">
-    <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png">
-    <meta property="og:type" content="website">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pão do Ciso - Cardápio</title>
     
-    <style>
-        /* ESTILOS MANTIDOS INTEGRALMENTE CONFORME SOLICITADO */
-        :root { --banner: #2e2610; --p-green: #2d3a27; --a-brown: #7d4f39; --bg: #fdf5e6; --nav: #dccbb0; --text: #3e2723; --w: #fff; --red: #b22222; --highlight: #f9f0e0; --grey: #e0e0e0; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { min-height: 100%; background: var(--bg); font-family: 'Calibri', sans-serif; color: var(--text); }
-        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
-        header { background: var(--banner); color: #fdf5e6; padding: 15px 20px; border-bottom: 4px solid var(--a-brown); display: flex; align-items: center; justify-content: center; gap: 15px; flex-shrink: 0; }
-        .logo-img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--a-brown); object-fit: cover; background: white; flex-shrink: 0; }
-        .header-info { display: flex; flex-direction: column; justify-content: center; }
-        .header-info h1 { font-size: 1.4rem; margin: 0; line-height: 1.2; color: #fdf5e6; }
-        .sub-link { color: #fdf5e6; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; margin-top: 3px; }
-        .banner-fornada { background: linear-gradient(135deg, var(--nav) 0%, #eaddca 100%); margin: 10px 15px 5px 15px; padding: 12px; border-radius: 12px; border-left: 5px solid var(--a-brown); border-right: 5px solid var(--a-brown); text-align: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .banner-fornada h2 { font-size: 0.95rem; text-transform: uppercase; margin: 0; letter-spacing: 0.5px; color: var(--text); font-weight: 900; }
-        .banner-fornada p { font-size: 0.85rem; color: var(--a-brown); margin-top: 2px; font-weight: bold; }
-        .main-scroll { padding: 10px; padding-bottom: 100px; } 
-        .container-grid { max-width: 1200px; margin: auto; }
-        .secao-titulo { font-weight: 900; font-size: 1.1rem; margin: 25px 5px 15px; color: var(--a-brown); border-bottom: 2px solid var(--nav); padding-bottom: 5px; text-transform: uppercase; }
-        .grid-produtos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        @media (min-width: 1024px) { .grid-produtos { grid-template-columns: repeat(5, 1fr); gap: 20px; } .container-grid { padding: 20px; } }
-        .card-quadrado { background: var(--w); border-radius: 12px; overflow: hidden; border: 1px solid #eaddca; display: flex; flex-direction: column; cursor: pointer; position: relative; }
-        .img-grid { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
-        .info-grid { padding: 10px; }
-        .nome-grid { font-size: 0.9rem; font-weight: 900; line-height: 1.1; height: 2.2em; overflow: hidden; }
-        .preco-grid { color: var(--p-green); font-weight: 900; margin-top: 5px; }
-        .badge-qty { position: absolute; top: 8px; right: 8px; background: var(--p-green); color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; border: 1px solid white; }
-        .modal-overlay { 
-            display: none; 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(0,0,0,0.85); 
-            z-index: 999; 
-            overflow-y: auto; /* Permite que você role o fundo se o modal for muito longo */
-        }
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-        /* 1. REGRA GERAL: Para os modais de Revisão, Dados e Sucesso (Sempre no centro da tela) */
-        /* 1A. REGRA GERAL: Ajustada para permitir rolagem em telas pequenas ou cestas grandes */
-        .modal-pedido { 
-            display: none; 
-            position: absolute; /* Mudado de fixed para absolute */
-            top: 20px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            background: var(--w); 
-            border-radius: 12px; 
-            width: 95%; 
-            max-width: 480px; 
-            z-index: 1000; 
-            padding: 20px; 
-            text-align: left; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-bottom: 50px;
-        }
+    <link rel="icon" type="image/png" href="img/logo-favicon.png">
 
-        .modal-pedido h3 { 
-            margin-bottom: 15px; 
-            border-bottom: 2px solid var(--nav); 
-            padding-bottom: 10px; 
-            font-weight: 900; 
-        }
-        .fechar-modal-x { position: absolute; top: 12px; right: 12px; font-size: 1.1rem; color: var(--text); background: #fff; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; z-index: 1020; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); border: 1px solid var(--grey); transition: 0.2s; }
-        .btn-prosseguir { background: var(--p-green); color: white; border: none; padding: 16px; border-radius: 50px; width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; letter-spacing: 1px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(45, 58, 39, 0.4); }
-        .btn-voltar { background: var(--grey); color: #333; border: none; padding: 16px; border-radius: 50px; width: 100%; font-weight: 900; text-transform: uppercase; cursor: pointer; display: block; letter-spacing: 1px; transition: transform 0.2s; margin-top: 10px; text-align: center; }
-        .btn-remover-vermelho { background: var(--red); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold; text-transform: uppercase; }
-        .cesta-item-linha { background: white; padding: 10px; border-radius: 6px; border: 1px solid #c4b49c; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-        .extra-item { padding-left: 10px; margin-top: 4px; font-size: 0.75rem; color: #666; border-left: 2px solid var(--nav); }
-        .opcao-entrega, .opcao-pagamento { border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; font-weight: bold; position: relative; background: white; transition: 0.2s; text-align: center; }
-        .opcao-entrega.selecionada, .opcao-pagamento.selecionada { border-color: var(--p-green); background: #f0f7f0; }
-        .entrega-info-frame, .pagamento-info-frame { display: none; margin-top: 10px; padding: 15px; background: #fff; border: 1px dashed var(--p-green); border-radius: 8px; text-align: center; }
-        .aviso-taxa-entrega, .aviso-comprovante { display: flex; gap: 10px; align-items: flex-start; background: #faf7f2; padding: 12px; border-radius: 4px 8px 8px 4px; border-left: 4px solid var(--a-brown); margin-top: 12px; text-align: left; }
-        .qr-container { width: 140px; height: 140px; margin: 10px auto; background: #fff; border: 1px solid #ddd; padding: 5px; }
-        .btn-copiar-pix { background: #f9f0e0; border: 1px solid var(--nav); padding: 10px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin: 10px 0; }
-        .selo-rec { position: absolute; top: -10px; right: 10px; background: var(--p-green); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; }
-        #cesta-rodape { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--a-brown); border-top: 2px solid #5d3a2a; display: none; padding: 12px 20px; z-index: 900; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); }
-        .rodape-content { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
-        .rodape-info { color: white; display: flex; flex-direction: column; }
-        .rodape-info .item-count { font-size: 0.8rem; font-weight: normal; opacity: 0.9; }
-        .rodape-info .item-total { font-size: 1.1rem; font-weight: 900; }
-        .btn-ver-cesta { background: var(--p-green); color: white; border: 2px solid white; padding: 8px 15px; border-radius: 30px; font-weight: 900; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; }
-        .linha-quantidade { display: flex; justify-content: space-between; align-items: center; padding: 10px; gap: 8px; flex-wrap: wrap; }
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nome da Sua Padaria | Fornadas Artesanais">
+    <meta property="og:description" content="Pães de fermentação natural, antepastos e produtos artesanais. Faça seu pedido para a próxima fornada!">
+    <meta property="og:image" content="https://seusite.com.br/img/logo-preview.jpg">
+    <meta property="og:url" content="https://seusite.com.br">
 
-        /* Nova regra para impedir que o contador do opcional pule de linha */
-        .linha-opcional-estilizada {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            gap: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .nome-opcional-container {
-            flex: 1; /* Ocupa todo o espaço da esquerda */
-            font-size: 0.85rem;
-            line-height: 1.2;
-            color: var(--text);
-        }
-
-        .qty-box-opcional {
-            display: flex;
-            align-items: center;
-            border: 1.5px solid var(--p-green);
-            border-radius: 6px;
-            height: 32px;
-            background: white;
-            width: 95px; 
-            flex-shrink: 0; /* Impede o contador de ser esmagado */
-        }
-
-        .qty-box { display: flex; align-items: center; border: 1.5px solid var(--p-green); border-radius: 6px; height: 32px; background: white; width: 95px; flex-shrink: 0; }
-        .btn-q { background: var(--p-green); border: none; width: 30px; height: 100%; color: white; font-weight: bold; cursor: pointer; }
-        .qty-val { flex: 1; border: none; text-align: center; font-weight: bold; font-size: 0.9rem; pointer-events: none; }
-        .menu-opcionais { border: 1px solid var(--nav); border-radius: 8px; margin: 5px 0 15px; background: #fffcf7; overflow: hidden; }
-        .titulo-opcionais { padding: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 0.85rem; color: var(--a-brown); text-transform: uppercase; background: #f9f0e0; }
-        .titulo-opcionais::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 0.7rem; transition: 0.3s; }
-        .menu-opcionais.aberto .titulo-opcionais::after { transform: rotate(180deg); }
-        .divisor-opcionais { height: 2px; background: var(--nav); margin: 0 10px; display: none; }
-        .menu-opcionais.aberto .divisor-opcionais { display: block; }
-        .lista-opcionais { padding: 10px; display: none; }
-        .menu-opcionais.aberto .lista-opcionais { display: block; }
-        #modalImg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; cursor: pointer; }
-        #modalImg img { width: 75vw; height: 75vw; max-width: 450px; max-height: 450px; object-fit: cover; border-radius: 12px; border: 5px solid var(--w); box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
-        .item-esgotado { pointer-events: auto !important; cursor: not-allowed; border: 1px solid #ddd; }
-        .total-destaque-box {
-            background-color: #ffcccb; /* Vermelho claro */
-            color: #b22222; /* Texto em tom de vermelho escuro para contraste */
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 900;
-            margin: 20px 0;
-            border: 1px solid #f5b7b1;
-        }
-
-    </style>
 </head>
-<body onload="render()">
+<body>
 
-    <header>
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png" class="logo-img" alt="Logo Pão do Ciso">
-        <div class="header-info">
-            <h1>Pão do Ciso</h1>
-            <a href="https://instagram.com/paodociso" target="_blank" class="sub-link"><i class="fab fa-instagram"></i> @paodociso</a>
-            <a href="https://wa.me/5511982391781" target="_blank" class="sub-link"><i class="fab fa-whatsapp"></i> (11) 98239-1781</a>
+    <!-- ===================== BLOCO 1: CABEÇALHO ===================== -->
+
+    <header class="main-header" style="background: var(--verde-militar); padding: 15px 20px; color: white;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 20px; max-width: 500px; margin: 0 auto;">
+            
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuJ4QfA-MRI3zoMZ369g2bR010Oo5zbObK9ESGcNWq2TMO197DYMjXXdICjeYi4l_8DwNCuPzpso6-M_6ED22uWkLtzU7sId9nj6KzfnvY2-oHXpKXypBYkCL4BU3P17UXbIvj_vDu1d57d5j82KSv7zv7mDdKJpncS18bn4KpKhcGjjwHEse2-CgWzQ/s320/logo2.png" 
+                 alt="Pão do Ciso" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); flex-shrink: 0;">
+            
+            <div style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
+                <h1 style="margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 900; line-height: 1.2;">Pão do Ciso</h1>
+                
+                <div style="display: flex; flex-direction: column; gap: 3px; margin-top: 5px;">
+                    <a href="https://instagram.com/paodociso" target="_blank" style="color: white; text-decoration: none; font-size: 1rem; opacity: 0.8; display: flex; align-items: center; gap: 6px;">
+                        <i class="fab fa-instagram"></i> @paodociso
+                    </a>
+                    <a href="https://wa.me/5511982391781" target="_blank" style="color: white; text-decoration: none; font-size: 1rem; opacity: 0.8; display: flex; align-items: center; gap: 6px;">
+                        <i class="fab fa-whatsapp"></i> (11) 98239-1781
+                    </a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="banner-fornada" onclick="abrirModalFornada()">
-        <h2 id="txt-data-fornada">PRÓXIMA FORNADA: --/--</h2>
-        <p id="txt-limite-pedido">Pedidos até --/--</p>
-    </div>
-
-    <div class="main-scroll">
-        <div class="container-grid" id="render-cli"></div>
-    </div>
-
-    <div id="modalFornada" class="modal-pedido" style="text-align: center;">
-        <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
-        <h3>Informações da Fornada</h3>
-        <div id="conteudoFornada" style="font-size: 0.95rem; line-height: 1.6; color: var(--text);"></div>
-        <div style="margin-top: 15px; padding: 10px; background: #faf7f2; border-radius: 8px; border: 1px solid var(--nav); font-size: 0.85rem; color: #666;">
-            <i class="fas fa-info-circle"></i> Produção artesanal e limitada. <i class="fas fa-info-circle"></i><br>Os pães são assados no dia da entrega para garantir o frescor.
+        <div class="container" style="margin-top: -10px; position: relative; z-index: 10;">
+            <div class="banner-fornada" onclick="abrirModal('modalFornada')" 
+                 style="background: #f4f4f4; color: #555; text-align: center; padding: 12px; cursor: pointer; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin: 0 15px;">
+                <h2 id="txt-data-fornada" style="margin: 0; font-size: 0.85rem; font-weight: 900; color: var(--marrom-cafe);">
+                    <i class="fas fa-calendar-alt"></i> PRÓXIMA FORNADA: 30/01
+                </h2>
+                <p id="txt-limite-pedido" style="margin: 2px 0 0 0; font-size: 0.75rem; opacity: 0.95;">Pedidos até 28/01 às 18h</p>
+            </div>
         </div>
-        <button class="btn-prosseguir" style="margin-top: 15px;" onclick="fecharModais()">PROSSEGUIR ></button>
-    </div>
 
-    <div id="modalProduto" class="modal-pedido modal-scroll">
-        <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
-        <div id="conteudo-produto-modal"></div>
-        <div style="margin-top: 20px;">
-            <button class="btn-prosseguir" style="background: var(--a-brown);" onclick="fecharModais()"> + ADICIONAR MAIS ITENS + </button>
-            <button id="btn-modal-prosseguir" onclick="abrirRevisao()" style="display: none; margin-top: 10px;" class="btn-prosseguir">PROSSEGUIR PARA A CESTA DE COMPRAS ></button>
+    <!-- ===================== BLOCO 2: ÁREA PRINCIPAL (PRODUTOS) ===================== -->
+    <main id="app-container" class="container">
+        <!-- Área onde os produtos do cardápio serão carregados dinamicamente -->
+    </main>
+
+    <!-- ===================== BLOCO 3: BARRA FIXA DO CARRINHO ===================== -->
+    <div id="barra-carrinho" onclick="abrirCarrinho()" style="display: none;">
+        <div class="carrinho-info-esquerda">
+            <span class="qtd-carrinho" id="resumo-qtd">0 itens</span>
+            <span class="valor-subtotal" id="resumo-total">R$ 0,00</span>
+        </div>
+        <div class="carrinho-botao-direita">
+            VER CESTA <i class="fas fa-shopping-basket"></i>
         </div>
     </div>
 
-    <div id="modalRevisao" class="modal-pedido">
-        <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
-        <h3>Minha Cesta</h3>
+    <!-- ===================== BLOCO 4: OVERLAY DOS MODAIS ===================== -->
+    
+    <div id="modal-overlay" onclick="fecharModalTudo()"></div>
+
+    <!-- ===================== BLOCO 5: CONJUNTO DE MODAIS ===================== -->
+    <!-- 
+        Este bloco contém todos os modais do sistema.
+        Cada modal representa uma etapa diferente do fluxo de pedido.
+    -->
+
+    <div id="modalFornada" class="modal">
+        <button class="btn-fechar" onclick="fecharModal('modalFornada')">&times;</button>
         
-        <div id="lista-revisao-completa"></div>
-
-        <div style="margin-top: 20px; padding: 12px; background: #f9f0e0; border-radius: 8px; border: 1px dashed var(--a-brown);">
-            <p style="font-weight: bold; font-size: 0.8rem; margin-bottom: 8px;">POSSUI UM CUPOM?</p>
-            <div style="display: flex; gap: 8px;">
-                <input type="text" id="inputCupom" placeholder="CÓDIGO" style="margin: 0; text-transform: uppercase; height: 38px;">
-                <button onclick="aplicarCupom()" style="background: var(--a-brown); color: white; border: none; padding: 0 15px; border-radius: 6px; font-weight: bold; cursor: pointer; height: 38px;">APLICAR</button>
-            </div>
-            <div id="msgCupom" style="font-size: 0.75rem; margin-top: 5px; font-weight: bold;"></div>
-        </div>
-
-        <div style="margin-top:20px;">
-            <p style="font-weight: bold; font-size: 0.85rem; margin-bottom: 5px;">COMO DESEJA RECEBER?</p>
-            <div class="opcao-entrega" onclick="selEntrega('Retirada', this)">
-                Vou retirar no local
-            </div>
-            <div class="opcao-entrega" onclick="selEntrega('Entrega', this)">
-                Entrega em domicílio
-                <div class="entrega-info-frame">
-                    <div class="aviso-taxa-entrega">
-                        <i class="fas fa-truck"></i>
-                        <div style="font-weight: normal;"><b>Taxa de entrega:</b><br>R$ 10,00 adicionados ao total.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="revisao-total-txt"></div>
-
-        <button class="btn-prosseguir" style="margin-top:20px; background: var(--a-brown);" onclick="fecharModais()">+ ADICIONAR MAIS ITENS +</button>
-        <button class="btn-prosseguir" style="margin-top:10px;" onclick="abrirDados()">PROSSEGUIR ></button>
-    </div>
-
-    <div id="modalDados" class="modal-pedido">
-        <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
-        <div id="etapa-dados">
-            <h3>Seus Dados</h3>
-            <input type="text" id="nomeCli" placeholder="Nome Completo *">
-            <input type="tel" id="telCli" placeholder="WhatsApp (DDD + Número) *" maxlength="11" oninput="validarApenasNumeros(this)">
-            <input type="text" id="endCliDados" placeholder="Informe seu endereço completo *" style="display:none;">
-            <button class="btn-prosseguir" style="margin-top:15px;" onclick="irParaPagamento()">PROSSEGUIR PARA PAGAMENTO ></button>
-            <button class="btn-voltar" onclick="voltarParaRevisao()">< VOLTAR PARA CESTA</button>
-        </div>
-        <div id="etapa-pagamento" style="display:none">
-            <h3>Forma de Pagamento</h3>
-            <div class="opcao-pagamento" onclick="selPgto('Pix', this)">
-                <span class="selo-rec">RECOMENDADO</span>PIX
-                <div class="pagamento-info-frame">
-                    <div style="background:var(--highlight); padding:8px; border-radius:4px; font-weight:900; color:var(--p-green); margin-bottom:10px;">VALOR: <span id="pix-valor-txt"></span></div>
-                    <div class="qr-container"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdMMy5OknVHvs1RNFM3tik8FXT0lwM1JmYjJmtnZJrFb46pcwkOdTMCsRA5wx3whHPeXFm_8Ql6iZCFGmoKLrQiM0lCuVDc5YFLGEwhNplENrWlYhKFGG1ONARuy8VgZR0ROpGK9MT123ng1aL69gz-rmRXGejVZqeUqDwKf81nmxOZ5RqTqJV_Lqw3g/s1000/qrcode-paodociso.png" style="width:100%"></div>
-                    <div style="font-weight: normal; margin-top: 10px; font-size: 0.9rem;">Chave PIX:</div>
-                    <div class="btn-copiar-pix" onclick="copiarChave()"><b>paodociso@gmail.com</b> <i class="far fa-copy"></i></div>
-                    <div class="aviso-comprovante"><i class="fas fa-info-circle"></i><div style="font-size:0.82rem; font-weight: normal;"><b>Importante:</b><br>Seu pedido será enviado por Whatsapp. Após enviá-lo, por favor, faça o pagamento e envie o comprovante.</div></div>
-                </div>
-            </div>
-            <div class="opcao-pagamento" onclick="selPgto('Cartão', this)">Cartão (Crédito/ Débito)
-                <div class="pagamento-info-frame">
-                    <div class="aviso-comprovante"><i class="fas fa-info-circle"></i><div style="font-size:0.82rem; font-weight: normal;">Você poderá receber por WhatsApp um link para pagamento ou pagar por aproximação no ato da entrega.</div></div>
-                </div>
-            </div>
-            <div class="opcao-pagamento" onclick="selPgto('Dinheiro', this)">Dinheiro
-                <div class="pagamento-info-frame">
-                    <div class="aviso-comprovante"><i class="fas fa-info-circle"></i><div style="font-size:0.82rem; font-weight: normal;">Pagamento em espécie no ato da entrega.</div></div>
-                </div>
-            </div>
-            <button class="btn-prosseguir" style="margin-top:20px;" onclick="finalizar()">FINALIZAR PEDIDO ></button>
-            <button class="btn-voltar" onclick="voltarParaDados()">< VOLTAR PARA DADOS</button>
-        </div>
-    </div>
-
-    <div id="modalSucesso" class="modal-pedido" style="text-align:center; z-index:1001;">
-        <div style="color: var(--p-green); font-size: 3rem; margin-bottom: 15px;"><i class="fas fa-spinner fa-spin"></i></div>
-        <h3>Pedido Registrado!</h3>
-        <p>Você será automaticamente direcionado para o envio do pedido pelo whatsapp, aguarde...</p>
-    </div>
-
-    <div id="modalPosEnvio" class="modal-pedido" style="text-align:center;">
-        <div class="fechar-modal-x" onclick="fecharModais()"><i class="fas fa-times"></i></div>
-        <h3>O que deseja fazer agora?</h3>
-        <button class="btn-prosseguir" onclick="reenviarWhats()" style="background: var(--p-green); margin-bottom: 10px;"><i class="fab fa-whatsapp"></i> REENVIAR PARA WHATSAPP ></button>
-        <button class="btn-prosseguir" onclick="novoPedido()">FAZER NOVO PEDIDO ></button>
-        <button class="btn-voltar" onclick="encerrarSistema()">ENCERRAR</button>
-    </div>
-
-    <div id="modalImg" onclick="fecharModais()"><img id="imgExpandida" src=""></div>
-    <div id="modalOverlay" class="modal-overlay" onclick="fecharModais()"></div>
-
-    <div id="cesta-rodape">
-        <div class="rodape-content">
-            <div class="rodape-info">
-                <span class="item-count" id="count-txt">0 itens adicionados</span>
-                <span class="item-total" id="total-txt">R$ 0,00</span>
-            </div>
-            <button class="btn-ver-cesta" onclick="abrirRevisao()">Ver Cesta</button>
-        </div>
-    </div>
-
-<script src="cardapio.js"></script>
-<script>
-/** * VERSÃO 21 - LOGICA REESTRUTURADA
- * Pão do Ciso - Cardápio Digital
- */
-
-// --- ESTADO GLOBAL DA APLICAÇÃO ---
-let appState = {
-    carrinho: [],
-    totalItens: 0,
-    totalGeral: 0,
-    taxaEntrega: 0,
-    desconto: 0, // Nova propriedade
-    cupomAtivo: null, // Nova propriedade
-    pagamentoSel: "",
-    user: { nome: "", tel: "", entrega: "", endereco: "" },
-    ultimaMsg: ""
-};
-
-// -- AJUSTE CONFIGURAÇÃO DATA DA PRÓXIMA FORNADA
-const DATA_PROXIMA_FORNADA = "2025-02-19";
-
-// --- UTILITÁRIOS ---
-const el = id => document.getElementById(id);
-const fmtMoeda = val => `R$ ${parseFloat(val || 0).toFixed(2)}`;
-const fecharModais = () => {
-    document.querySelectorAll('.modal-pedido, .modal-overlay, #modalImg').forEach(m => m.style.display = 'none');
-};
-
-/**
- * RENDERIZAÇÃO INICIAL
- * Carrega produtos e configura datas da fornada
- */
-function render() {
-    // Recupera dados salvos localmente
-    const saved = localStorage.getItem('paodociso_dados');
-    if(saved) {
-        const d = JSON.parse(saved);
-        el('nomeCli').value = d.nome || "";
-        el('telCli').value = d.tel || "";
-    }
-    
-    // Renderiza Grade de Produtos
-    const { secoes } = dadosIniciais;
-    el('render-cli').innerHTML = secoes.map((s, si) => {
-        const itensVisiveis = s.itens.filter(i => i[6] !== true);
-        if (itensVisiveis.length === 0) return '';
-
-        return `
-            <div class="secao-titulo">${s.nome}</div>
-            <div class="grid-produtos">
-                ${itensVisiveis.map((i) => {
-                    const originalIndex = s.itens.indexOf(i);
-                    const isEsgotado = i[5] === true;
-                    const clickAction = isEsgotado ? "alert('Este item está esgotado!')" : `abrirDetalhes(${si}, ${originalIndex})`;
-
-                    return `
-                    <div class="card-quadrado" style="${isEsgotado ? 'opacity: 0.6; cursor: not-allowed;' : ''}" onclick="${clickAction}">
-                        <div id="badge-it-${si}-${originalIndex}" class="badge-qty" style="display:none">0</div>
-                        <img src="${i[3]}" class="img-grid" onerror="this.src='https://via.placeholder.com/200'" style="${isEsgotado ? 'filter: grayscale(1);' : ''}">
-                        <div class="info-grid">
-                            <div class="nome-grid">${i[0]} ${isEsgotado ? '<br><span style="color:red; font-size:0.7rem;">(ESGOTADO)</span>' : ''}</div>
-                            <div class="preco-grid">${isEsgotado ? '---' : fmtMoeda(i[2])}</div>
-                        </div>
-                    </div>`;
-                }).join('')}
-            </div>`;
-    }).join('');
-    
-    // Configura Banner de Datas
-    const dF = new Date(DATA_PROXIMA_FORNADA + "T12:00:00");
-    const dP = new Date(dF); dP.setDate(dP.getDate() - 2); 
-    const fmtCurto = d => d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'});
-    
-    el('txt-data-fornada').innerText = `PRÓXIMA FORNADA: ${fmtCurto(dF)}`;
-    el('txt-limite-pedido').innerText = `Pedidos até ${fmtCurto(dP)}`;
-
-    abrirModalFornada();
-}
-
-/**
- * LOGICA DE PRODUTOS E OPCIONAIS
- */
-function encontrarOpcionais(nomes, banco) {
-    if (!nomes || !banco) return [];
-    const limpar = s => s.trim().toLowerCase().replace(/\s*\([^)]*\)/g, '');
-    return nomes.map(n => banco.find(o => limpar(o[0]) === limpar(n))).filter(Boolean);
-}
-
-function abrirDetalhes(si, ii) {
-    const item = dadosIniciais.secoes[si].itens[ii];
-    const idRef = `it-${si}-${ii}`;
-    const opcionaisDisp = encontrarOpcionais(item[4], dadosIniciais["opcionais" + dadosIniciais.secoes[si].nome]);
-    const noCesto = appState.carrinho.find(c => c.idRef === idRef);
-
-    // Sanitização de nome para evitar quebra de string no onclick
-    const nomeSeguro = item[0].replace(/'/g, "\\'");
-
-    el('conteudo-produto-modal').innerHTML = `
-        <img src="${item[3]}" style="width:100%; border-radius:10px; margin-bottom:15px; aspect-ratio:1/1; object-fit:cover;" onclick="ampliarImg('${item[3]}')">
-        <h2 style="font-size:1.2rem">${item[0]}</h2>
-        <div style="color:var(--p-green); font-weight:900; font-size:1.2rem; margin-bottom:10px">${fmtMoeda(item[2])}</div>
-        <p style="font-size:0.85rem; color:#666; margin-bottom:15px">${item[1]}</p>
-        <div style="border-top:1px solid #eee; margin-top:15px">
-            <div class="linha-quantidade">
-                <b style="font-size:0.85rem">QUANTIDADE:</b>
-                <div class="qty-box">
-                    <button class="btn-q" onclick="mudarQuantidade(-1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii})">-</button>
-                    <input type="text" value="${noCesto ? noCesto.q : 0}" class="qty-val" id="modal-qty-${idRef}">
-                    <button class="btn-q" onclick="mudarQuantidade(1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii})">+</button>
-                </div>
-            </div>
-        </div>
-        
-        ${opcionaisDisp.length ? `
-    <div class="menu-opcionais ${noCesto ? 'aberto' : ''}" id="menu-opc-${idRef}">
-        <div class="titulo-opcionais" onclick="this.parentElement.classList.toggle('aberto')">OPCIONAIS</div>
-        <div class="divisor-opcionais"></div>
-        <div class="lista-opcionais">
-            ${opcionaisDisp.map(o => {
-                const qOp = noCesto ? (noCesto.ex.find(e => e.n === o[0])?.q || 0) : 0;
-                const nomeOpcSeguro = o[0].replace(/'/g, "\\'"); 
-                
-                return `
-                <div class="linha-opcional-estilizada">
-                    <div class="nome-opcional-container">
-                        <strong>${o[0]}</strong><br>
-                        <span style="color:var(--p-green); font-size:0.8rem;">+ ${fmtMoeda(o[1])}</span>
-                    </div>
-                    <div class="qty-box-opcional">
-                        <button class="btn-q" onclick="mudarQuantidade(-1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii},'${nomeOpcSeguro}',${o[1]})">-</button>
-                        <input type="text" value="${qOp}" class="qty-val op-modal-qty" data-n="${o[0]}" data-p="${o[1]}">
-                        <button class="btn-q" onclick="mudarQuantidade(1,'${idRef}',${item[2]},'${nomeSeguro}',${si},${ii},'${nomeOpcSeguro}',${o[1]})">+</button>
-                    </div>
-                </div>`;
-            }).join('')}
-        </div>
-    </div>` : ''}
-
-        <div id="sub-modal-${idRef}" style="text-align:right; font-weight:900; color:var(--p-green); font-size:1.1rem; margin-top:10px">
-            Subtotal: ${fmtMoeda(noCesto ? noCesto.sub : 0)}
-        </div>`;
-    
-    el('btn-modal-prosseguir').style.display = appState.carrinho.length > 0 ? "flex" : "none";
-    el('modalOverlay').style.display = 'block';
-    el('modalProduto').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-/**
- * GESTÃO DO CARRINHO
- */
-function mudarQuantidade(delta, idRef, precoBase, nome, si, ii, opNome = null, opPreco = 0) {
-    const qInput = el(`modal-qty-${idRef}`);
-    const menuOpc = el(`menu-opc-${idRef}`);
-    
-    // Se for alteração de opcional, valida se item principal existe
-    if (opNome) {
-        if (+qInput.value <= 0 && delta > 0) return;
-        document.querySelectorAll('.op-modal-qty').forEach(inp => { 
-            if(inp.dataset.n === opNome) inp.value = Math.max(0, +inp.value + delta); 
-        });
-    } else {
-        const valAnterior = +qInput.value;
-        qInput.value = Math.max(0, valAnterior + delta);
-        if (valAnterior === 0 && +qInput.value === 1 && menuOpc) menuOpc.classList.add('aberto');
-        if (+qInput.value === 0) {
-            document.querySelectorAll('.op-modal-qty').forEach(o => o.value = 0);
-            if(menuOpc) menuOpc.classList.remove('aberto');
-        }
-    }
-
-    const qFinal = +qInput.value;
-    let extras = [], pExtras = 0;
-    
-    // Coleta opcionais ativos
-    document.querySelectorAll('.op-modal-qty').forEach(o => { 
-        if(+o.value > 0) { 
-            extras.push({n: o.dataset.n, q: +o.value}); 
-            pExtras += (+o.value * +o.dataset.p); 
-        }
-    });
-
-    const subtotal = qFinal > 0 ? (qFinal * precoBase) + pExtras : 0;
-    
-    // Atualiza Carrinho
-    appState.carrinho = appState.carrinho.filter(c => c.idRef !== idRef);
-    if (qFinal > 0) appState.carrinho.push({ nome, q: qFinal, sub: subtotal, ex: extras, idRef });
-    
-    // Update Visual UI
-    if(el(`sub-modal-${idRef}`)) el(`sub-modal-${idRef}`).innerText = `Subtotal: ${fmtMoeda(subtotal)}`;
-    const badge = el(`badge-${idRef}`); 
-    if(badge) { 
-        badge.innerText = qFinal; 
-        badge.style.display = qFinal > 0 ? 'block' : 'none'; 
-    }
-    
-    el('btn-modal-prosseguir').style.display = appState.carrinho.length > 0 ? "flex" : "none";
-    atualizarTotais();
-}
-
-function atualizarTotais() {
-    // 1. Cálculos Base
-    appState.totalItens = appState.carrinho.reduce((acc, i) => acc + i.sub, 0);
-    
-    let valorDesconto = 0;
-    if(appState.cupomAtivo) {
-        valorDesconto = appState.totalItens * (appState.cupomAtivo.porcentagem / 100);
-    }
-    appState.desconto = valorDesconto;
-    
-    const qtdTotal = appState.carrinho.reduce((acc, i) => acc + i.q, 0);
-    appState.totalGeral = (appState.totalItens - appState.desconto) + appState.taxaEntrega;
-    
-    // 2. Atualização do Rodapé da Página
-    el('cesta-rodape').style.display = appState.carrinho.length ? 'block' : 'none';
-    el('count-txt').innerText = `${qtdTotal} ${qtdTotal > 1 ? 'itens adicionados' : 'item adicionado'}`;
-    el('total-txt').innerText = fmtMoeda(appState.totalGeral);
-    
-    // 3. Renderização do Resumo no Modal
-    if(el('revisao-total-txt')) {
-        let htmlResumo = `
-            <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; font-size: 0.9rem;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span>Subtotal Produtos:</span> <span>${fmtMoeda(appState.totalItens)}</span>
-                </div>`;
-        
-        if(appState.desconto > 0) {
-            htmlResumo += `
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px; color: #b22222; font-weight: bold;">
-                    <span>Desconto (${appState.cupomAtivo.nome}):</span> <span>- ${fmtMoeda(appState.desconto)}</span>
-                </div>`;
-        }
-
-        if(appState.taxaEntrega > 0) {
-            htmlResumo += `
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span>Taxa de Entrega:</span> <span>${fmtMoeda(appState.taxaEntrega)}</span>
-                </div>`;
-        }
-
-        htmlResumo += `</div>`; // Fecha div de resumo
-        
-        // Adiciona o Botão Retangular Vermelho Claro para o Total
-        htmlResumo += `
-            <div class="total-destaque-box">
-                TOTAL: ${fmtMoeda(appState.totalGeral)}
-            </div>`;
+        <div style="padding: 20px; text-align: center;">
+            <i class="fas fa-bread-slice" style="font-size: 2.5rem; color: var(--marrom-cafe); margin-bottom: 15px;"></i>
             
-        el('revisao-total-txt').innerHTML = htmlResumo;
-    }
-    
-    if(el('pix-valor-txt')) el('pix-valor-txt').innerText = fmtMoeda(appState.totalGeral);
-}
-
-function aplicarCupom() {
-    const cod = el('inputCupom').value.trim().toLowerCase();
-    const msg = el('msgCupom');
-    
-    const cuponsValidos = {
-        'mathilde10': 10,
-        'mathilde15': 15,
-        'mathilde20': 20
-    };
-
-    if (cuponsValidos[cod]) {
-        appState.cupomAtivo = { nome: cod.toUpperCase(), porcentagem: cuponsValidos[cod] };
-        msg.style.color = "green";
-        msg.innerText = `Cupom ${cod.toUpperCase()} aplicado!`;
-        atualizarTotais();
-    } else {
-        appState.cupomAtivo = null;
-        msg.style.color = "red";
-        msg.innerText = "Cupom inválido ou expirado.";
-        atualizarTotais();
-    }
-}
-
-/**
- * FLUXO DE CHECKOUT
- */
-function abrirRevisao() { 
-    fecharModais(); 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    el('modalOverlay').style.display = 'block'; 
-    el('modalRevisao').style.display = 'block'; 
-    
-    let html = appState.carrinho.map((i, idx) => `
-        <div class="cesta-item-linha">
-            <div style="flex:1">
-                <div style="font-size:0.9rem"><b>${i.q}x ${i.nome}</b> - ${fmtMoeda(i.sub)}</div>
-                ${i.ex.map(o => `<div class="extra-item">${o.q}x ${o.n}</div>`).join('')}
+            <h3 style="color: var(--marrom-cafe); font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Informações da Fornada</h3>
+            
+            <div id="conteudoFornada" style="font-size: 1rem; line-height: 1.6; color: #444; margin: 20px 0; text-align: left; background: #fdfdfd; padding: 15px; border-radius: 10px; border: 1px solid #eee;">
+                🥖 <b>Produção Artesanal</b> Os pães são feitos com fermentação natural (Levain).<br><br>
+                ⏰ <b>Frescor:</b> Seu pão será assado no dia da entrega.<br><br>
+                📦 <b>Pedidos:</b> Como minha capacidade de produção é limitada, trabalho sob demanda.
             </div>
-            <button class="btn-remover-vermelho" onclick="removerCarrinho(${idx}, '${i.idRef}')">Remover</button>
-        </div>`).join(''); 
 
-    if (appState.user.entrega === 'Entrega') {
-        html += `<div class="cesta-item-linha" style="background:#faf7f2; border:1px dashed var(--a-brown); margin-top:10px;">
-                <div style="flex:1"><div style="font-size:0.9rem; color:var(--a-brown);">Taxa de Entrega - R$ 10,00</div></div></div>`;
-    }
-    el('lista-revisao-completa').innerHTML = html || "<p style='text-align:center'>Cesta vazia</p>"; 
-    atualizarTotais(); 
-}
+            <div style="background: #fff4e5; padding: 12px; border-radius: 8px; font-size: 0.85rem; color: #a35200; border: 1px solid #ffe3bc; margin-bottom: 20px;">
+                <i class="fas fa-clock"></i> <b>Dica:<BR></b> Garanta o seu quanto antes!
+            </div>
+            <button class="btn-acao-carrinho btn-verde-personalizado" onclick="fecharModal('modalFornada')">
+                ENTENDI,<BR> VAMOS ÀS COMPRAS! >
+            </button>
+        </div>
+    </div>
 
-function removerCarrinho(idx, idRef) { 
-    appState.carrinho.splice(idx, 1); 
-    const badge = el(`badge-${idRef}`); 
-    if(badge) { badge.innerText = 0; badge.style.display = 'none'; } 
-    if(appState.carrinho.length === 0) { 
-        fecharModais(); 
-        el('cesta-rodape').style.display = 'none'; 
-    } else {
-        abrirRevisao(); 
-    }
-}
+    <!-- Modal 5.1: Detalhes do Produto -->
 
-function selEntrega(tipo, elem) { 
-    appState.taxaEntrega = (tipo === 'Entrega') ? 10 : 0; 
-    appState.user.entrega = tipo; 
+        <div id="modalProduto" class="modal">
+                <button class="btn-fechar" onclick="fecharModal('modalProduto')">&times;</button>
+                <div id="corpoModalProduto"></div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn-acao-carrinho btn-bege-personalizado" onclick="adicionarMais()">
+                        + ADICIONAR MAIS ITENS +
+                    </button>
+
+                    <button id="btn-ir-cesta" class="btn-acao-carrinho btn-verde-personalizado" onclick="irParaCesta()" style="display: none;">
+                        IR PARA A CESTA DE COMPRAS
+                    </button>
+                </div>
+            </div>
+
+    <!-- Modal 5.2: Carrinho de Compras -->
+    <div id="modalCarrinho" class="modal">
+        <button class="btn-fechar" onclick="fecharModal('modalCarrinho')">&times;</button>
+        <div id="itensCarrinho"></div>
+    </div>
+
+    <div id="modalDadosDoCliente" class="modal">
+        <button class="btn-fechar" onclick="fecharModal('modalDadosDoCliente')">&times;</button>
+        
+        <div id="corpoDadosCliente" style="padding: 15px;">
+            <h3 style="text-align:center; font-weight:900; text-transform:uppercase; color:var(--marrom-cafe); margin-bottom:20px; letter-spacing:1px;">Seus Dados</h3>
+            
+            <div style="display:flex; flex-direction:column; gap:15px;">
+                <div class="campo-grupo">
+                    <label style="font-size:0.75rem; font-weight:900; color:#cc0000; display:block; margin-bottom:5px;">NOME COMPLETO *</label>
+                    <input type="text" id="nomeCliente" placeholder="Como te chamamos?" 
+                        style="width:100%; padding:14px; border-radius:10px; border:1px solid #ddd; font-size:1rem; outline:none; background:#fdfdfd; box-sizing: border-box;">
+                </div>
+
+                <div class="campo-grupo">
+                    <label style="font-size:0.75rem; font-weight:900; color:#cc0000; display:block; margin-bottom:5px;">WHATSAPP *</label>
+                    <input type="tel" id="telefoneCliente" placeholder="(00) 00000-0000" 
+                        style="width:100%; padding:14px; border-radius:10px; border:1px solid #ddd; font-size:1rem; outline:none; background:#fdfdfd; box-sizing: border-box;">
+                </div>
+
+                <div id="wrapper-endereco" style="display:none; border-top: 1px dashed #ddd; padding-top:15px; margin-top:5px;">
+                    <label style="font-size:0.75rem; font-weight:900; color:#cc0000; display:block; margin-bottom:5px;">ENDEREÇO DE ENTREGA *</label>
+                    
+                    <input type="text" id="cepCliente" placeholder="CEP (00000000)" maxlength="8" onblur="buscarCEP(this.value)" style="width:100%; padding:12px; margin-bottom:8px; border-radius:8px; border:1px solid #ddd; box-sizing: border-box;">
+                    
+                    <input type="text" id="ruaCliente" placeholder="Rua e Bairro" style="width:100%; padding:12px; margin-bottom:8px; border-radius:8px; border:1px solid #ddd; box-sizing: border-box;">
+                    
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="numCliente" placeholder="Nº" style="width:30%; padding:12px; border-radius:8px; border:1px solid #ddd; box-sizing: border-box;">
+                        <input type="text" id="compCliente" placeholder="Apto/Bloco" style="width:70%; padding:12px; border-radius:8px; border:1px solid #ddd; box-sizing: border-box;">
+                    </div>
+                    
+                    <input type="text" id="refCliente" placeholder="Ponto de referência" style="width:100%; padding:12px; margin-top:8px; border-radius:8px; border:1px solid #ddd; box-sizing: border-box;">
+                    
+                    <input type="hidden" id="enderecoCliente">
+                </div>
+
+            </div>
+
+            <div style="margin-top:25px;">
+                <button class="btn-acao-carrinho btn-verde-personalizado" onclick="validarDadosCliente()">
+                    ESCOLHER PAGAMENTO >
+                </button>
+                
+                <button class="btn-acao-carrinho btn-bege-personalizado" style="margin-top:10px;" onclick="fecharModal('modalDadosDoCliente'); abrirModal('modalCarrinho');">
+                    < VOLTAR À CESTA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalFormaDePagamento" class="modal">
+        <button class="btn-fechar" onclick="fecharModalTudo()">&times;</button>
+
+        <div class="modal-body" style="padding: 20px;">
+            <h3 style="margin-bottom: 25px; color: var(--marrom-cafe); text-align: center; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Forma de Pagamento</h3>
+
+            <div class="opcao-pagamento" onclick="selPgto('Pix', this)" style="position: relative; border-radius: 12px; border: 2px solid #eee; background: #fff; padding: 15px; cursor: pointer; margin-bottom: 12px; transition: 0.3s; text-align: center;">
+                <span style="position: absolute; top: -10px; left: 80%; transform: translateX(-50%); background: var(--verde-militar); color: white; font-size: 0.6rem; padding: 3px 10px; border-radius: 4px; font-weight: bold;">RECOMENDADO</span>
+                
+<div style="font-weight: 900; color: #333; font-size: 1rem; display: flex; align-items: center; justify-content: center;">
+    <i class="fa-brands fa-pix" style="color: #555; margin-right: 8px;"></i> PIX
+</div>            
+                
+                <div class="pagamento-info-frame" style="display:none; margin-top: 15px;">
+                    <div style="background: #fdf8f3; border: 1px solid var(--verde-militar); padding: 10px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; color: var(--verde-militar);">
+                        TOTAL: <span id="pix-valor-txt"></span>
+                    </div>
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdMMy5OknVHvs1RNFM3tik8FXT0lwM1JmYjJmtnZJrFb46pcwkOdTMCsRA5wx3whHPeXFm_8Ql6iZCFGmoKLrQiM0lCuVDc5YFLGEwhNplENrWlYhKFGG1ONARuy8VgZR0ROpGK9MT123ng1aL69gz-rmRXGejVZqeUqDwKf81nmxOZ5RqTqJV_Lqw3g/s1000/qrcode-paodociso.png" style="width:160px; margin-bottom: 10px; border: 1px solid #eee; padding: 5px; border-radius: 10px;">
+                    <p style="font-weight: bold; font-size: 0.75rem; color: #666;">CLIQUE PARA COPIAR A CHAVE:</p>
+                    <div onclick="copiarPix()" style="border: 2px dashed var(--verde-militar); background: #f9fdfa; padding: 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 5px;">
+                        <span id="chave-pix-texto" style="font-family: monospace; font-size: 0.85rem; color: var(--verde-militar); font-weight: bold;">paodociso@gmail.com</span>
+                        <i class="far fa-copy" style="color: var(--verde-militar);"></i>
+                    </div>
+                    <div id="aviso-copiado" style="display:none; color: #28a745; font-size: 0.75rem; font-weight: bold; margin-top: 5px;">✅ Chave copiada!</div>
+                </div>
+            </div>
+
+            <div class="opcao-pagamento" onclick="selPgto('Cartão', this)" style="border-radius: 12px; border: 2px solid #eee; background: #fff; padding: 15px; cursor: pointer; margin-bottom: 12px; text-align: center;">
+                <div style="font-weight: 900; color: #333;"><i class="fas fa-credit-card" style="margin-right: 8px; color: #555;"></i> CARTÃO (CRÉDITO/DÉBITO)</div>
+                <div class="pagamento-info-frame" style="display:none; font-size: 0.8rem; margin-top: 10px; color: #666; border-top: 1px solid #eee; pt: 10px;">
+                    Pague por aproximação na entrega ou peça o link via WhatsApp.
+                </div>
+            </div>
+
+            <div class="opcao-pagamento" onclick="selPgto('Dinheiro', this)" style="border-radius: 12px; border: 2px solid #eee; background: #fff; padding: 15px; cursor: pointer; margin-bottom: 25px; text-align: center;">
+                <div style="font-weight: 900; color: #333;"><i class="fas fa-money-bill-wave" style="margin-right: 8px; color: #555;"></i> DINHEIRO</div>
+                <div class="pagamento-info-frame" style="display:none; font-size: 0.8rem; margin-top: 10px; color: #666; border-top: 1px solid #eee; pt: 10px;">
+                    Pagamento em espécie no ato da entrega.
+                </div>
+            </div>
+
+            <button class="btn-acao-carrinho btn-verde-personalizado" onclick="finalizarPedido()">
+                FINALIZAR PEDIDO <i class="fab fa-whatsapp" style="margin-left: 8px;"></i>
+            </button>
+
+            <button class="btn-acao-carrinho btn-bege-personalizado" style="margin-top:10px;" onclick="fecharModal('modalFormaDePagamento'); abrirModal('modalDadosDoCliente')">
+                <i class="fas fa-arrow-left"></i> VOLTAR PARA MEUS DADOS
+            </button>
+
+        </div>
+    </div>
+
+    <!-- ===================== FIM DO BLOCO DE MODAIS ===================== -->
+
+    <!-- ===================== BLOCO 6: SCRIPTS JAVASCRIPT ===================== -->
+    <script src="dados.js"></script>
+    <!-- Provavelmente contém: dados dos produtos, categorias, preços, etc. -->
     
-    // Reset de estilos das opções
-    document.querySelectorAll('.opcao-entrega').forEach(o => o.classList.remove('selecionada')); 
-    document.querySelectorAll('.entrega-info-frame').forEach(f => f.style.display = 'none'); 
-    
-    // Ativa a opção clicada
-    elem.classList.add('selecionada'); 
-    
-    // Mostra o aviso interno (o ícone do caminhão) se for Entrega
-    const frame = elem.querySelector('.entrega-info-frame');
-    if(frame) frame.style.display = 'block';
+    <script src="script.js"></script>
+    <!-- Provavelmente contém: lógica do carrinho, manipulação dos modais, 
+         funções de pedido, interações com usuário, etc. -->
+    <!-- ===================== FIM DO BLOCO DE SCRIPTS ===================== -->
 
-    // Mostra/Esconde campo de endereço
-    if(el('endCliDados')) el('endCliDados').style.display = (tipo === 'Entrega') ? 'block' : 'none'; 
-    
-    atualizarTotais(); 
-}
-
-function abrirDados() { 
-    if(!appState.user.entrega) return alert("Selecione como deseja receber!"); 
-    el('modalRevisao').style.display = 'none'; 
-    el('modalDados').style.display = 'block'; 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function irParaPagamento() { 
-    const n = el('nomeCli').value.trim();
-    const t = el('telCli').value.trim();
-    const e = el('endCliDados').value.trim();
-    
-    if(!n || !t) return alert("Preencha os campos obrigatórios!");
-    if(appState.user.entrega === 'Entrega' && !e) return alert("Endereço obrigatório!");
-    
-    appState.user.nome = n; 
-    appState.user.tel = t; 
-    appState.user.endereco = (appState.user.entrega === 'Entrega') ? e : "N/A";
-    
-    localStorage.setItem('paodociso_dados', JSON.stringify({nome: n, tel: t})); 
-    el('etapa-dados').style.display = 'none'; 
-    el('etapa-pagamento').style.display = 'block'; 
-}
-
-function selPgto(tipo, elem) { 
-    appState.pagamentoSel = tipo; 
-    document.querySelectorAll('.opcao-pagamento').forEach(o => o.classList.remove('selecionada')); 
-    elem.classList.add('selecionada'); 
-    document.querySelectorAll('.pagamento-info-frame').forEach(f => f.style.display = 'none'); 
-    const frame = elem.querySelector('.pagamento-info-frame'); 
-    if(frame) frame.style.display = 'block'; 
-}
-
-/**
- * FINALIZAÇÃO E ENVIO
- */
-function finalizar() { 
-    if(!appState.pagamentoSel) return alert("Selecione o pagamento!");
-    
-    el('modalDados').style.display = 'none';
-    el('modalSucesso').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    // 1. FORMATAÇÃO PARA A PLANILHA
-    // Cada item (com seus opcionais) vira uma linha única.
-    // O Google Script usará o "\n" para quebrar esses itens em linhas diferentes na aba 'pedidosAbertos'.
-    const itensParaPlanilha = appState.carrinho.map(i => {
-        let textoItem = `${i.q}x ${i.nome}`;
-        if (i.ex && i.ex.length > 0) {
-            textoItem += ` [${i.ex.map(o => `${o.q}x ${o.n}`).join(', ')}]`;
-        }
-        return textoItem;
-    }).join("\n");
-
-    // 2. LINK WHATSAPP PARA A PLANILHA
-    const linkZapPlanilha = `https://wa.me/55${appState.user.tel}`;
-
-    // 3. ENVIO DOS DADOS PARA O GOOGLE SCRIPT
-    // Certifique-se de que a URL abaixo é a da sua última implantação (Deploy)
-    const urlScript = "https://script.google.com/macros/s/AKfycbwfhM8c2EQUhevSbDJwLYrfGl2FsCOZ65bc-WMsobQeGPGolXyAfwyYkJok31e2JOWoHQ/exec";
-
-    fetch(urlScript, { 
-        method: 'POST', 
-        mode: 'no-cors', 
-        body: JSON.stringify({ 
-            nome: appState.user.nome, 
-            telefone: appState.user.tel, 
-            whatsapp_link: linkZapPlanilha,
-            tipoEntrega: appState.user.entrega, 
-            endereco: appState.user.endereco, 
-            itens: itensParaPlanilha, 
-            pagamento: appState.pagamentoSel,
-            total: appState.totalGeral.toFixed(2)
-        }) 
-    });
-
-    // 4. MONTAGEM DA MENSAGEM PARA WHATSAPP (Visual do Cliente)
-    const itensMsg = appState.carrinho.map(i => 
-        `*${i.q}x ${i.nome}*${i.ex.length ? i.ex.map(o => `\n   └ ${o.q}x ${o.n}`).join('') : ''}`
-    ).join('\n\n');
-
-    appState.ultimaMsg = `NOVO PEDIDO - PAO DO CISO\n━━━━━━━━━━━━━━━━━━━━\nCLIENTE\nNome: *${appState.user.nome}*\nTelefone: *${appState.user.tel}*\n━━━━━━━━━━━━━━━━━━━━\nENTREGA\nTipo: ${appState.user.entrega}\n${appState.user.entrega === 'Entrega' ? `Endereço: *${appState.user.endereco}*\n` : ""}━━━━━━━━━━━━━━━━━━━━\nITENS DO PEDIDO\n${itensMsg}\n\n${appState.desconto > 0 ? `Cupom: ${appState.cupomAtivo.nome} (-${fmtMoeda(appState.desconto)})\n` : ""}${appState.taxaEntrega > 0 ? `Taxa de Entrega: R$ 10,00\n` : ""}━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO\nForma: ${appState.pagamentoSel}\nTOTAL: *${fmtMoeda(appState.totalGeral)}*\n━━━━━━━━━━━━━━━━━━━━\n_Pedido gerado via cardápio digital._`;
-    
-    // Redirecionamento após 4 segundos
-    setTimeout(() => { 
-        reenviarWhats();
-        el('modalSucesso').style.display = 'none';
-        el('modalPosEnvio').style.display = 'block';
-    }, 4000); 
-}
-
-// --- FUNÇÕES COMPLEMENTARES ---
-function ampliarImg(src) { el('imgExpandida').src = src; el('modalOverlay').style.display = 'block'; el('modalImg').style.display = 'block'; }
-function validarApenasNumeros(inp) { inp.value = inp.value.replace(/\D/g, ''); }
-function copiarChave() { navigator.clipboard.writeText("paodociso@gmail.com"); alert("Chave PIX copiada!"); }
-function reenviarWhats() { window.open(`https://wa.me/5511982391781?text=${encodeURIComponent(appState.ultimaMsg)}`, '_blank'); }
-function voltarParaDados() { el('etapa-pagamento').style.display = 'none'; el('etapa-dados').style.display = 'block'; }
-function voltarParaRevisao() { el('modalDados').style.display = 'none'; el('modalRevisao').style.display = 'block'; }
-function novoPedido() { location.reload(); }
-function encerrarSistema() { 
-    localStorage.clear(); 
-    if (window.confirm("Deseja fechar o cardápio?")) {
-        window.close();
-        alert("Por favor, feche esta aba manualmente.");
-    }
-}
-</script>
 </body>
 </html>

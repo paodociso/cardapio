@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo | Pão do Ciso</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-creme: #fdf5e6;
+            --verde-militar: #2d3a27;
+            --marrom-cafe: #2e2610;
+            --marrom-detalhe: #7d4f39;
+            --texto: #3e2723;
+            --branco: #ffffff;
+            --red: #b22222;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            background: #f4f1ea;
+            color: var(--texto);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--verde-militar);
+            height: 100vh;
+            position: fixed;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header img {
+            width: 90px;
+            border-radius: 50%;
+            border: 3px solid var(--bg-creme);
+            margin-bottom: 15px;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 5px solid var(--bg-creme);
+        }
+
+        /* Main Area */
+        .main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .card-admin {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        /* Tabelas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: #f8f9fa;
+            color: var(--marrom-cafe);
+            border-bottom: 2px solid #eee;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        .col-img { width: 70px; }
+        .col-preco { width: 110px; }
+        .col-status { width: 110px; }
+        .col-acoes { width: 140px; }
+
+        /* Buttons */
+        .btn-adm {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-verde-personalizado { background: var(--verde-militar); color: white; }
+        .btn-bege-personalizado { background: var(--bg-creme); color: var(--verde-militar); border: 1px solid #dccbb0; }
+        .btn-red { background: var(--red); color: white; }
+
+        /* Badges */
+        .badge { padding: 5px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; }
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-error { background: #f8d7da; color: #721c24; }
+
+        .badge-opcional-micro {
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            background: #eee;
+            border-radius: 10px;
+            color: var(--verde-militar);
+            border: 1px solid #ddd;
+        }
+
+        .badge-opcional {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 0.8rem;
+            background: #fff;
+        }
+
+        .badge-opcional.selected {
+            background: var(--verde-militar);
+            color: white;
+        }
+
+        .opcionais-badge-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center;
+            z-index: 1000; backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background: white; width: 550px; padding: 40px; border-radius: 20px;
+            max-height: 90vh; overflow-y: auto;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
+        }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .card-button { background: white; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .card-button:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://cdn3.emoji.gg/emojis/2637-settings.png" alt="Logo">
+            <h3>Painel Pão do Ciso</h3>
+        </div>
+        <nav>
+            <div class="nav-item" id="nav-dashboard" onclick="navegarPara('dashboard')"><i class="fas fa-chart-pie"></i> Dashboard</div>
+            <div class="nav-item" id="nav-produtos" onclick="navegarPara('produtos')"><i class="fas fa-bread-slice"></i> Produtos</div>
+            <div class="nav-item" id="nav-sessoes" onclick="navegarPara('sessoes')"><i class="fas fa-folder-open"></i> Sessões</div>
+            <div class="nav-item" id="nav-cupons" onclick="navegarPara('cupons')"><i class="fas fa-ticket-alt"></i> Cupons</div>
+            <div style="padding: 20px;">
+                <button class="btn-adm btn-bege-personalizado" style="width:100%" onclick="visualizarCodigo()">Ver Código</button>
+                <button class="btn-adm btn-verde-personalizado" style="width:100%; margin-top:10px" onclick="baixarDados()">Baixar dados.js</button>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div id="content-area"></div>
+    </main>
+
+    <div id="modal-container" class="modal-overlay" onclick="if(event.target === this) fecharModal()">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="dados.js"></script>
+    <script>
+        let db = JSON.parse(localStorage.getItem('pao_do_ciso_db')) || dadosIniciais;
+        let opcionaisTemp = [];
+        let secaoAtiva = 'dashboard';
+
+        const persistir = () => localStorage.setItem('pao_do_ciso_db', JSON.stringify(db));
+
+        const CRUD = {
+            atualizarEListar: () => { persistir(); renderizarAtual(); },
+
+            salvarFornada: (dados) => {
+                db.fornada = { dataISO: dados.dataISO, diasAntecedencia: parseInt(dados.diasAntecedencia), horaLimite: dados.horaLimite };
+                CRUD.atualizarEListar();
+                alert("Fornada atualizada!");
+            },
+
+            salvarProduto: (sIdx, iIdx) => {
+                const dados = {
+                    nome: document.getElementById('f-nome').value,
+                    descricao: document.getElementById('f-descricao').value,
+                    preco: parseFloat(document.getElementById('f-preco').value) || 0,
+                    imagem: document.getElementById('f-imagem').value || 'img/placeholder.jpg',
+                    opcionais_ativos: [...opcionaisTemp],
+                    esgotado: iIdx !== null ? db.secoes[sIdx].itens[iIdx].esgotado : false
+                };
+                if (iIdx !== null) db.secoes[sIdx].itens[iIdx] = dados;
+                else db.secoes[sIdx].itens.push(dados);
+                fecharModal();
+                CRUD.atualizarEListar();
+            },
+
+            removerProduto: (sIdx, iIdx) => {
+                if (confirm("Excluir produto?")) { db.secoes[sIdx].itens.splice(iIdx, 1); CRUD.atualizarEListar(); }
+            },
+
+            toggleEstoque: (sIdx, iIdx) => {
+                db.secoes[sIdx].itens[iIdx].esgotado = !db.secoes[sIdx].itens[iIdx].esgotado;
+                CRUD.atualizarEListar();
+            },
+
+            salvarSessao: (idx, nome) => {
+                if (idx !== null) db.secoes[idx].nome = nome;
+                else db.secoes.push({ nome: nome, itens: [] });
+                fecharModal();
+                CRUD.atualizarEListar();
+            },
+
+            removerSessao: (idx) => {
+                if (confirm("Excluir sessão?")) { db.secoes.splice(idx, 1); CRUD.atualizarEListar(); }
+            },
+
+            adicionarOpcional: (nomeSessao, sIdx) => {
+                if (!db.opcionais[nomeSessao]) db.opcionais[nomeSessao] = [];
+                db.opcionais[nomeSessao].push({ nome: "Novo Opcional", preco: 0 });
+                persistir();
+                abrirModalSessao(sIdx);
+            },
+
+            editarOpcional: (nomeSessao, oIdx, campo, valor) => {
+                db.opcionais[nomeSessao][oIdx][campo] = campo === 'preco' ? parseFloat(valor) : valor;
+                persistir();
+            },
+
+            removerOpcional: (nomeSessao, oIdx, sIdx) => {
+                db.opcionais[nomeSessao].splice(oIdx, 1);
+                persistir();
+                abrirModalSessao(sIdx);
+            },
+
+            salvarCupom: () => {
+                const codigo = document.getElementById('f-cupom-codigo').value.toUpperCase();
+                db.cupons.push({ codigo, tipo: document.getElementById('f-cupom-tipo').value, valor: parseFloat(document.getElementById('f-cupom-valor').value) });
+                fecharModal();
+                CRUD.atualizarEListar();
+            },
+
+            removerCupom: (idx) => { if (confirm("Excluir cupom?")) { db.cupons.splice(idx, 1); CRUD.atualizarEListar(); } }
+        };
+
+        const navegarPara = (secao) => {
+            secaoAtiva = secao;
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('nav-' + secao).classList.add('active');
+            renderizarAtual();
+        };
+
+        const renderizarAtual = () => {
+            const container = document.getElementById('content-area');
+            container.innerHTML = '';
+            if (secaoAtiva === 'dashboard') renderDashboard(container);
+            else if (secaoAtiva === 'produtos') renderProdutos(container);
+            else if (secaoAtiva === 'sessoes') renderSessoes(container);
+            else if (secaoAtiva === 'cupons') renderCupons(container);
+        };
+
+        function renderDashboard(target) {
+            const f = db.fornada || { dataISO: '', diasAntecedencia: 2, horaLimite: '12h' };
+            target.innerHTML = `
+                <h1>Dashboard</h1>
+                <div class="card-admin">
+                    <h3>Configuração da Fornada</h3>
+                    <div style="display:flex; gap:15px; align-items:flex-end;">
+                        <div class="form-group" style="flex:1"> <label>Data</label> <input type="date" id="f-data-iso" value="${f.dataISO}"> </div>
+                        <div class="form-group" style="flex:1"> <label>Antecedência (dias)</label> <input type="number" id="f-antecedencia" value="${f.diasAntecedencia}"> </div>
+                        <div class="form-group" style="flex:1"> <label>Hora Limite</label> <input type="text" id="f-hora-limite" value="${f.horaLimite}"> </div>
+                        <button class="btn-adm btn-verde-personalizado" onclick="CRUD.salvarFornada({dataISO: document.getElementById('f-data-iso').value, diasAntecedencia: document.getElementById('f-antecedencia').value, horaLimite: document.getElementById('f-hora-limite').value})">Salvar</button>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="card-button" onclick="navegarPara('produtos')"><i class="fas fa-bread-slice"></i><h3>Produtos</h3><h2>${db.secoes.reduce((acc, s) => acc + s.itens.length, 0)}</h2></div>
+                    <div class="card-button" onclick="navegarPara('sessoes')"><i class="fas fa-folder-open"></i><h3>Sessões</h3><h2>${db.secoes.length}</h2></div>
+                </div>`;
+        }
+
+        function renderProdutos(target) {
+            let html = '<h1>Produtos</h1>';
+            db.secoes.forEach((secao, sIdx) => {
+                html += `
+                <div class="card-admin">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <h2 style="margin:0">${secao.nome}</h2>
+                        <button class="btn-adm btn-verde-personalizado" onclick="abrirModalProduto(${sIdx})">+ Novo Produto</button>
+                    </div>
+                    <table>
+                        <thead><tr><th class="col-img">Img</th><th>Produto</th><th class="col-preco">Preço</th><th class="col-status">Status</th><th class="col-acoes">Ações</th></tr></thead>
+                        <tbody>
+                            ${secao.itens.map((item, iIdx) => `
+                            <tr>
+                                <td><img src="${item.imagem}" style="width:40px; height:40px; border-radius:5px; object-fit:cover;"></td>
+                                <td>
+                                    <strong>${item.nome}</strong><br><small style="color:#666">${item.descricao || ''}</small>
+                                    <div style="display:flex; flex-wrap:wrap; gap:4px; width:100%; margin-top:5px;">
+                                        ${(item.opcionais_ativos || []).map(opt => `<span class="badge-opcional-micro">${opt}</span>`).join('')}
+                                    </div>
+                                </td>
+                                <td>R$ ${item.preco.toFixed(2)}</td>
+                                <td><span class="badge ${item.esgotado ? 'badge-error' : 'badge-success'}">${item.esgotado ? 'ESG' : 'OK'}</span></td>
+                                <td>
+                                    <button class="btn-adm btn-bege-personalizado" onclick="CRUD.toggleEstoque(${sIdx}, ${iIdx})"><i class="fas fa-sync"></i></button>
+                                    <button class="btn-adm btn-bege-personalizado" onclick="abrirModalProduto(${sIdx}, ${iIdx})"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-adm btn-red" onclick="CRUD.removerProduto(${sIdx}, ${iIdx})"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>`;
+            });
+            target.innerHTML = html;
+        }
+
+        function renderSessoes(target) {
+            target.innerHTML = `<h1>Sessões</h1><button class="btn-adm btn-verde-personalizado" onclick="abrirModalSessao()">+ Nova</button>
+            <div class="card-admin"><table><thead><tr><th>Nome</th><th>Ações</th></tr></thead><tbody>
+            ${db.secoes.map((s, idx) => `<tr><td>${s.nome}</td><td><button class="btn-adm btn-bege-personalizado" onclick="abrirModalSessao(${idx})">Editar</button> <button class="btn-adm btn-red" onclick="CRUD.removerSessao(${idx})">X</button></td></tr>`).join('')}
+            </tbody></table></div>`;
+        }
+
+        function renderCupons(target) {
+            target.innerHTML = `<h1>Cupons</h1><button class="btn-adm btn-verde-personalizado" onclick="abrirModalCupom()">+ Novo Cupom</button>
+            <div class="card-admin"><table><thead><tr><th>Código</th><th>Ações</th></tr></thead><tbody>
+            ${db.cupons.map((c, idx) => `<tr><td>${c.codigo}</td><td><button class="btn-adm btn-red" onclick="CRUD.removerCupom(${idx})">X</button></td></tr>`).join('')}
+            </tbody></table></div>`;
+        }
+
+        function abrirModalProduto(sIdx, iIdx = null) {
+            const item = iIdx !== null ? db.secoes[sIdx].itens[iIdx] : { nome: '', preco: 0, imagem: '', descricao: '', opcionais_ativos: [] };
+            opcionaisTemp = [...(item.opcionais_ativos || [])];
+            const todosOpcionais = (db.opcionais[db.secoes[sIdx].nome] || []).map(opt => opt.nome);
+
+            document.getElementById('modal-body').innerHTML = `
+                <form onsubmit="event.preventDefault(); CRUD.salvarProduto(${sIdx}, ${iIdx})">
+                    <div class="form-group"><label>Nome</label><input id="f-nome" value="${item.nome}" required></div>
+                    <div class="form-group"><label>Descrição</label><textarea id="f-descricao">${item.descricao || ''}</textarea></div>
+                    <div class="form-group"><label>Imagem</label><input id="f-imagem" value="${item.imagem}"></div>
+                    <div class="form-group"><label>Preço</label><input type="number" step="0.01" id="f-preco" value="${item.preco}" required></div>
+                    <div class="form-group"><label>Opcionais</label><div class="opcionais-badge-container">
+                        ${todosOpcionais.map(opt => `<div class="badge-opcional ${opcionaisTemp.includes(opt) ? 'selected' : ''}" onclick="toggleBadge('${opt}', this)">${opt}</div>`).join('')}
+                    </div></div>
+                    <button type="button" class="btn-adm btn-bege-personalizado" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn-adm btn-verde-personalizado">Salvar</button>
+                </form>`;
+            document.getElementById('modal-title').innerText = iIdx !== null ? "Editar" : "Novo";
+            document.getElementById('modal-container').style.display = 'flex';
+        }
+
+        function abrirModalSessao(idx = null) {
+            const sessao = idx !== null ? db.secoes[idx] : { nome: '' };
+            const lista = db.opcionais[sessao.nome] || [];
+            document.getElementById('modal-body').innerHTML = `
+                <div class="form-group"><label>Nome</label><input id="f-sessao-nome" value="${sessao.nome}"></div>
+                ${idx !== null ? `<h3>Opcionais</h3>${lista.map((opc, oIdx) => `<div style="display:flex; gap:5px; margin-bottom:5px;">
+                    <input value="${opc.nome}" onchange="CRUD.editarOpcional('${sessao.nome}', ${oIdx}, 'nome', this.value)">
+                    <input type="number" value="${opc.preco}" onchange="CRUD.editarOpcional('${sessao.nome}', ${oIdx}, 'preco', this.value)">
+                    <button onclick="CRUD.removerOpcional('${sessao.nome}', ${oIdx}, ${idx})">X</button></div>`).join('')}
+                    <button class="btn-adm btn-bege-personalizado" onclick="CRUD.adicionarOpcional('${sessao.nome}', ${idx})">+ Opcional</button>` : ''}
+                <hr><button class="btn-adm btn-verde-personalizado" onclick="CRUD.salvarSessao(${idx}, document.getElementById('f-sessao-nome').value)">Salvar Sessão</button>`;
+            document.getElementById('modal-container').style.display = 'flex';
+        }
+
+        function abrirModalCupom() {
+            document.getElementById('modal-body').innerHTML = `
+                <div class="form-group"><label>Código</label><input id="f-cupom-codigo"></div>
+                <div class="form-group"><label>Tipo</label><select id="f-cupom-tipo"><option value="porcentagem">%</option><option value="fixo">R$</option></select></div>
+                <div class="form-group"><label>Valor</label><input type="number" id="f-cupom-valor"></div>
+                <button class="btn-adm btn-verde-personalizado" onclick="CRUD.salvarCupom()">Salvar</button>`;
+            document.getElementById('modal-container').style.display = 'flex';
+        }
+
+        const fecharModal = () => document.getElementById('modal-container').style.display = 'none';
+        function toggleBadge(nome, el) {
+            const i = opcionaisTemp.indexOf(nome);
+            if (i > -1) { opcionaisTemp.splice(i, 1); el.classList.remove('selected'); }
+            else { opcionaisTemp.push(nome); el.classList.add('selected'); }
+        }
+        const visualizarCodigo = () => { const w = window.open(); w.document.write(`<pre>const dadosIniciais = ${JSON.stringify(db, null, 2)};</pre>`); };
+
+        /* CÓDIGO NOVO: */
+        const baixarDados = () => {
+            // Cria um novo objeto forçando a ordem solicitada: fornada, cupons, opcionais, secoes
+            const dbOrdenado = {
+                fornada: db.fornada,
+                cupons: db.cupons,
+                opcionais: db.opcionais,
+                secoes: db.secoes
+            };
+
+            const conteudo = `const dadosIniciais = ${JSON.stringify(dbOrdenado, null, 2)};`;
+            const blob = new Blob([conteudo], { type: "text/javascript" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a"); 
+            a.href = url; 
+            a.download = "dados.js"; 
+            a.click();
+        };
+
+        window.onload = () => navegarPara('dashboard');
+    </script>
+</body>
+</html>
